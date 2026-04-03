@@ -1,0 +1,112 @@
+.card {
+  display: block;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  transition: border-color 0.25s, transform 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.coverImg {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .coverImg {
+  transform: scale(1.03);
+}
+
+.body {
+  padding: 2rem;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(to bottom, var(--color-gold), var(--color-gold-dim));
+  transition: height 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--color-gold-dim);
+  transform: translateY(-2px);
+}
+
+.card:hover::before {
+  height: 100%;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-gold);
+  background-color: rgba(201, 168, 76, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.readTime {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+  transition: color 0.2s;
+}
+
+.card:hover .title {
+  color: var(--color-gold-light);
+}
+
+.excerpt {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.readMore {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  transition: letter-spacing 0.2s;
+}
+
+.card:hover .readMore {
+  letter-spacing: 0.15em;
+}

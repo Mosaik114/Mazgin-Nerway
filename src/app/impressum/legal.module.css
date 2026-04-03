@@ -1,0 +1,78 @@
+.page {
+  padding: 5rem 0 var(--section-gap);
+}
+
+.page .container {
+  max-width: 720px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-gold);
+  font-size: 0.7rem;
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
+}
+
+/* Inhalt */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.block h2 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.block p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.85;
+}
+
+.block a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold-dim);
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.block a:hover {
+  color: var(--color-gold-light);
+}

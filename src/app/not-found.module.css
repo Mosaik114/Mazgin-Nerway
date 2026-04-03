@@ -1,0 +1,56 @@
+.page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  animation: fadeUp 0.5s ease both;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-gold);
+  font-size: 0.7rem;
+  width: 200px;
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
+}
+
+.code {
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-gold-dim);
+  line-height: 1;
+}
+
+.message {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  max-width: 360px;
+  line-height: 1.7;
+}
+
+.link {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--color-gold-light);
+}
