@@ -1,5 +1,5 @@
 .page {
-  padding: 5rem 0 var(--section-gap);
+  padding: var(--space-2xl) 0 var(--section-gap);
 }
 
 .page .container {
@@ -9,47 +9,28 @@
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--space-xl);
 }
 
 .tag {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--color-gold);
-  margin-bottom: 1rem;
+  composes: pageTag from '../../styles/shared.module.css';
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 2rem;
+  composes: pageTitle from '../../styles/shared.module.css';
+  margin-bottom: var(--space-lg);
 }
 
-/* Ornament */
 .ornament {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--color-gold);
-  font-size: 0.7rem;
-}
-
-.ornament::before,
-.ornament::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
+  composes: ornament from '../../styles/shared.module.css';
 }
 
 /* Body-Layout */
 .body {
   display: flex;
-  gap: 3rem;
+  gap: var(--space-lg);
   align-items: flex-start;
-  margin-bottom: 4rem;
+  margin-bottom: var(--space-xl);
 }
 
 /* Bild-Platzhalter */
@@ -87,7 +68,7 @@
 .text {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--space-sm);
 }
 
 .lead {
@@ -105,25 +86,13 @@
 }
 
 .divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--color-gold);
-  font-size: 0.7rem;
-  margin: 0.5rem 0;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
+  composes: ornament from '../../styles/shared.module.css';
+  margin: var(--space-xs) 0;
 }
 
 .cta {
   display: inline-block;
-  margin-top: 0.5rem;
+  margin-top: var(--space-xs);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -142,13 +111,13 @@
 .values {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--space-sm);
   border-top: 1px solid var(--color-border);
-  padding-top: 2.5rem;
+  padding-top: var(--space-lg);
 }
 
 .value {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-muted);
@@ -164,7 +133,7 @@
 }
 
 /* Responsiv */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .body {
     flex-direction: column;
     align-items: center;

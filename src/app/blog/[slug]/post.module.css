@@ -1,5 +1,5 @@
 .page {
-  padding: 4rem 0 var(--section-gap);
+  padding: var(--space-xl) 0 var(--section-gap);
 }
 
 .page .container {
@@ -8,17 +8,8 @@
 
 /* Zurück-Link */
 .back {
-  display: inline-block;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  margin-bottom: 3rem;
-  transition: color 0.2s;
-}
-
-.back:hover {
-  color: var(--color-gold);
+  composes: backLink from '../../../styles/shared.module.css';
+  margin-bottom: var(--space-lg);
 }
 
 /* Cover-Bild */
@@ -28,7 +19,7 @@
   height: 360px;
   overflow: hidden;
   border-radius: 2px;
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-lg);
   border: 1px solid var(--color-border);
 }
 
@@ -38,36 +29,27 @@
 
 /* Header */
 .header {
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-lg);
 }
 
 .meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  composes: meta from '../../../styles/shared.module.css';
+  margin-bottom: var(--space-sm);
 }
 
 .category {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-gold);
-  background-color: rgba(var(--color-gold-rgb), 0.1);
-  padding: 0.2rem 0.6rem;
-  border-radius: 2px;
+  composes: category from '../../../styles/shared.module.css';
 }
 
 .date,
 .readTime {
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
 
 .readTime::before {
   content: '·';
-  margin-right: 0.75rem;
+  margin-right: var(--space-sm);
 }
 
 .title {
@@ -79,56 +61,44 @@
 }
 
 .excerpt {
-  font-size: 1.05rem;
+  font-size: var(--text-md);
   color: var(--color-text-muted);
   line-height: 1.8;
   border-left: 2px solid var(--color-gold-dim);
-  padding-left: 1.25rem;
-  margin-bottom: 2rem;
+  padding-left: var(--space-sm);
+  margin-bottom: var(--space-lg);
   font-style: italic;
 }
 
 /* Ornament-Trennlinie */
 .ornament {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--color-gold);
-  font-size: 0.7rem;
-  margin: 1.5rem 0;
-}
-
-.ornament::before,
-.ornament::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
+  composes: ornament from '../../../styles/shared.module.css';
+  margin: var(--space-md) 0;
 }
 
 /* Markdown-Inhalt */
 .content {
   color: var(--color-text-soft);
-  font-size: 1.05rem;
+  font-size: var(--text-md);
   line-height: 1.9;
 }
 
 .content h2 {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: var(--text-xl);
   color: var(--color-text);
-  margin: 2.5rem 0 1rem;
+  margin: var(--space-lg) 0 1rem;
 }
 
 .content h3 {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: var(--text-lg);
   color: var(--color-text);
-  margin: 2rem 0 0.75rem;
+  margin: var(--space-lg) 0 var(--space-sm);
 }
 
 .content p {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-md);
 }
 
 .content strong {
@@ -155,16 +125,16 @@
 
 .content blockquote {
   border-left: 2px solid var(--color-gold-dim);
-  padding-left: 1.25rem;
+  padding-left: var(--space-sm);
   color: var(--color-text-muted);
   font-style: italic;
-  margin: 2rem 0;
+  margin: var(--space-lg) 0;
 }
 
 .content ul,
 .content ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding-left: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
 .content li {
@@ -184,10 +154,10 @@
 .content pre {
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  padding: 1.5rem;
+  padding: var(--space-md);
   border-radius: 2px;
   overflow-x: auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-md);
 }
 
 .content pre code {
@@ -201,8 +171,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
   border-top: 1px solid var(--color-border);
 }
 
@@ -227,7 +197,7 @@
 }
 
 .navLabel {
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
@@ -239,7 +209,7 @@
 }
 
 .navTitle {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   font-family: var(--font-heading);
   color: var(--color-text);
   line-height: 1.35;
@@ -252,14 +222,14 @@
 
 /* Verwandte Posts */
 .related {
-  margin-top: 3rem;
+  margin-top: var(--space-lg);
 }
 
 .relatedTitle {
   font-family: var(--font-heading);
   font-size: 1.1rem;
   color: var(--color-text);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-md);
 }
 
 .relatedGrid {
@@ -275,7 +245,7 @@
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: 2px;
-  padding: 1.5rem;
+  padding: var(--space-md);
   transition: border-color 0.2s, transform 0.2s;
 }
 
@@ -285,10 +255,7 @@
 }
 
 .relatedCategory {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-gold);
+  composes: category from '../../../styles/shared.module.css';
 }
 
 .relatedCardTitle {
@@ -315,27 +282,18 @@
 }
 
 .relatedReadMore {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-gold);
-  margin-top: 0.5rem;
+  margin-top: var(--space-xs);
 }
 
 /* Post-Footer */
 .postFooter {
-  margin-top: 4rem;
+  margin-top: var(--space-xl);
 }
 
 .backBottom {
-  display: inline-block;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  transition: color 0.2s;
-}
-
-.backBottom:hover {
-  color: var(--color-gold);
+  composes: backLink from '../../../styles/shared.module.css';
 }

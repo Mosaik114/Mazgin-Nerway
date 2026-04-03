@@ -1,0 +1,70 @@
+/* ── Ornament (goldene Trennlinie mit Symbol) ──── */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-gold);
+  font-size: 0.7rem;
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
+}
+
+/* ── Category Badge ────────────────────────────── */
+.category {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-gold);
+  background-color: rgba(var(--color-gold-rgb), 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+}
+
+/* ── Meta Row (date, read time etc.) ───────────── */
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.metaText {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Back-Link ─────────────────────────────────── */
+.backLink {
+  display: inline-block;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--color-gold);
+}
+
+/* ── Page Header (tag + title + ornament) ──────── */
+.pageTag {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  margin-bottom: 1rem;
+}
+
+.pageTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}

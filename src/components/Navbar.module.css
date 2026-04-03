@@ -46,7 +46,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: var(--space-lg);
 }
 
 .link {
@@ -138,7 +138,7 @@
 
 .mobileLink {
   display: block;
-  padding: 1rem 1.5rem;
+  padding: 1rem var(--space-md);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -150,7 +150,7 @@
 .mobileLink:hover,
 .mobileLink.active {
   color: var(--color-gold);
-  padding-left: 2rem;
+  padding-left: var(--space-lg);
 }
 
 .mobileThemeRow {
@@ -158,19 +158,19 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 1.5rem;
+  padding: 1rem var(--space-md);
   border-bottom: 1px solid var(--color-border);
 }
 
 .mobileThemeLabel {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
 }
 
 /* ── Responsiv ─────────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .nav {
     display: none;
   }
