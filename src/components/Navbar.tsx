@@ -27,15 +27,19 @@ export default function Navbar() {
 
         {/* Desktop-Nav */}
         <nav className={styles.nav}>
-          {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`${styles.link} ${pathname === href ? styles.active : ''}`}
-            >
-              {label}
-            </Link>
-          ))}
+          {links.map(({ href, label }) => {
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`${styles.link} ${isActive ? styles.active : ''}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {label}
+              </Link>
+            );
+          })}
           <ThemeToggle />
         </nav>
 
@@ -53,16 +57,20 @@ export default function Navbar() {
 
       {/* Mobile-Nav */}
       <div className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}>
-        {links.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className={`${styles.mobileLink} ${pathname === href ? styles.active : ''}`}
-            onClick={() => setOpen(false)}
-          >
-            {label}
-          </Link>
-        ))}
+        {links.map(({ href, label }) => {
+          const isActive = pathname === href;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={`${styles.mobileLink} ${isActive ? styles.active : ''}`}
+              aria-current={isActive ? 'page' : undefined}
+              onClick={() => setOpen(false)}
+            >
+              {label}
+            </Link>
+          );
+        })}
         <div className={styles.mobileThemeRow}>
           <span className={styles.mobileThemeLabel}>Theme</span>
           <ThemeToggle />

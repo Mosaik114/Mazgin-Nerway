@@ -16,48 +16,55 @@ export interface Post {
   content: string;
 }
 
+interface Frontmatter {
+  title?: string;
+  date?: string;
+  excerpt?: string;
+  category?: string;
+  coverImage?: string;
+  featured?: boolean;
+  published?: boolean;
+}
+
 function calcReadingTime(content: string): number {
   return Math.max(1, Math.ceil(content.split(/\s+/).length / 200));
 }
 
-function parsePost(filename: string, content: string, data: Record<string, unknown>): Post {
+function parsePost(filename: string, content: string, data: Frontmatter): Post {
   const slug = filename.replace('.md', '');
   return {
     slug,
-    title: (data.title as string) ?? slug,
-    date: (data.date as string) ?? '',
-    excerpt: (data.excerpt as string) ?? content.slice(0, 160).replace(/\n/g, ' ') + '…',
-    category: (data.category as string) ?? undefined,
-    coverImage: (data.coverImage as string) ?? undefined,
-    featured: (data.featured as boolean) ?? false,
+    title: data.title ?? slug,
+    date: data.date ?? '',
+    excerpt: data.excerpt ?? content.slice(0, 160).replace(/\n/g, ' ') + '…',
+    category: data.category,
+    coverImage: data.coverImage,
+    featured: data.featured ?? false,
     readingTime: calcReadingTime(content),
     content,
   };
 }
 
+let cachedPosts: Post[] | null = null;
+
 export function getAllPosts(): Post[] {
+  if (cachedPosts) return cachedPosts;
+
   const files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.md'));
 
   const posts = files
     .map((filename) => {
       const raw = fs.readFileSync(path.join(postsDir, filename), 'utf-8');
       const { data, content } = matter(raw);
-      if (data.published === false) return null;
-      return parsePost(filename, content, data);
+      if ((data as Frontmatter).published === false) return null;
+      return parsePost(filename, content, data as Frontmatter);
     })
     .filter((p): p is Post => p !== null);
 
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  cachedPosts = posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return cachedPosts;
 }
 
 export function getPostBySlug(slug: string): Post | null {
-  const filepath = path.join(postsDir, `${slug}.md`);
-  if (!fs.existsSync(filepath)) return null;
-
-  const raw = fs.readFileSync(filepath, 'utf-8');
-  const { data, content } = matter(raw);
-
-  if (data.published === false) return null;
-
-  return parsePost(`${slug}.md`, content, data);
+  return getAllPosts().find((p) => p.slug === slug) ?? null;
 }

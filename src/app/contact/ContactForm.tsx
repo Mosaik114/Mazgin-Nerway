@@ -40,6 +40,7 @@ export default function ContactForm() {
           name: String(data.get('name')).trim(),
           email: String(data.get('email')).trim(),
           message: String(data.get('message')).trim(),
+          website: String(data.get('website') ?? ''),
         }),
       });
 
@@ -69,6 +70,12 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form} noValidate>
+      {/* Honeypot — hidden from real users, traps bots */}
+      <div style={{ position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>Name</label>
         <input

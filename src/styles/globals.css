@@ -109,6 +109,26 @@ img {
   background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
 }
 
+/* Skip-Link (Accessibility) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
 /* Container */
 .container {
   width: 100%;

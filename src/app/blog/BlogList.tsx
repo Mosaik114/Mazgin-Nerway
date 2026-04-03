@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import BlogCard from '@/components/BlogCard';
 import type { Post } from '@/lib/posts';
+import { formatDate } from '@/lib/config';
 import styles from './blog.module.css';
 
 interface Props {
@@ -25,9 +26,7 @@ export default function BlogList({ posts, categories }: Props) {
     : null;
   const rest = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered;
 
-  const featuredDate = featured
-    ? new Date(featured.date).toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
-    : null;
+  const featuredDate = featured ? formatDate(featured.date) : null;
 
   return (
     <>

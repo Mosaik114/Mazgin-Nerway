@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
+import { formatDate } from '@/lib/config';
 import styles from './BlogCard.module.css';
 
 interface Props {
@@ -14,11 +15,7 @@ interface Props {
 }
 
 export default function BlogCard({ title, slug, date, excerpt, category, coverImage, readingTime }: Props) {
-  const formatted = new Date(date).toLocaleDateString('de-DE', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  });
+  const formatted = formatDate(date);
 
   return (
     <Link href={`/blog/${slug}`} className={styles.card}>

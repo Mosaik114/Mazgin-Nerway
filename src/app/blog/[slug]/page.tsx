@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { SITE_URL, formatDate } from '@/lib/config';
 import styles from './post.module.css';
 
 interface Props {
@@ -27,8 +28,7 @@ export async function generateMetadata({ params }: Props) {
       description: post.excerpt,
       type: 'article',
       publishedTime: post.date,
-      url: `https://mazginnerway.de/blog/${post.slug}`,
-      images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+      url: `${SITE_URL}/blog/${post.slug}`,
     },
     twitter: {
       card: 'summary_large_image',
@@ -46,11 +46,7 @@ export default async function BlogPostPage({ params }: Props) {
   const processed = await remark().use(html).process(post.content);
   const contentHtml = processed.toString();
 
-  const formatted = new Date(post.date).toLocaleDateString('de-DE', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  });
+  const formatted = formatDate(post.date);
 
   // Prev/Next
   const allPosts = getAllPosts();
