@@ -19,7 +19,7 @@
     "resend": "^6.10.0"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "^9.39.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
