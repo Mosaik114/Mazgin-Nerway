@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? 'kontakt@mazginnerway.de';
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? 'nerway.a.mazgin@gmail.com';
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);

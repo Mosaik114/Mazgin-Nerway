@@ -102,7 +102,7 @@
 }
 
 .inputError {
-  border-color: #8b3a3a;
+  border-color: var(--color-danger-border);
 }
 
 .textarea {
@@ -112,14 +112,14 @@
 
 .error {
   font-size: 0.78rem;
-  color: #c07070;
+  color: var(--color-danger);
 }
 
 .formError {
   font-size: 0.85rem;
-  color: #c07070;
-  background-color: rgba(139, 58, 58, 0.1);
-  border: 1px solid rgba(139, 58, 58, 0.3);
+  color: var(--color-danger);
+  background-color: rgba(var(--color-danger-rgb), 0.1);
+  border: 1px solid rgba(var(--color-danger-rgb), 0.3);
   border-radius: 2px;
   padding: 0.75rem 1rem;
 }
@@ -127,7 +127,7 @@
 .submit {
   align-self: flex-start;
   background-color: var(--color-gold);
-  color: #0f0e0c;
+  color: var(--color-on-gold);
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;

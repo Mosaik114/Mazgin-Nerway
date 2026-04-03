@@ -71,7 +71,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.08) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(var(--color-gold-rgb), 0.08) 0%, transparent 60%);
 }
 
 .imageInitials {

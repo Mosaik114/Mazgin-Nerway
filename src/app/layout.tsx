@@ -3,6 +3,7 @@ import { Playfair_Display, Inter } from 'next/font/google';
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { themeScript } from '@/lib/theme';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -64,6 +65,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" className={`${playfair.variable} ${inter.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <Navbar />
         <main>{children}</main>

@@ -1,0 +1,47 @@
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.toggle:hover {
+  border-color: var(--color-gold-dim);
+  color: var(--color-gold);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--color-gold-dim);
+  outline-offset: 2px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.sun {
+  display: flex;
+}
+
+.moon {
+  display: none;
+}
+
+:global(html[data-theme='sepia']) .sun {
+  display: none;
+}
+
+:global(html[data-theme='sepia']) .moon {
+  display: flex;
+}

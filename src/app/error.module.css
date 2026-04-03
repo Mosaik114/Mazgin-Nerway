@@ -50,7 +50,7 @@
 .btn {
   padding: 0.7rem 1.75rem;
   background-color: var(--color-gold);
-  color: #0f0e0c;
+  color: var(--color-on-gold);
   font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;

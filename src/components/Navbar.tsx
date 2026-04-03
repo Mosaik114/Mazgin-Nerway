@@ -1,9 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import styles from './Navbar.module.css';
+import ThemeToggle from './ThemeToggle';
 
 const links = [
   { href: '/',        label: 'Home'    },
@@ -20,7 +22,7 @@ export default function Navbar() {
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.logo} onClick={() => setOpen(false)}>
-          Mazgin<span>.</span>
+          <Image src="/images/Mazgin Nerway Logo.png" alt="Mazgin Nerway" width={0} height={0} sizes="100vw" priority className={styles.logoImage} />
         </Link>
 
         {/* Desktop-Nav */}
@@ -34,6 +36,7 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
 
         {/* Hamburger */}
@@ -60,6 +63,10 @@ export default function Navbar() {
             {label}
           </Link>
         ))}
+        <div className={styles.mobileThemeRow}>
+          <span className={styles.mobileThemeLabel}>Theme</span>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
