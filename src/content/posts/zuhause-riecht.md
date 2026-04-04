@@ -1,6 +1,6 @@
 ﻿---
 title: "Was zu Hause riecht"
-date: "2026-04-04"
+date: "2026-04-03"
 slug: "was-zu-hause-riecht"
 category: "Gedanken"
 coverImage: "/images/zuhause-riecht.png"
