@@ -378,27 +378,25 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </header>
 
-          <div className={styles.contentLayout}>
-            <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
+          {tocHeadings.length > 0 && (
+            <aside className={styles.toc} aria-labelledby="toc-heading">
+              <h2 id="toc-heading" className={styles.tocTitle}>Inhalt</h2>
+              <ol className={styles.tocList}>
+                {tocHeadings.map((heading) => (
+                  <li key={heading.id} className={styles.tocItem}>
+                    <a
+                      href={`#${heading.id}`}
+                      className={`${styles.tocLink} ${heading.level === 3 ? styles.tocLinkSub : ''}`}
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </aside>
+          )}
 
-            {tocHeadings.length > 0 && (
-              <aside className={styles.toc} aria-labelledby="toc-heading">
-                <h2 id="toc-heading" className={styles.tocTitle}>Inhalt</h2>
-                <ol className={styles.tocList}>
-                  {tocHeadings.map((heading) => (
-                    <li key={heading.id} className={styles.tocItem}>
-                      <a
-                        href={`#${heading.id}`}
-                        className={`${styles.tocLink} ${heading.level === 3 ? styles.tocLinkSub : ''}`}
-                      >
-                        {heading.text}
-                      </a>
-                    </li>
-                  ))}
-                </ol>
-              </aside>
-            )}
-          </div>
+          <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
           <nav className={styles.postNav} aria-label="Beitragsnavigation">
             <div className={styles.navItem}>

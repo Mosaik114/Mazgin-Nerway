@@ -72,14 +72,11 @@ export default function Navbar() {
 
     const { style } = document.body;
     const previousOverflow = style.overflow;
-    const previousTouchAction = style.touchAction;
 
     style.overflow = 'hidden';
-    style.touchAction = 'none';
 
     return () => {
       style.overflow = previousOverflow;
-      style.touchAction = previousTouchAction;
     };
   }, [open]);
 

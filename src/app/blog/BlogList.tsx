@@ -13,12 +13,40 @@ import styles from './blog.module.css';
 interface Props {
   posts: Post[];
   categories: string[];
+  initialActiveCategory?: string;
+  initialQuery?: string;
 }
 
-export default function BlogList({ posts, categories }: Props) {
-  const [active, setActive] = useState('Alle');
-  const [query, setQuery] = useState('');
-  const normalizedQuery = query.trim().toLowerCase();
+function normalizeForSearch(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\u00DF/g, 'ss');
+}
+
+export default function BlogList({
+  posts,
+  categories,
+  initialActiveCategory = 'Alle',
+  initialQuery = '',
+}: Props) {
+  const initialActive = categories.includes(initialActiveCategory) ? initialActiveCategory : 'Alle';
+  const [active, setActive] = useState(initialActive);
+  const [query, setQuery] = useState(initialQuery);
+  const normalizedQuery = normalizeForSearch(query.trim());
+
+  const buildFilterHref = (category: string, nextQuery: string): string => {
+    const params = new URLSearchParams();
+    const trimmedQuery = nextQuery.trim();
+
+    if (category !== 'Alle') params.set('category', category);
+    if (trimmedQuery) params.set('q', trimmedQuery);
+
+    const queryString = params.toString();
+    return queryString ? `/blog?${queryString}` : '/blog';
+  };
+
   const getTagAccent = (category: string) => {
     const color =
       category === 'Alle'
@@ -48,11 +76,12 @@ export default function BlogList({ posts, categories }: Props) {
     if (!normalizedQuery) return byCategory;
 
     return byCategory.filter((post) => {
-      const haystack = [post.title, post.excerpt, post.category]
+      const haystack = [post.title, post.excerpt, post.category, ...post.tags]
         .filter(Boolean)
-        .join(' ')
-        .toLowerCase();
-      return haystack.includes(normalizedQuery);
+        .join(' ');
+
+      const normalizedHaystack = normalizeForSearch(haystack);
+      return normalizedHaystack.includes(normalizedQuery);
     });
   }, [active, normalizedQuery, posts]);
 
@@ -83,19 +112,20 @@ export default function BlogList({ posts, categories }: Props) {
               '--tag-accent-bg': tagAccent.backgroundColor,
               '--tag-accent-border': tagAccent.borderColor,
             } as CSSProperties;
+            const href = buildFilterHref(cat, query);
 
             return (
-              <button
+              <Link
                 key={cat}
-                type="button"
                 onClick={() => setActive(cat)}
                 className={`${styles.tag} ${isActive ? styles.tagActive : ''}`}
                 style={tagStyle}
-                aria-pressed={isActive}
+                href={href}
+                aria-current={isActive ? 'page' : undefined}
               >
                 <span>{cat}</span>
                 <span className={styles.tagCount}>{count}</span>
-              </button>
+              </Link>
             );
           })}
         </div>
@@ -128,32 +158,18 @@ export default function BlogList({ posts, categories }: Props) {
             {active !== 'Alle' && normalizedQuery && ' ·'}
             {normalizedQuery && ` Suche „${query.trim()}“`}
           </p>
-          <button
-            type="button"
-            onClick={() => {
-              setActive('Alle');
-              setQuery('');
-            }}
-            className={styles.clearBtn}
-          >
+          <Link href="/blog" className={styles.clearBtn}>
             Filter zurücksetzen
-          </button>
+          </Link>
         </div>
       )}
 
       {filtered.length === 0 ? (
         <div className={styles.empty}>
           <p>Für diese Auswahl wurden keine Beiträge gefunden.</p>
-          <button
-            type="button"
-            className={styles.clearBtn}
-            onClick={() => {
-              setActive('Alle');
-              setQuery('');
-            }}
-          >
+          <Link href="/blog" className={styles.clearBtn}>
             Alle Beiträge anzeigen
-          </button>
+          </Link>
         </div>
       ) : (
         <>

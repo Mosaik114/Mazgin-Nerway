@@ -1,19 +1,23 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getTheme, toggleTheme, type Theme } from '@/lib/theme';
+import { getTheme, onThemeChange, toggleTheme, type Theme } from '@/lib/theme';
 import styles from './ThemeToggle.module.css';
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setThemeState] = useState<Theme>('dark');
 
   useEffect(() => {
-    setTheme(getTheme());
+    setThemeState(getTheme());
+
+    return onThemeChange((nextTheme) => {
+      setThemeState(nextTheme);
+    });
   }, []);
 
   function handleToggle() {
     const next = toggleTheme();
-    setTheme(next);
+    setThemeState(next);
   }
 
   const isSepia = theme === 'sepia';

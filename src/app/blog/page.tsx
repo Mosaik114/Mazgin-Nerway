@@ -14,6 +14,17 @@ import BlogList from './BlogList';
 import styles from './blog.module.css';
 
 const BLOG_TITLE = 'Blog';
+type SearchParamValue = string | string[] | undefined;
+type BlogSearchParams = Record<string, SearchParamValue>;
+
+interface BlogPageProps {
+  searchParams?: Promise<BlogSearchParams>;
+}
+
+function firstParamValue(value: SearchParamValue): string {
+  if (Array.isArray(value)) return value[0] ?? '';
+  return value ?? '';
+}
 const BLOG_DESCRIPTION = 'Alle Beiträge von Mazgin Nerway - Gedanken, Geschichten und Reflexionen.';
 
 export const metadata: Metadata = {
@@ -49,7 +60,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage({ searchParams }: BlogPageProps) {
   const posts = getAllPosts();
   const tags = getAllTagsWithCount();
   const postCategories = Array.from(
@@ -63,6 +74,12 @@ export default function BlogPage() {
   const usedKnownCategories = CATEGORIES.filter((cat) => postCategories.includes(cat));
   const usedNewCategories = postCategories.filter((category) => !knownCategorySet.has(category));
   const categories = ['Alle', ...usedKnownCategories, ...usedNewCategories];
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const requestedCategory = firstParamValue(resolvedSearchParams.category).trim();
+  const requestedQuery = firstParamValue(resolvedSearchParams.q).trim();
+  const initialActiveCategory =
+    requestedCategory && categories.includes(requestedCategory) ? requestedCategory : 'Alle';
+  const initialQuery = requestedQuery;
   const latestPost = posts[0];
   const latestPostIso = latestPost ? toIsoDateOrNull(latestPost.date) : null;
   const totalReadingTime = posts.reduce((sum, post) => sum + post.readingTime, 0);
@@ -142,7 +159,13 @@ export default function BlogPage() {
           </div>
         </header>
 
-        <BlogList posts={posts} categories={categories} />
+        <BlogList
+          key={`${initialActiveCategory}|${initialQuery}`}
+          posts={posts}
+          categories={categories}
+          initialActiveCategory={initialActiveCategory}
+          initialQuery={initialQuery}
+        />
       </div>
     </section>
   );
