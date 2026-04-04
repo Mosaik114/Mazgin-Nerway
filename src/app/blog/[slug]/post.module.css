@@ -1,9 +1,8 @@
 .page {
   padding: var(--space-xl) 0 var(--section-gap);
-}
-
-.page .container {
-  max-width: 720px;
+  --post-accent: var(--color-gold);
+  --post-accent-bg: rgba(var(--color-gold-rgb), 0.1);
+  --post-accent-border: var(--color-gold-dim);
 }
 
 /* Zurück-Link */
@@ -64,7 +63,7 @@
   font-size: clamp(1.05rem, 1.2vw, 1.2rem);
   color: var(--color-text-muted);
   line-height: 1.8;
-  border-left: 2px solid var(--color-gold-dim);
+  border-left: 2px solid var(--post-accent-border);
   padding-left: var(--space-sm);
   margin-bottom: var(--space-lg);
   font-style: italic;
@@ -107,7 +106,7 @@
 }
 
 .content em {
-  color: var(--color-gold-light);
+  color: var(--post-accent);
   font-style: italic;
 }
 
@@ -250,7 +249,7 @@
 }
 
 .relatedCard:is(:hover, :active) {
-  border-color: var(--color-gold-dim);
+  border-color: var(--post-accent-border);
   transform: translateY(-2px);
 }
 
@@ -285,7 +284,7 @@
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-gold);
+  color: var(--post-accent);
   margin-top: var(--space-xs);
 }
 

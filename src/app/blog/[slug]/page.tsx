@@ -1,8 +1,10 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { SITE_URL, formatDate } from '@/lib/config';
 import styles from './post.module.css';
@@ -50,8 +52,24 @@ export default async function BlogPostPage({ params }: Props) {
 
   const processed = await remark().use(html).process(post.content);
   const contentHtml = processed.toString();
-
   const formatted = formatDate(post.date);
+
+  const getCategoryAccent = (category?: string) => {
+    const color = category ? CATEGORY_COLORS[category as Category] : null;
+
+    return {
+      color: color ?? 'var(--color-gold)',
+      backgroundColor: color ? `${color}1a` : 'rgba(var(--color-gold-rgb), 0.1)',
+      borderColor: color ? `${color}66` : 'var(--color-gold-dim)',
+    };
+  };
+
+  const postAccent = getCategoryAccent(post.category);
+  const postStyle = {
+    '--post-accent': postAccent.color,
+    '--post-accent-bg': postAccent.backgroundColor,
+    '--post-accent-border': postAccent.borderColor,
+  } as CSSProperties;
 
   // Prev/Next
   const allPosts = getAllPosts();
@@ -65,9 +83,8 @@ export default async function BlogPostPage({ params }: Props) {
     : [];
 
   return (
-    <article className={styles.page}>
+    <article className={styles.page} style={postStyle}>
       <div className="container">
-
         {/* Zurück */}
         <Link href="/blog" className={styles.back}>
           ← Zurück zum Blog
@@ -80,7 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
               src={post.coverImage}
               alt={post.title}
               fill
-              sizes="(max-width: 768px) calc(100vw - 2.5rem), 720px"
+              sizes="(max-width: 768px) calc(100vw - 2.5rem), (max-width: 1200px) calc(100vw - 3rem), 1052px"
               quality={92}
               className={styles.coverImg}
               priority
@@ -92,7 +109,16 @@ export default async function BlogPostPage({ params }: Props) {
         <header className={styles.header}>
           <div className={styles.meta}>
             {post.category && (
-              <span className={styles.category}>{post.category}</span>
+              <span
+                className={styles.category}
+                style={{
+                  color: postAccent.color,
+                  backgroundColor: postAccent.backgroundColor,
+                  borderColor: postAccent.borderColor,
+                }}
+              >
+                {post.category}
+              </span>
             )}
             <time className={styles.date}>{formatted}</time>
             <span className={styles.readTime}>{post.readingTime} Min. Lesezeit</span>
@@ -107,10 +133,7 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         {/* Inhalt */}
-        <div
-          className={styles.content}
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
-        />
+        <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
         {/* Prev/Next Navigation */}
         <nav className={styles.postNav}>
@@ -135,17 +158,32 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Verwandte Posts */}
         {related.length > 0 && (
           <aside className={styles.related}>
-            <div className={styles.ornament}><span>✦</span></div>
+            <div className={styles.ornament}>
+              <span>✦</span>
+            </div>
             <h2 className={styles.relatedTitle}>Weitere Beiträge in &quot;{post.category}&quot;</h2>
             <div className={styles.relatedGrid}>
-              {related.map((r) => (
-                <Link key={r.slug} href={`/blog/${r.slug}`} className={styles.relatedCard}>
-                  <span className={styles.relatedCategory}>{r.category}</span>
-                  <span className={styles.relatedCardTitle}>{r.title}</span>
-                  <span className={styles.relatedExcerpt}>{r.excerpt}</span>
-                  <span className={styles.relatedReadMore}>Lesen →</span>
-                </Link>
-              ))}
+              {related.map((r) => {
+                const relatedAccent = getCategoryAccent(r.category);
+
+                return (
+                  <Link key={r.slug} href={`/blog/${r.slug}`} className={styles.relatedCard}>
+                    <span
+                      className={styles.relatedCategory}
+                      style={{
+                        color: relatedAccent.color,
+                        backgroundColor: relatedAccent.backgroundColor,
+                        borderColor: relatedAccent.borderColor,
+                      }}
+                    >
+                      {r.category}
+                    </span>
+                    <span className={styles.relatedCardTitle}>{r.title}</span>
+                    <span className={styles.relatedExcerpt}>{r.excerpt}</span>
+                    <span className={styles.relatedReadMore}>Lesen →</span>
+                  </Link>
+                );
+              })}
             </div>
           </aside>
         )}
@@ -159,7 +197,6 @@ export default async function BlogPostPage({ params }: Props) {
             ← Alle Beiträge
           </Link>
         </footer>
-
       </div>
     </article>
   );

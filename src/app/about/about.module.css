@@ -98,31 +98,6 @@
   border-color: var(--color-gold);
 }
 
-/* Werte-Tags */
-.values {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  border-top: 1px solid var(--color-border);
-  padding-top: var(--space-lg);
-}
-
-.value {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
-  padding: 0.35rem 1rem;
-  border-radius: var(--radius-pill);
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.value:is(:hover, :active) {
-  border-color: var(--color-gold-dim);
-  color: var(--color-gold);
-}
-
 /* Responsiv */
 @media (max-width: 1024px) {
   .imageWrap {

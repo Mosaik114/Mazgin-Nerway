@@ -59,13 +59,6 @@ export default function AboutPage() {
             <p>Kein Fazit. Kein Archiv. Nur das Denken, das irgendwo anfangen muss.</p>
           </div>
         </div>
-
-        {/* Werte / Stichworte */}
-        <div className={styles.values}>
-          {['Sprache', 'Identität', 'Reflexion', 'Stille', 'Neugier'].map((v) => (
-            <span key={v} className={styles.value}>{v}</span>
-          ))}
-        </div>
       </div>
     </section>
   );
