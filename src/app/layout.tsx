@@ -25,6 +25,34 @@ const inter = Inter({
   display: 'swap',
 });
 
+const shouldIndexSite =
+  process.env.NODE_ENV === 'production'
+  && (!process.env.VERCEL || process.env.VERCEL_ENV === 'production');
+
+const metadataRobots: Metadata['robots'] = shouldIndexSite
+  ? {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    }
+  : {
+      index: false,
+      follow: false,
+      googleBot: {
+        index: false,
+        follow: false,
+        'max-image-preview': 'none',
+        'max-snippet': 0,
+        'max-video-preview': 0,
+      },
+    };
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
@@ -69,17 +97,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ['/opengraph-image'],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
-  },
+  robots: metadataRobots,
 };
 
 const websiteJsonLd = {

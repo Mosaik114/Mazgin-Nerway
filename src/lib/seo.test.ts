@@ -3,8 +3,8 @@ import { toAbsoluteUrl, toIsoDateOrNull, toJsonLd } from './seo';
 
 describe('seo helpers', () => {
   it('builds absolute URLs for relative paths', () => {
-    expect(toAbsoluteUrl('/blog')).toBe('https://nerway.de/blog');
-    expect(toAbsoluteUrl('contact')).toBe('https://nerway.de/contact');
+    expect(toAbsoluteUrl('/blog')).toBe('https://www.nerway.de/blog');
+    expect(toAbsoluteUrl('contact')).toBe('https://www.nerway.de/contact');
   });
 
   it('returns null for invalid dates and ISO string for valid ones', () => {
