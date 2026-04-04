@@ -57,7 +57,8 @@
   /* --bp-sm: 480px  --bp-md: 768px  --bp-lg: 1024px */
 }
 
-/* Sepia-Hellmodus */
+/* Hellmodus (inkl. Legacy-Sepia) */
+[data-theme="light"],
 [data-theme="sepia"] {
   --color-bg:         #f5f0e8;
   --color-bg-soft:    #ede8dc;

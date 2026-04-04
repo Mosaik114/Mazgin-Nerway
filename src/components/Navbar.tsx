@@ -90,10 +90,10 @@ export default function Navbar() {
           aria-label="Zur Startseite"
         >
           <Image
-            src="/images/Mazgin Nerway Logo.png"
+            src="/images/Mazgin Nerway Logo Gold.png"
             alt="Mazgin Nerway"
-            width={50}
-            height={50}
+            width={512}
+            height={124}
             priority
             className={styles.logoImage}
           />

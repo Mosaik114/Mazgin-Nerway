@@ -18,14 +18,22 @@
   display: inline-flex;
   align-items: center;
   border-radius: var(--radius-xs);
+  padding: 0.2rem 0;
 }
 
 .logoImage {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: clamp(110px, 14vw, 155px);
+  height: auto;
   object-fit: contain;
-  border-radius: var(--radius-xs);
+  transform: translateY(4px);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.22));
+}
+
+@media (max-width: 860px) {
+  .logoImage {
+    width: clamp(90px, 28vw, 125px);
+  }
 }
 
 .nav {

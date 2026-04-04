@@ -86,7 +86,7 @@ export default function DatenschutzPage() {
             <h2>6. Cookies und lokale Speicherung</h2>
             <p>
               Es werden keine Marketing- oder Tracking-Cookies gesetzt. Für die
-              Darstellungsoption (Dark-/Sepia-Modus) kann ein Eintrag im Local Storage
+              Darstellungsoption (Dark-/Hellmodus) kann ein Eintrag im Local Storage
               deines Browsers gespeichert werden.
             </p>
           </div>

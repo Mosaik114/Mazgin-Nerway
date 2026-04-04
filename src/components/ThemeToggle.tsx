@@ -20,16 +20,16 @@ export default function ThemeToggle() {
     setThemeState(next);
   }
 
-  const isSepia = theme === 'sepia';
+  const isLight = theme === 'light';
 
   return (
     <button
       type="button"
       onClick={handleToggle}
       className={styles.toggle}
-      aria-label="Zwischen Dunkel- und Sepia-Modus wechseln"
-      aria-pressed={isSepia}
-      title={isSepia ? 'Dunkelmodus aktivieren' : 'Sepia-Modus aktivieren'}
+      aria-label="Zwischen Dunkel- und Hellmodus wechseln"
+      aria-pressed={isLight}
+      title={isLight ? 'Dunkelmodus aktivieren' : 'Hellmodus aktivieren'}
     >
       <span className={`${styles.icon} ${styles.sun}`} aria-hidden="true">
         <SunIcon />

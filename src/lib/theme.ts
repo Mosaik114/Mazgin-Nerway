@@ -1,14 +1,19 @@
-export type Theme = 'dark' | 'sepia';
+export type Theme = 'dark' | 'light';
 
 const STORAGE_KEY = 'mazgin-theme';
 const DEFAULT_THEME: Theme = 'dark';
 const THEME_CHANGE_EVENT = 'mazgin:theme-change';
+const LEGACY_LIGHT_THEME = 'sepia';
+
+function isLightThemeValue(value: string | null): boolean {
+  return value === 'light' || value === LEGACY_LIGHT_THEME;
+}
 
 function applyTheme(theme: Theme): void {
   if (typeof document === 'undefined') return;
 
-  if (theme === 'sepia') {
-    document.documentElement.setAttribute('data-theme', 'sepia');
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
     return;
   }
 
@@ -19,8 +24,9 @@ function readThemeFromDom(): Theme | null {
   if (typeof document === 'undefined') return null;
   const theme = document.documentElement.getAttribute('data-theme');
 
-  if (theme === 'sepia') return 'sepia';
-  if (theme === 'dark') return 'dark';
+  if (isLightThemeValue(theme)) return 'light';
+  // Dark mode is represented by a missing data-theme attribute.
+  if (theme === null || theme === '' || theme === 'dark') return 'dark';
 
   return null;
 }
@@ -33,7 +39,7 @@ export function getTheme(): Theme {
 
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === 'sepia' ? 'sepia' : DEFAULT_THEME;
+    return isLightThemeValue(stored) ? 'light' : DEFAULT_THEME;
   } catch {
     return DEFAULT_THEME;
   }
@@ -58,7 +64,7 @@ export function setTheme(theme: Theme): void {
 }
 
 export function toggleTheme(currentTheme?: Theme): Theme {
-  const next = (currentTheme ?? getTheme()) === 'dark' ? 'sepia' : 'dark';
+  const next = (currentTheme ?? getTheme()) === 'dark' ? 'light' : 'dark';
   setTheme(next);
   return next;
 }
@@ -90,8 +96,8 @@ export const themeScript = `
 (function() {
   try {
     var t = localStorage.getItem('mazgin-theme');
-    if (t === 'sepia') {
-      document.documentElement.setAttribute('data-theme', 'sepia');
+    if (t === 'light' || t === 'sepia') {
+      document.documentElement.setAttribute('data-theme', 'light');
     } else {
       document.documentElement.removeAttribute('data-theme');
     }

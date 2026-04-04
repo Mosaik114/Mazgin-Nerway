@@ -125,7 +125,7 @@
   aspect-ratio: 16 / 8.6;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background-color: #050505;
+  background-color: var(--color-bg-soft);
 }
 
 .heroAsideCoverImg {

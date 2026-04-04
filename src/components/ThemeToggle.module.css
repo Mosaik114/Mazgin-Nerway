@@ -35,10 +35,12 @@
   display: none;
 }
 
+:global(html[data-theme='light']) .sun,
 :global(html[data-theme='sepia']) .sun {
   display: none;
 }
 
+:global(html[data-theme='light']) .moon,
 :global(html[data-theme='sepia']) .moon {
   display: flex;
 }
