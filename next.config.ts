@@ -80,12 +80,6 @@ const nextConfig: NextConfig = {
         destination: 'https://nerway.de/:path*',
         permanent: true,
       },
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.nerway.de' }],
-        destination: 'https://nerway.de/:path*',
-        permanent: true,
-      },
     ];
   },
   async headers() {
