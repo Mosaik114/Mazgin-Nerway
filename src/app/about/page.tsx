@@ -1,12 +1,61 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
+import { SITE_URL } from '@/lib/config';
+import { SITE_NAME, toJsonLd } from '@/lib/seo';
 import styles from './about.module.css';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Über mich',
+  description:
+    'Ich bin Mazgin Nerway – Bloggerin und Autorin. Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    type: 'profile',
+    locale: 'de_DE',
+    url: '/about',
+    title: `Über mich | ${SITE_NAME}`,
+    description:
+      'Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Über mich | ${SITE_NAME}`,
+    description:
+      'Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
+    images: ['/opengraph-image'],
+  },
+};
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE_NAME,
+  url: SITE_URL,
+  description:
+    'Mazgin Nerway ist Bloggerin und Autorin. Sie schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}/about`,
+  },
 };
 
 export default function AboutPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJsonLd(personJsonLd) }}
+      />
     <section className={styles.page}>
       <div className="container">
         {/* Header */}
@@ -61,5 +110,6 @@ export default function AboutPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

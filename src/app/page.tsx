@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatDate } from '@/lib/config';
 import { getAllPosts } from '@/lib/posts';
@@ -5,6 +6,38 @@ import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import BlogCard from '@/components/BlogCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Mazgin Nerway – Blog über Identität, Sprache und Kultur',
+  description:
+    'Mazgin Nerway schreibt über Identität, Sprache, Kultur und das Leben zwischen zwei Welten. Persönliche Essays und Gedanken auf Deutsch.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'de_DE',
+    url: '/',
+    title: 'Mazgin Nerway – Blog über Identität, Sprache und Kultur',
+    description:
+      'Persönliche Essays über Identität, Sprache und Kultur von Mazgin Nerway.',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Mazgin Nerway',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mazgin Nerway – Blog über Identität, Sprache und Kultur',
+    description:
+      'Persönliche Essays über Identität, Sprache und Kultur von Mazgin Nerway.',
+    images: ['/opengraph-image'],
+  },
+};
 
 export default function Home() {
   const allPosts = getAllPosts();

@@ -95,6 +95,20 @@ const websiteJsonLd = {
   },
 };
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE_NAME,
+  url: SITE_URL,
+  description:
+    'Mazgin Nerway ist Bloggerin und Autorin. Sie schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+  knowsLanguage: ['de', 'de-DE'],
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}/about`,
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" className={`${playfair.variable} ${inter.variable}`}>
@@ -103,6 +117,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: toJsonLd(personJsonLd) }}
         />
       </head>
       <body>
