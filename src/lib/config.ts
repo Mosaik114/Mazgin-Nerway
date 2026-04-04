@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://mazginnerway.de';
+export const SITE_URL = 'https://nerway.de';
 export const LOCALE = 'de-DE';
 
 export function formatDate(date: string): string {

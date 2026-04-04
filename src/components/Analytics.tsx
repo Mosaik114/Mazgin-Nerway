@@ -4,7 +4,7 @@ import Script from 'next/script';
  * Analytics component — supports Umami (privacy-friendly, no cookie banner needed).
  *
  * Set these environment variables:
- *   NEXT_PUBLIC_UMAMI_URL      — e.g. "https://analytics.mazginnerway.de"
+ *   NEXT_PUBLIC_UMAMI_URL      — e.g. "https://analytics.nerway.de"
  *   NEXT_PUBLIC_UMAMI_WEBSITE_ID — your Umami website ID
  *
  * If the env vars are missing, nothing is rendered.

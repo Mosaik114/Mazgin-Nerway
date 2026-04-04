@@ -14,7 +14,7 @@ export const LEGAL_CONTACT = {
   postalCode: readEnvValue('LEGAL_POSTAL_CODE', '[PLZ]'),
   city: readEnvValue('LEGAL_CITY', '[Stadt]'),
   country: readEnvValue('LEGAL_COUNTRY', 'Deutschland'),
-  email: readEnvValue('LEGAL_EMAIL', 'kontakt@mazginnerway.de'),
+  email: readEnvValue('LEGAL_EMAIL', 'kontakt@nerway.de'),
 };
 
 export const HAS_COMPLETE_LEGAL_ADDRESS =

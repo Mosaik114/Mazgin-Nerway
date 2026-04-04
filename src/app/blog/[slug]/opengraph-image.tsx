@@ -67,7 +67,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
             ✦
           </span>
           <span style={{ color: '#8a8070', fontSize: 24 }}>
-            mazginnerway.de
+            nerway.de
           </span>
         </div>
       </div>
