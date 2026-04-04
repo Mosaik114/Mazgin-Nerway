@@ -1,4 +1,5 @@
 import styles from './legal.module.css';
+import { HAS_COMPLETE_LEGAL_ADDRESS, LEGAL_CONTACT } from '@/lib/legal';
 
 export const metadata = {
   title: 'Impressum',
@@ -16,27 +17,37 @@ export default function ImpressumPage() {
         </header>
 
         <div className={styles.body}>
+          {!HAS_COMPLETE_LEGAL_ADDRESS && (
+            <div className={styles.block}>
+              <p>
+                <strong>Hinweis:</strong> Für einen rechtssicheren Live-Betrieb müssen die
+                Adressdaten in den Umgebungsvariablen `LEGAL_STREET`, `LEGAL_POSTAL_CODE`
+                und `LEGAL_CITY` gesetzt werden.
+              </p>
+            </div>
+          )}
+
           <div className={styles.block}>
             <h2>Angaben gemäß § 5 TMG</h2>
             <p>
-              Mazgin Nerway<br />
-              [Straße und Hausnummer]<br />
-              [PLZ] [Stadt]<br />
-              Deutschland
+              {LEGAL_CONTACT.name}<br />
+              {LEGAL_CONTACT.street}<br />
+              {LEGAL_CONTACT.postalCode} {LEGAL_CONTACT.city}<br />
+              {LEGAL_CONTACT.country}
             </p>
           </div>
 
           <div className={styles.block}>
             <h2>Kontakt</h2>
             <p>
-              E-Mail: <a href="mailto:kontakt@mazginnerway.de">kontakt@mazginnerway.de</a>
+              E-Mail: <a href={`mailto:${LEGAL_CONTACT.email}`}>{LEGAL_CONTACT.email}</a>
             </p>
           </div>
 
           <div className={styles.block}>
             <h2>Verantwortlich für den Inhalt</h2>
             <p>
-              Mazgin Nerway<br />
+              {LEGAL_CONTACT.name}<br />
               (Anschrift wie oben)
             </p>
           </div>
