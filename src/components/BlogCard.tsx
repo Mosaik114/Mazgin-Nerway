@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { formatDate } from '@/lib/config';
 import styles from './BlogCard.module.css';
@@ -14,11 +15,23 @@ interface Props {
   readingTime?: number;
 }
 
-export default function BlogCard({ title, slug, date, excerpt, category, coverImage, readingTime }: Props) {
+export default function BlogCard({
+  title,
+  slug,
+  date,
+  excerpt,
+  category,
+  coverImage,
+  readingTime,
+}: Props) {
   const formatted = formatDate(date);
+  const accentColor = category
+    ? (CATEGORY_COLORS[category as Category] ?? 'var(--color-gold-dim)')
+    : 'var(--color-gold-dim)';
+  const cardStyle = { '--card-accent': accentColor } as CSSProperties;
 
   return (
-    <Link href={`/blog/${slug}`} className={styles.card}>
+    <Link href={`/blog/${slug}`} className={styles.card} style={cardStyle}>
       <article>
         {coverImage && (
           <div className={styles.cover}>

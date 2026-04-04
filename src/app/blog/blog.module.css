@@ -181,6 +181,7 @@
 }
 
 .featured {
+  --featured-accent: var(--color-gold-dim);
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   background-color: var(--color-bg-card);
@@ -192,25 +193,9 @@
   position: relative;
 }
 
-.featured::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--color-gold), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
 .featured:hover {
-  border-color: var(--color-gold-dim);
+  border-color: var(--featured-accent);
   transform: translateY(-2px);
-}
-
-.featured:hover::before {
-  opacity: 1;
 }
 
 .featuredCover,

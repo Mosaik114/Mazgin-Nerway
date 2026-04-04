@@ -1,6 +1,7 @@
 ﻿'use client';
 
 import { useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
@@ -50,6 +51,10 @@ export default function BlogList({ posts, categories }: Props) {
 
   const rest = featured ? filtered.filter((post) => post.slug !== featured.slug) : filtered;
   const featuredDate = featured ? formatDate(featured.date) : null;
+  const featuredAccent = featured?.category
+    ? (CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold-dim)')
+    : 'var(--color-gold-dim)';
+  const featuredStyle = { '--featured-accent': featuredAccent } as CSSProperties;
   const hasActiveFilters = active !== 'Alle' || Boolean(normalizedQuery);
 
   return (
@@ -126,7 +131,7 @@ export default function BlogList({ posts, categories }: Props) {
       ) : (
         <>
           {featured && (
-            <Link href={`/blog/${featured.slug}`} className={styles.featured}>
+            <Link href={`/blog/${featured.slug}`} className={styles.featured} style={featuredStyle}>
               {featured.coverImage ? (
                 <div className={styles.featuredCover}>
                   <Image

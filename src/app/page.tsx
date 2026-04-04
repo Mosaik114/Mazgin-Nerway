@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { formatDate } from '@/lib/config';
 import { getAllPosts } from '@/lib/posts';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
@@ -37,31 +37,29 @@ export default function Home() {
           </div>
 
           {latestPost && (
-            <Link
-              href={`/blog/${latestPost.slug}`}
-              className={styles.heroAside}
-              aria-label={`Neuester Beitrag lesen: ${latestPost.title}`}
-            >
-              <p className={styles.heroAsideLabel}>Neuester Beitrag</p>
-              <h2 className={styles.heroAsideTitle}>{latestPost.title}</h2>
-              <p className={styles.heroAsideText}>{latestPost.excerpt}</p>
-              <div className={styles.heroAsideMeta}>
-                <time>{formatDate(latestPost.date)}</time>
-                {latestPost.category && (
-                  <span
-                    className={styles.heroAsideCategory}
-                    style={{
-                      color: CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)',
-                      backgroundColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}1a`,
-                      borderColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}66`,
-                    }}
-                  >
-                    {latestPost.category}
-                  </span>
-                )}
+            <div className={styles.heroAside}>
+              <div className={styles.heroAsideCardWrap}>
+                <span
+                  className={styles.heroAsideBadge}
+                  style={{
+                    color: CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)',
+                    borderColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}99`,
+                    backgroundColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}1f`,
+                  }}
+                >
+                  Neuester Beitrag
+                </span>
+                <BlogCard
+                  title={latestPost.title}
+                  slug={latestPost.slug}
+                  date={latestPost.date}
+                  excerpt={latestPost.excerpt}
+                  category={latestPost.category}
+                  coverImage={latestPost.coverImage}
+                  readingTime={latestPost.readingTime}
+                />
               </div>
-              <span className={styles.heroAsideLink}>Direkt lesen →</span>
-            </Link>
+            </div>
           )}
         </div>
         <div className={styles.heroOrn} aria-hidden>✦</div>
@@ -83,6 +81,8 @@ export default function Home() {
                 date={post.date}
                 excerpt={post.excerpt}
                 category={post.category}
+                coverImage={post.coverImage}
+                readingTime={post.readingTime}
               />
             ))}
           </div>

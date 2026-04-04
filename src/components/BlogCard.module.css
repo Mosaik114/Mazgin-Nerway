@@ -1,4 +1,5 @@
-﻿.card {
+.card {
+  --card-accent: var(--color-gold-dim);
   display: block;
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
@@ -29,24 +30,9 @@
   padding: var(--space-lg);
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 0;
-  background: linear-gradient(to bottom, var(--color-gold), var(--color-gold-dim));
-  transition: height 0.3s ease;
-}
-
 .card:hover {
-  border-color: var(--color-gold-dim);
+  border-color: var(--card-accent);
   transform: translateY(-2px);
-}
-
-.card:hover::before {
-  height: 100%;
 }
 
 .meta {
