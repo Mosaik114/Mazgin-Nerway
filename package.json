@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ci:check": "npm run lint && npm run validate:content && npm run test && npm run build",
     "validate:content": "node scripts/validate-content.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\""
   },
@@ -28,6 +31,7 @@
     "eslint-config-next": "^16.2.2",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.1",
+    "vitest": "^3.2.4",
     "typescript": "^5",
     "typescript-eslint": "^8.58.0"
   }
