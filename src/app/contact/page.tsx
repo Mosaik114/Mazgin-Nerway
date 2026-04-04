@@ -2,7 +2,7 @@ import ContactForm from './ContactForm';
 import styles from './contact.module.css';
 
 export const metadata = {
-  title: 'Kontakt — Mazgin Nerway',
+  title: 'Kontakt',
 };
 
 export default function ContactPage() {

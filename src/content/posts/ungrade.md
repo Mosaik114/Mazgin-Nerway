@@ -2,7 +2,7 @@
 title: "Ungerade"
 date: "2026-04-04"
 slug: "ungerade"
-category: "Gedanken"
+category: "Identität"
 coverImage: "/images/ungrade.png"
 published: true
 excerpt: "Über die Erschöpfung, immer eine Antwort parat haben zu müssen. Und darüber, dass man nicht teilbar ist. Nicht als Kompromiss. Als eigene Zahl."

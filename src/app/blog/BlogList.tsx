@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import BlogCard from '@/components/BlogCard';
 import type { Post } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
@@ -132,7 +133,8 @@ export default function BlogList({ posts, categories }: Props) {
                     src={featured.coverImage}
                     alt={featured.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, 55vw"
+                    quality={92}
                     className={styles.featuredCoverImg}
                   />
                 </div>
@@ -145,7 +147,16 @@ export default function BlogList({ posts, categories }: Props) {
               <div className={styles.featuredBody}>
                 <div className={styles.featuredMeta}>
                   {featured.category && (
-                    <span className={styles.featuredCategory}>{featured.category}</span>
+                    <span
+                      className={styles.featuredCategory}
+                      style={{
+                        color: CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold)',
+                        backgroundColor: `${CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold)'}1a`,
+                        borderColor: `${CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold)'}66`,
+                      }}
+                    >
+                      {featured.category}
+                    </span>
                   )}
                   <time className={styles.featuredDate}>{featuredDate}</time>
                   <span className={styles.featuredReadTime}>{featured.readingTime} Min.</span>

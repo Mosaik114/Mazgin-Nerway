@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description: 'Gedanken, Geschichten und Reflexionen — irgendwo zwischen zwei Welten.',
     images: [
       {
-        url: '/og-image.png',
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'Mazgin Nerway',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Mazgin Nerway',
     description: 'Gedanken, Geschichten und Reflexionen — irgendwo zwischen zwei Welten.',
-    images: ['/og-image.png'],
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,

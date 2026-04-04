@@ -243,10 +243,11 @@
 .featuredCoverImg {
   object-fit: cover;
   transition: transform 0.4s ease;
+  transform: scale(1);
 }
 
 .featured:hover .featuredCoverImg {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .featuredBody {

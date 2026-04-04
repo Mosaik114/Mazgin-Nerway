@@ -22,7 +22,14 @@ export default function BlogCard({ title, slug, date, excerpt, category, coverIm
       <article>
         {coverImage && (
           <div className={styles.cover}>
-            <Image src={coverImage} alt={title} fill sizes="(max-width: 768px) 100vw, 600px" className={styles.coverImg} />
+            <Image
+              src={coverImage}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              quality={92}
+              className={styles.coverImg}
+            />
           </div>
         )}
         <div className={styles.body}>
@@ -33,6 +40,7 @@ export default function BlogCard({ title, slug, date, excerpt, category, coverIm
                 style={{
                   color: CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)',
                   backgroundColor: `${CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)'}1a`,
+                  borderColor: `${CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)'}66`,
                 }}
               >
                 {category}

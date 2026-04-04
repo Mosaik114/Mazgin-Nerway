@@ -40,8 +40,8 @@ export default function Navbar() {
           <Image
             src="/images/Mazgin Nerway Logo.png"
             alt="Mazgin Nerway"
-            width={216}
-            height={56}
+            width={50}
+            height={50}
             priority
             className={styles.logoImage}
           />

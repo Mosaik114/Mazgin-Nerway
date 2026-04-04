@@ -2,7 +2,7 @@
 import styles from './about.module.css';
 
 export const metadata = {
-  title: 'Über mich — Mazgin Nerway',
+  title: 'Über mich',
 };
 
 export default function AboutPage() {

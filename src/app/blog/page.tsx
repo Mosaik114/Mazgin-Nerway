@@ -11,8 +11,17 @@ export const metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
-  const usedCategories = CATEGORIES.filter((cat) => posts.some((p) => p.category === cat));
-  const categories = ['Alle', ...usedCategories];
+  const postCategories = Array.from(
+    new Set(
+      posts
+        .map((post) => post.category)
+        .filter((category): category is string => Boolean(category)),
+    ),
+  );
+  const knownCategorySet = new Set<string>(CATEGORIES);
+  const usedKnownCategories = CATEGORIES.filter((cat) => postCategories.includes(cat));
+  const usedNewCategories = postCategories.filter((category) => !knownCategorySet.has(category));
+  const categories = ['Alle', ...usedKnownCategories, ...usedNewCategories];
   const latestPost = posts[0];
   const totalReadingTime = posts.reduce((sum, post) => sum + post.readingTime, 0);
 
@@ -21,7 +30,7 @@ export default function BlogPage() {
       <div className="container">
         <header className={styles.header}>
           <p className={styles.pageTag}>Blog</p>
-          <h1 className={styles.pageTitle}>Texte und Gedanken</h1>
+          <h1 className={styles.pageTitle}>Die Bibliothek meiner Gedanken</h1>
           <p className={styles.pageSubtitle}>
             Hier findest du alle Beiträge - persönlich, nachdenklich und mit Blick auf das,
             was zwischen den Zeilen liegt.

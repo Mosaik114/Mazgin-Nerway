@@ -1,6 +1,7 @@
 ﻿import Link from 'next/link';
 import { formatDate } from '@/lib/config';
 import { getAllPosts } from '@/lib/posts';
+import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import BlogCard from '@/components/BlogCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
@@ -36,16 +37,31 @@ export default function Home() {
           </div>
 
           {latestPost && (
-            <aside className={styles.heroAside} aria-label="Neuester Beitrag">
+            <Link
+              href={`/blog/${latestPost.slug}`}
+              className={styles.heroAside}
+              aria-label={`Neuester Beitrag lesen: ${latestPost.title}`}
+            >
               <p className={styles.heroAsideLabel}>Neuester Beitrag</p>
               <h2 className={styles.heroAsideTitle}>{latestPost.title}</h2>
               <p className={styles.heroAsideText}>{latestPost.excerpt}</p>
               <div className={styles.heroAsideMeta}>
                 <time>{formatDate(latestPost.date)}</time>
-                {latestPost.category && <span>{latestPost.category}</span>}
+                {latestPost.category && (
+                  <span
+                    className={styles.heroAsideCategory}
+                    style={{
+                      color: CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)',
+                      backgroundColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}1a`,
+                      borderColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}66`,
+                    }}
+                  >
+                    {latestPost.category}
+                  </span>
+                )}
               </div>
-              <Link href={`/blog/${latestPost.slug}`} className={styles.heroAsideLink}>Direkt lesen →</Link>
-            </aside>
+              <span className={styles.heroAsideLink}>Direkt lesen →</span>
+            </Link>
           )}
         </div>
         <div className={styles.heroOrn} aria-hidden>✦</div>

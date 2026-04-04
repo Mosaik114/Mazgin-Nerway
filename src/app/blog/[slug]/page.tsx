@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { remark } from 'remark';
@@ -43,6 +43,11 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
+  const incomingSlug = decodeURIComponent(slug);
+  if (incomingSlug !== post.slug) {
+    redirect(`/blog/${post.slug}`);
+  }
+
   const processed = await remark().use(html).process(post.content);
   const contentHtml = processed.toString();
 
@@ -50,13 +55,13 @@ export default async function BlogPostPage({ params }: Props) {
 
   // Prev/Next
   const allPosts = getAllPosts();
-  const idx = allPosts.findIndex((p) => p.slug === slug);
+  const idx = allPosts.findIndex((p) => p.slug === post.slug);
   const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
   const nextPost = idx > 0 ? allPosts[idx - 1] : null;
 
   // Verwandte Posts (gleiche Kategorie, max. 2)
   const related = post.category
-    ? allPosts.filter((p) => p.slug !== slug && p.category === post.category).slice(0, 2)
+    ? allPosts.filter((p) => p.slug !== post.slug && p.category === post.category).slice(0, 2)
     : [];
 
   return (
@@ -76,6 +81,7 @@ export default async function BlogPostPage({ params }: Props) {
               alt={post.title}
               fill
               sizes="(max-width: 768px) 100vw, 720px"
+              quality={92}
               className={styles.coverImg}
               priority
             />
@@ -130,7 +136,7 @@ export default async function BlogPostPage({ params }: Props) {
         {related.length > 0 && (
           <aside className={styles.related}>
             <div className={styles.ornament}><span>✦</span></div>
-            <h2 className={styles.relatedTitle}>Weitere Beiträge in „{post.category}"</h2>
+            <h2 className={styles.relatedTitle}>Weitere Beiträge in &quot;{post.category}&quot;</h2>
             <div className={styles.relatedGrid}>
               {related.map((r) => (
                 <Link key={r.slug} href={`/blog/${r.slug}`} className={styles.relatedCard}>

@@ -3,7 +3,7 @@ title: "Die Zunge zwischen den Zähnen"
 date: "2026-04-02"
 slug: "zunge-zwischen-den-zaehnen"
 category: "Gedanken"
-coverImage: "/images/zunge-zähne.png"
+coverImage: "/images/zunge-zaehne.png"
 published: true
 excerpt: "Jedes weitere Wort ist ein Messer. Man weiß es. Und redet trotzdem weiter."
 ---
