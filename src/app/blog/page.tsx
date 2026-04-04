@@ -1,26 +1,38 @@
-import { getAllPosts } from '@/lib/posts';
+﻿import { getAllPosts } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
-import SectionTitle from '@/components/SectionTitle';
+import { formatDate } from '@/lib/config';
 import BlogList from './BlogList';
 import styles from './blog.module.css';
 
 export const metadata = {
   title: 'Blog',
-  description: 'Alle Beiträge von Mazgin Nerway — Gedanken, Geschichten und Reflexionen.',
+  description: 'Alle Beiträge von Mazgin Nerway - Gedanken, Geschichten und Reflexionen.',
 };
 
 export default function BlogPage() {
   const posts = getAllPosts();
   const usedCategories = CATEGORIES.filter((cat) => posts.some((p) => p.category === cat));
   const categories = ['Alle', ...usedCategories];
+  const latestPost = posts[0];
+  const totalReadingTime = posts.reduce((sum, post) => sum + post.readingTime, 0);
 
   return (
     <section className={styles.page}>
       <div className="container">
-        <SectionTitle
-          title="Blog"
-          subtitle="Gedanken, Geschichten und Reflexionen."
-        />
+        <header className={styles.header}>
+          <p className={styles.pageTag}>Blog</p>
+          <h1 className={styles.pageTitle}>Texte und Gedanken</h1>
+          <p className={styles.pageSubtitle}>
+            Hier findest du alle Beiträge - persönlich, nachdenklich und mit Blick auf das,
+            was zwischen den Zeilen liegt.
+          </p>
+          <div className={styles.stats}>
+            <span className={styles.stat}>{posts.length} Beiträge</span>
+            <span className={styles.stat}>{totalReadingTime} Min. Gesamtlesezeit</span>
+            {latestPost && <span className={styles.stat}>Neu: {formatDate(latestPost.date)}</span>}
+          </div>
+        </header>
+
         <BlogList posts={posts} categories={categories} />
       </div>
     </section>

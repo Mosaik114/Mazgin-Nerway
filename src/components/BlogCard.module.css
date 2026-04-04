@@ -1,8 +1,8 @@
-.card {
+﻿.card {
   display: block;
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: 2px;
+  border-radius: var(--radius-md);
   transition: border-color 0.25s, transform 0.25s;
   position: relative;
   overflow: hidden;
@@ -102,3 +102,4 @@
 .card:hover .readMore {
   letter-spacing: 0.15em;
 }
+

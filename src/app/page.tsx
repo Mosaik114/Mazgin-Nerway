@@ -1,31 +1,54 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
+import { formatDate } from '@/lib/config';
 import { getAllPosts } from '@/lib/posts';
 import BlogCard from '@/components/BlogCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
 
 export default function Home() {
-  const posts = getAllPosts().slice(0, 3);
+  const allPosts = getAllPosts();
+  const posts = allPosts.slice(0, 3);
+  const latestPost = posts[0];
 
   return (
     <>
       {/* Hero */}
       <section className={styles.hero}>
-        <div className={`container ${styles.heroInner}`}>
-          <div className={styles.heroTag}>✦ Willkommen</div>
-          <h1 className={styles.heroTitle}>
-            Mazgin<br />
-            <span>Nerway</span>
-          </h1>
-          <p className={styles.heroText}>
-            Gedanken, Geschichten und Reflexionen — irgendwo zwischen zwei Welten.
-          </p>
-          <div className={styles.heroActions}>
-            <Link href="/blog" className={styles.btnPrimary}>Blog lesen</Link>
-            <Link href="/about" className={styles.btnSecondary}>Über mich</Link>
+        <div className={`container ${styles.heroInner} ${!latestPost ? styles.heroSingle : ''}`}>
+          <div className={styles.heroContent}>
+            <div className={styles.heroTag}>✦ Willkommen</div>
+            <h1 className={styles.heroTitle}>
+              Zwischen zwei Welten
+              <span>entsteht meine Stimme.</span>
+            </h1>
+            <p className={styles.heroText}>
+              Ich schreibe über Identität, Sprache und die stillen Momente dazwischen.
+              Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.
+            </p>
+            <div className={styles.heroActions}>
+              <Link href="/blog" className={styles.btnPrimary}>Blog lesen</Link>
+              <Link href="/about" className={styles.btnSecondary}>Über mich</Link>
+            </div>
+            <div className={styles.heroMeta}>
+              <span>{allPosts.length} Beiträge</span>
+              {latestPost && <span>Neu: {formatDate(latestPost.date)}</span>}
+            </div>
           </div>
+
+          {latestPost && (
+            <aside className={styles.heroAside} aria-label="Neuester Beitrag">
+              <p className={styles.heroAsideLabel}>Neuester Beitrag</p>
+              <h2 className={styles.heroAsideTitle}>{latestPost.title}</h2>
+              <p className={styles.heroAsideText}>{latestPost.excerpt}</p>
+              <div className={styles.heroAsideMeta}>
+                <time>{formatDate(latestPost.date)}</time>
+                {latestPost.category && <span>{latestPost.category}</span>}
+              </div>
+              <Link href={`/blog/${latestPost.slug}`} className={styles.heroAsideLink}>Direkt lesen →</Link>
+            </aside>
+          )}
         </div>
-        <div className={styles.heroOrn}>✦</div>
+        <div className={styles.heroOrn} aria-hidden>✦</div>
       </section>
 
       {/* Letzte Posts */}
@@ -33,7 +56,7 @@ export default function Home() {
         <div className="container">
           <SectionTitle
             title="Letzte Beiträge"
-            subtitle="Gedanken, die ich mit dir teilen möchte."
+            subtitle="Aktuelle Texte aus meinem Blog."
           />
           <div className={styles.grid}>
             {posts.map((post) => (
@@ -61,10 +84,13 @@ export default function Home() {
           </div>
           <h2 className={styles.aboutTitle}>Wer steckt dahinter?</h2>
           <p className={styles.aboutText}>
-            Ich bin Mazgin — aufgewachsen zwischen Kulturen, fasziniert von Sprache
+            Ich bin Mazgin. Aufgewachsen zwischen Kulturen, fasziniert von Sprache
             und dem, was Worte bewirken können. Dieser Blog ist mein Ort zum Denken.
           </p>
-          <Link href="/about" className={styles.btnSecondary}>Mehr erfahren</Link>
+          <div className={styles.aboutActions}>
+            <Link href="/about" className={styles.btnSecondary}>Mehr über mich</Link>
+            <Link href="/contact" className={styles.btnGhost}>Kontakt</Link>
+          </div>
         </div>
       </section>
     </>

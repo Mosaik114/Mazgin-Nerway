@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import BlogCard from '@/components/BlogCard';
@@ -15,42 +15,118 @@ interface Props {
 
 export default function BlogList({ posts, categories }: Props) {
   const [active, setActive] = useState('Alle');
+  const [query, setQuery] = useState('');
+  const normalizedQuery = query.trim().toLowerCase();
 
-  const filtered = active === 'Alle'
-    ? posts
-    : posts.filter((p) => p.category === active);
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    counts.set('Alle', posts.length);
+    categories
+      .filter((cat) => cat !== 'Alle')
+      .forEach((cat) => {
+        counts.set(cat, posts.filter((post) => post.category === cat).length);
+      });
+    return counts;
+  }, [categories, posts]);
 
-  // Featured: explizit markiert oder neuester Post wenn kein Filter aktiv
-  const featured = active === 'Alle'
-    ? (filtered.find((p) => p.featured) ?? filtered[0])
-    : null;
-  const rest = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered;
+  const filtered = useMemo(() => {
+    const byCategory = active === 'Alle' ? posts : posts.filter((post) => post.category === active);
+    if (!normalizedQuery) return byCategory;
 
+    return byCategory.filter((post) => {
+      const haystack = [post.title, post.excerpt, post.category]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return haystack.includes(normalizedQuery);
+    });
+  }, [active, normalizedQuery, posts]);
+
+  const featured =
+    active === 'Alle' && !normalizedQuery
+      ? (filtered.find((post) => post.featured) ?? filtered[0])
+      : null;
+
+  const rest = featured ? filtered.filter((post) => post.slug !== featured.slug) : filtered;
   const featuredDate = featured ? formatDate(featured.date) : null;
+  const hasActiveFilters = active !== 'Alle' || Boolean(normalizedQuery);
 
   return (
     <>
-      {/* Kategorie-Tags */}
-      <div className={styles.tags}>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActive(cat)}
-            className={`${styles.tag} ${active === cat ? styles.tagActive : ''}`}
-          >
-            {cat}
-          </button>
-        ))}
+      <div className={styles.toolbar}>
+        <div className={styles.tags} role="group" aria-label="Kategorien filtern">
+          {categories.map((cat) => {
+            const isActive = active === cat;
+            const count = categoryCounts.get(cat) ?? 0;
+
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActive(cat)}
+                className={`${styles.tag} ${isActive ? styles.tagActive : ''}`}
+                aria-pressed={isActive}
+              >
+                <span>{cat}</span>
+                <span className={styles.tagCount}>{count}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className={styles.searchWrap}>
+          <label htmlFor="blog-search" className={styles.searchLabel}>Suche</label>
+          <input
+            id="blog-search"
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Nach Titel, Text oder Kategorie suchen"
+            className={styles.searchInput}
+          />
+        </div>
       </div>
 
+      {hasActiveFilters && (
+        <div className={styles.filterInfo}>
+          <p>
+            Aktive Filter:
+            {active !== 'Alle' && ` Kategorie „${active}“`}
+            {active !== 'Alle' && normalizedQuery && ' ·'}
+            {normalizedQuery && ` Suche „${query.trim()}“`}
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setActive('Alle');
+              setQuery('');
+            }}
+            className={styles.clearBtn}
+          >
+            Filter zurücksetzen
+          </button>
+        </div>
+      )}
+
       {filtered.length === 0 ? (
-        <p className={styles.empty}>Keine Beiträge in dieser Kategorie.</p>
+        <div className={styles.empty}>
+          <p>Für diese Auswahl wurden keine Beiträge gefunden.</p>
+          <button
+            type="button"
+            className={styles.clearBtn}
+            onClick={() => {
+              setActive('Alle');
+              setQuery('');
+            }}
+          >
+            Alle Beiträge anzeigen
+          </button>
+        </div>
       ) : (
         <>
-          {/* Featured Post */}
           {featured && (
             <Link href={`/blog/${featured.slug}`} className={styles.featured}>
-              {featured.coverImage && (
+              {featured.coverImage ? (
                 <div className={styles.featuredCover}>
                   <Image
                     src={featured.coverImage}
@@ -60,7 +136,12 @@ export default function BlogList({ posts, categories }: Props) {
                     className={styles.featuredCoverImg}
                   />
                 </div>
+              ) : (
+                <div className={styles.featuredFallback} aria-hidden>
+                  <span>{featured.category ?? 'Beitrag'}</span>
+                </div>
               )}
+
               <div className={styles.featuredBody}>
                 <div className={styles.featuredMeta}>
                   {featured.category && (
@@ -76,7 +157,6 @@ export default function BlogList({ posts, categories }: Props) {
             </Link>
           )}
 
-          {/* Rest als Grid */}
           {rest.length > 0 && (
             <div className={styles.grid}>
               {rest.map((post) => (
@@ -97,8 +177,9 @@ export default function BlogList({ posts, categories }: Props) {
       )}
 
       <p className={styles.count}>
-        {filtered.length} Beitrag{filtered.length !== 1 ? 'e' : ''}
-        {active !== 'Alle' && ` in „${active}"`}
+        {filtered.length} von {posts.length} Beiträgen
+        {active !== 'Alle' && ` in „${active}“`}
+        {normalizedQuery && ` mit „${query.trim()}“`}
       </p>
     </>
   );

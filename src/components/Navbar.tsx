@@ -1,34 +1,55 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { href: '/',        label: 'Home'    },
-  { href: '/blog',    label: 'Blog'    },
-  { href: '/about',   label: 'About'   },
+  { href: '/', label: 'Start' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/about', label: 'Über mich' },
   { href: '/contact', label: 'Kontakt' },
 ];
+
+function isActiveLink(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const menuId = 'mobile-navigation';
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
-        <Link href="/" className={styles.logo} onClick={() => setOpen(false)}>
-          <Image src="/images/Mazgin Nerway Logo.png" alt="Mazgin Nerway" width={0} height={0} sizes="100vw" priority className={styles.logoImage} />
+        <Link
+          href="/"
+          className={styles.logo}
+          onClick={() => setOpen(false)}
+          aria-label="Zur Startseite"
+        >
+          <Image
+            src="/images/Mazgin Nerway Logo.png"
+            alt="Mazgin Nerway"
+            width={216}
+            height={56}
+            priority
+            className={styles.logoImage}
+          />
         </Link>
 
-        {/* Desktop-Nav */}
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="Hauptnavigation">
           {links.map(({ href, label }) => {
-            const isActive = pathname === href;
+            const isActive = isActiveLink(pathname, href);
             return (
               <Link
                 key={href}
@@ -43,11 +64,13 @@ export default function Navbar() {
           <ThemeToggle />
         </nav>
 
-        {/* Hamburger */}
         <button
+          type="button"
           className={`${styles.hamburger} ${open ? styles.hamburgerOpen : ''}`}
           onClick={() => setOpen((v) => !v)}
-          aria-label="Menü öffnen"
+          aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
+          aria-expanded={open}
+          aria-controls={menuId}
         >
           <span />
           <span />
@@ -55,10 +78,9 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile-Nav */}
-      <div className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}>
+      <div id={menuId} className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}>
         {links.map(({ href, label }) => {
-          const isActive = pathname === href;
+          const isActive = isActiveLink(pathname, href);
           return (
             <Link
               key={href}
@@ -72,7 +94,7 @@ export default function Navbar() {
           );
         })}
         <div className={styles.mobileThemeRow}>
-          <span className={styles.mobileThemeLabel}>Theme</span>
+          <span className={styles.mobileThemeLabel}>Design</span>
           <ThemeToggle />
         </div>
       </div>

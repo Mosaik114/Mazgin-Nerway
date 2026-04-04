@@ -1,4 +1,4 @@
-/* ── Ornament (goldene Trennlinie mit Symbol) ──── */
+﻿/* Ornament (goldene Trennlinie mit Symbol) */
 .ornament {
   display: flex;
   align-items: center;
@@ -15,7 +15,7 @@
   background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
 }
 
-/* ── Category Badge ────────────────────────────── */
+/* Category Badge */
 .category {
   font-size: var(--text-xs);
   text-transform: uppercase;
@@ -23,10 +23,10 @@
   color: var(--color-gold);
   background-color: rgba(var(--color-gold-rgb), 0.1);
   padding: 0.2rem 0.6rem;
-  border-radius: 2px;
+  border-radius: var(--radius-pill);
 }
 
-/* ── Meta Row (date, read time etc.) ───────────── */
+/* Meta Row (date, read time etc.) */
 .meta {
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@
   color: var(--color-text-muted);
 }
 
-/* ── Back-Link ─────────────────────────────────── */
+/* Back-Link */
 .backLink {
   display: inline-block;
   font-size: var(--text-sm);
@@ -53,7 +53,7 @@
   color: var(--color-gold);
 }
 
-/* ── Page Header (tag + title + ornament) ──────── */
+/* Page Header (tag + title + ornament) */
 .pageTag {
   font-size: var(--text-xs);
   text-transform: uppercase;

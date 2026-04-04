@@ -1,4 +1,4 @@
-.page {
+﻿.page {
   padding: var(--space-xl) 0 var(--section-gap);
 }
 
@@ -18,7 +18,7 @@
   width: 100%;
   height: 360px;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: var(--radius-md);
   margin-bottom: var(--space-lg);
   border: 1px solid var(--color-border);
 }
@@ -147,7 +147,7 @@
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   padding: 0.1em 0.4em;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   color: var(--color-gold-light);
 }
 
@@ -155,7 +155,7 @@
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
   padding: var(--space-md);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   overflow-x: auto;
   margin-bottom: var(--space-md);
 }
@@ -244,7 +244,7 @@
   gap: 0.4rem;
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
-  border-radius: 2px;
+  border-radius: var(--radius-md);
   padding: var(--space-md);
   transition: border-color 0.2s, transform 0.2s;
 }

@@ -1,15 +1,14 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import styles from './about.module.css';
 
 export const metadata = {
-  title: 'About — Mazgin Nerway',
+  title: 'Über mich — Mazgin Nerway',
 };
 
 export default function AboutPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-
         {/* Header */}
         <header className={styles.header}>
           <div className={styles.tag}>✦ Über mich</div>
@@ -21,7 +20,6 @@ export default function AboutPage() {
         </header>
 
         <div className={styles.body}>
-
           {/* Bild-Platzhalter */}
           <div className={styles.imagePlaceholder}>
             <span className={styles.imageInitials}>MN</span>
@@ -67,7 +65,6 @@ export default function AboutPage() {
             <span key={v} className={styles.value}>{v}</span>
           ))}
         </div>
-
       </div>
     </section>
   );

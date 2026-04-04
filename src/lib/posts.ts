@@ -1,4 +1,4 @@
-import fs from 'fs';
+﻿import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
@@ -32,11 +32,12 @@ function calcReadingTime(content: string): number {
 
 function parsePost(filename: string, content: string, data: Frontmatter): Post {
   const slug = filename.replace('.md', '');
+
   return {
     slug,
     title: data.title ?? slug,
     date: data.date ?? '',
-    excerpt: data.excerpt ?? content.slice(0, 160).replace(/\n/g, ' ') + '…',
+    excerpt: data.excerpt ?? `${content.slice(0, 160).replace(/\n/g, ' ')}...`,
     category: data.category,
     coverImage: data.coverImage,
     featured: data.featured ?? false,
@@ -48,7 +49,8 @@ function parsePost(filename: string, content: string, data: Frontmatter): Post {
 let cachedPosts: Post[] | null = null;
 
 export function getAllPosts(): Post[] {
-  if (cachedPosts) return cachedPosts;
+  const useCache = process.env.NODE_ENV === 'production';
+  if (useCache && cachedPosts) return cachedPosts;
 
   const files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.md'));
 
@@ -61,8 +63,10 @@ export function getAllPosts(): Post[] {
     })
     .filter((p): p is Post => p !== null);
 
-  cachedPosts = posts.sort((a, b) => (a.date < b.date ? 1 : -1));
-  return cachedPosts;
+  const sorted = posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  if (useCache) cachedPosts = sorted;
+
+  return sorted;
 }
 
 export function getPostBySlug(slug: string): Post | null {

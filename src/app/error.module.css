@@ -1,4 +1,4 @@
-.page {
+﻿.page {
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   border: none;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -65,3 +65,4 @@
 .link:hover {
   color: var(--color-gold);
 }
+

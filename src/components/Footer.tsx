@@ -12,9 +12,9 @@ export default function Footer() {
         <div className={styles.content}>
           <p className={styles.name}>Mazgin Nerway</p>
           <nav className={styles.links}>
-            <Link href="/">Home</Link>
+            <Link href="/">Start</Link>
             <Link href="/blog">Blog</Link>
-            <Link href="/about">About</Link>
+            <Link href="/about">Über mich</Link>
             <Link href="/contact">Kontakt</Link>
           </nav>
           <div className={styles.legal}>
