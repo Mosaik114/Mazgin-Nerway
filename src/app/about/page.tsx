@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Image from 'next/image';
 import styles from './about.module.css';
 
 export const metadata = {
@@ -20,42 +20,42 @@ export default function AboutPage() {
         </header>
 
         <div className={styles.body}>
-          {/* Bild-Platzhalter */}
-          <div className={styles.imagePlaceholder}>
-            <span className={styles.imageInitials}>MN</span>
+          <div className={styles.imageWrap}>
+            <Image
+              src="/images/PB-Bild.png"
+              alt="Porträt von Mazgin Nerway"
+              fill
+              sizes="(max-width: 768px) 200px, (max-width: 1024px) 240px, 300px"
+              className={styles.profileImage}
+              priority
+            />
           </div>
 
-          {/* Text-Blöcke */}
           <div className={styles.text}>
             <p className={styles.lead}>
-              Ich bin Mazgin — aufgewachsen zwischen zwei Kulturen, zwei Sprachen
-              und zwei Blickwinkeln auf die Welt.
+              Es gibt Sätze, die man jahrelang mit sich trägt. Nicht weil man sie vergessen hat.
+              Sondern weil man noch nicht bereit war, sie zu schreiben. Und dann kommt ein
+              Abend, ein Geruch und man schreibt sie. Und sitzt da. Und weiß,
+              dass man sie nicht mehr zurücknehmen kann. Das sind dann meistens die richtigen.
             </p>
-
             <p>
-              Dieser Blog ist mein Ort zum Denken. Hier schreibe ich über Dinge,
-              die mich beschäftigen: Identität, Sprache, Alltag, Literatur und
-              das, was dazwischen liegt.
+              Ich bin Mazgin. Ein Name, der in manchen Mündern stolpert und in anderen einfach
+              sitzt. Ein Name zwischen Sprachen, wie ich selbst. Ich schreibe auf Deutsch, träume
+              auf Deutsch und trage trotzdem Dinge in mir, für die das Deutsche noch kein Wort
+              hat. Diesen Zwischenraum kenne ich gut. Ich lebe darin. Und ich schreibe aus ihm
+              heraus.
             </p>
-
             <p>
-              Ich glaube, dass das Schreiben eine der ehrlichsten Formen des
-              Denkens ist. Nicht weil alles gesagt werden muss — sondern weil
-              manches erst durch das Schreiben klar wird.
+              Nicht um zu erklären. Nicht um anzukommen. Sondern weil das Schreiben herausfindet,
+              was ich denke, nicht umgekehrt.
             </p>
-
-            <div className={styles.divider}>
-              <span>✦</span>
-            </div>
-
             <p>
-              Wenn du Fragen hast, Gedanken teilen möchtest oder einfach in
-              Kontakt treten willst — ich freue mich.
+              Hier entstehen Texte über Momente, die klein aussehen und es nicht sind. Über das,
+              was zwischen den Sprachen liegt, zwischen den Identitäten, zwischen dem, was man
+              ist, und dem, was andere daraus machen wollen. Über das Trotzdem.
             </p>
-
-            <Link href="/contact" className={styles.cta}>
-              Schreib mir →
-            </Link>
+            <p>Wenn du auch weißt, wie sich das anfühlt, dann bist du hier richtig.</p>
+            <p>Kein Fazit. Kein Archiv. Nur das Denken, das irgendwo anfangen muss.</p>
           </div>
         </div>
 

@@ -2,7 +2,7 @@
 title: "Was zu Hause riecht"
 date: "2026-04-03"
 slug: "was-zu-hause-riecht"
-category: "Gedanken"
+category: "Kindheit"
 coverImage: "/images/zuhause-riecht.png"
 published: true
 excerpt: "Bevor man die Tür aufmacht, weiß man schon, dass alles gut ist."
