@@ -39,6 +39,6 @@
   transition: color 0.2s;
 }
 
-.link:hover {
+.link:is(:hover, :active) {
   color: var(--color-gold-light);
 }

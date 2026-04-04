@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Navbar.module.css';
 import ThemeToggle from './ThemeToggle';
 
@@ -23,10 +23,65 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const menuId = 'mobile-navigation';
+  const mobileNavRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const mobileNav = mobileNavRef.current;
+    if (!mobileNav) return;
+
+    if (open) {
+      mobileNav.removeAttribute('inert');
+      return;
+    }
+
+    mobileNav.setAttribute('inert', '');
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [open]);
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 861px)');
+
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setOpen(false);
+      }
+    };
+
+    query.addEventListener('change', handleViewportChange);
+    return () => query.removeEventListener('change', handleViewportChange);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const { style } = document.body;
+    const previousOverflow = style.overflow;
+    const previousTouchAction = style.touchAction;
+
+    style.overflow = 'hidden';
+    style.touchAction = 'none';
+
+    return () => {
+      style.overflow = previousOverflow;
+      style.touchAction = previousTouchAction;
+    };
+  }, [open]);
 
   return (
     <header className={styles.header}>
@@ -78,7 +133,12 @@ export default function Navbar() {
         </button>
       </div>
 
-      <div id={menuId} className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}>
+      <div
+        id={menuId}
+        ref={mobileNavRef}
+        className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}
+        aria-hidden={!open}
+      >
         {links.map(({ href, label }) => {
           const isActive = isActiveLink(pathname, href);
           return (

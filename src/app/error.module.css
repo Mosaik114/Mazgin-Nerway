@@ -1,4 +1,4 @@
-﻿.page {
+.page {
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
   transition: background-color 0.2s;
 }
 
-.btn:hover {
+.btn:is(:hover, :active) {
   background-color: var(--color-gold-light);
 }
 
@@ -62,7 +62,7 @@
   transition: color 0.2s;
 }
 
-.link:hover {
+.link:is(:hover, :active) {
   color: var(--color-gold);
 }
 

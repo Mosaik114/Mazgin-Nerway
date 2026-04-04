@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: Props) {
               src={post.coverImage}
               alt={post.title}
               fill
-              sizes="(max-width: 768px) 100vw, 720px"
+              sizes="(max-width: 768px) calc(100vw - 2.5rem), 720px"
               quality={92}
               className={styles.coverImg}
               priority

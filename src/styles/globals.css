@@ -44,6 +44,9 @@
   /* Layout */
   --max-width: 1100px;
   --section-gap: var(--space-2xl);
+  --header-height: 68px;
+  --tap-target-size: 44px;
+  --mobile-padding-inline: 1.25rem;
   --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 14px;
@@ -87,6 +90,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 1rem);
 }
 
 body {
@@ -167,7 +171,8 @@ img {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
 }
 
 /* Scrollbar */
@@ -211,12 +216,46 @@ img {
   }
 
   .container {
-    padding: 0 1.25rem;
+    padding-left: max(var(--mobile-padding-inline), env(safe-area-inset-left));
+    padding-right: max(var(--mobile-padding-inline), env(safe-area-inset-right));
   }
 }
 
 @media (max-width: 480px) {
   :root {
     --section-gap: 2.5rem;
+  }
+}
+
+/* Touch feedback for devices without hover */
+@media (hover: none) and (pointer: coarse) {
+  a,
+  button,
+  input[type="submit"],
+  input[type="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(var(--color-gold-rgb), 0.22);
+  }
+
+  a:active,
+  button:active,
+  input[type="submit"]:active,
+  input[type="button"]:active {
+    filter: brightness(1.08) saturate(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

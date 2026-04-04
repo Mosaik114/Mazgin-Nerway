@@ -56,6 +56,6 @@
   transition: color 0.2s;
 }
 
-.block a:hover {
+.block a:is(:hover, :active) {
   color: var(--color-gold-light);
 }

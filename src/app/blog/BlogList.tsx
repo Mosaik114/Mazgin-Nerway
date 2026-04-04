@@ -138,7 +138,7 @@ export default function BlogList({ posts, categories }: Props) {
                     src={featured.coverImage}
                     alt={featured.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 55vw"
+                    sizes="(max-width: 768px) calc(100vw - 2.5rem), (max-width: 1200px) 52vw, 580px"
                     quality={92}
                     className={styles.featuredCoverImg}
                   />

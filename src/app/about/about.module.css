@@ -1,4 +1,4 @@
-﻿.page {
+.page {
   padding: var(--space-2xl) 0 var(--section-gap);
 }
 
@@ -93,7 +93,7 @@
   transition: color 0.2s, border-color 0.2s;
 }
 
-.cta:hover {
+.cta:is(:hover, :active) {
   color: var(--color-gold-light);
   border-color: var(--color-gold);
 }
@@ -118,7 +118,7 @@
   transition: border-color 0.2s, color 0.2s;
 }
 
-.value:hover {
+.value:is(:hover, :active) {
   border-color: var(--color-gold-dim);
   color: var(--color-gold);
 }

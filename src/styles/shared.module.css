@@ -1,4 +1,4 @@
-﻿/* Ornament (goldene Trennlinie mit Symbol) */
+/* Ornament (goldene Trennlinie mit Symbol) */
 .ornament {
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@
   transition: color 0.2s;
 }
 
-.backLink:hover {
+.backLink:is(:hover, :active) {
   color: var(--color-gold);
 }
 

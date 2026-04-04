@@ -22,7 +22,7 @@
   transform: scale(1);
 }
 
-.card:hover .coverImg {
+.card:is(:hover, :active) .coverImg {
   transform: scale(1.02);
 }
 
@@ -30,7 +30,7 @@
   padding: var(--space-lg);
 }
 
-.card:hover {
+.card:is(:hover, :active) {
   border-color: var(--card-accent);
   transform: translateY(-2px);
 }
@@ -63,7 +63,7 @@
   transition: color 0.2s;
 }
 
-.card:hover .title {
+.card:is(:hover, :active) .title {
   color: var(--color-gold-light);
 }
 
@@ -86,7 +86,28 @@
   transition: letter-spacing 0.2s;
 }
 
-.card:hover .readMore {
+.card:is(:hover, :active) .readMore {
   letter-spacing: 0.15em;
+}
+
+@media (max-width: 768px) {
+  .cover {
+    height: 190px;
+  }
+
+  .body {
+    padding: var(--space-md);
+  }
+
+  .excerpt {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 480px) {
+  .cover {
+    height: 180px;
+  }
 }
 

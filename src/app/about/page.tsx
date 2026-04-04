@@ -25,7 +25,7 @@ export default function AboutPage() {
               src="/images/PB-Bild.png"
               alt="Porträt von Mazgin Nerway"
               fill
-              sizes="(max-width: 768px) 467px, (max-width: 1024px) 574px, 682px"
+              sizes="(max-width: 768px) 200px, (max-width: 1024px) 240px, 300px"
               quality={90}
               className={styles.profileImage}
               priority

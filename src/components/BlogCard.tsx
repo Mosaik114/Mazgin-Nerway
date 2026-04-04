@@ -39,7 +39,7 @@ export default function BlogCard({
               src={coverImage}
               alt={title}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) calc(100vw - 2.5rem), (max-width: 1200px) 50vw, 360px"
               quality={92}
               className={styles.coverImg}
             />
