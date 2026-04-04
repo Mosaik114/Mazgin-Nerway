@@ -1,0 +1,94 @@
+.page {
+  padding: var(--space-2xl) 0 var(--section-gap);
+}
+
+.back {
+  composes: backLink from '../../../styles/shared.module.css';
+}
+
+.header {
+  text-align: center;
+  margin: var(--space-lg) 0 var(--space-xl);
+}
+
+.tag {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-gold);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-size: clamp(1.9rem, 4.8vw, 3rem);
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  max-width: 62ch;
+  margin: 0 auto;
+}
+
+.groups {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.group {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-card);
+  padding: var(--space-md);
+}
+
+.year {
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.item {
+  border-radius: var(--radius-sm);
+}
+
+.postLink {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.postLink:is(:hover, :active) {
+  border-color: var(--color-gold-dim);
+  background-color: rgba(var(--color-gold-rgb), 0.08);
+}
+
+.postTitle {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+}
+
+.postMeta {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 640px) {
+  .postLink {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

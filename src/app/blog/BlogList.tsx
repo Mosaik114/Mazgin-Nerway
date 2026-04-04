@@ -19,6 +19,18 @@ export default function BlogList({ posts, categories }: Props) {
   const [active, setActive] = useState('Alle');
   const [query, setQuery] = useState('');
   const normalizedQuery = query.trim().toLowerCase();
+  const getTagAccent = (category: string) => {
+    const color =
+      category === 'Alle'
+        ? 'var(--color-gold)'
+        : (CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)');
+
+    return {
+      color,
+      backgroundColor: category === 'Alle' ? 'rgba(var(--color-gold-rgb), 0.08)' : `${color}1a`,
+      borderColor: category === 'Alle' ? 'var(--color-gold-dim)' : `${color}66`,
+    };
+  };
 
   const categoryCounts = useMemo(() => {
     const counts = new Map<string, number>();
@@ -56,6 +68,7 @@ export default function BlogList({ posts, categories }: Props) {
     : 'var(--color-gold-dim)';
   const featuredStyle = { '--featured-accent': featuredAccent } as CSSProperties;
   const hasActiveFilters = active !== 'Alle' || Boolean(normalizedQuery);
+  const resultsAnnouncement = `${filtered.length} von ${posts.length} Beiträgen angezeigt.`;
 
   return (
     <>
@@ -64,6 +77,12 @@ export default function BlogList({ posts, categories }: Props) {
           {categories.map((cat) => {
             const isActive = active === cat;
             const count = categoryCounts.get(cat) ?? 0;
+            const tagAccent = getTagAccent(cat);
+            const tagStyle = {
+              '--tag-accent': tagAccent.color,
+              '--tag-accent-bg': tagAccent.backgroundColor,
+              '--tag-accent-border': tagAccent.borderColor,
+            } as CSSProperties;
 
             return (
               <button
@@ -71,6 +90,7 @@ export default function BlogList({ posts, categories }: Props) {
                 type="button"
                 onClick={() => setActive(cat)}
                 className={`${styles.tag} ${isActive ? styles.tagActive : ''}`}
+                style={tagStyle}
                 aria-pressed={isActive}
               >
                 <span>{cat}</span>
@@ -89,9 +109,16 @@ export default function BlogList({ posts, categories }: Props) {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Nach Titel, Text oder Kategorie suchen"
             className={styles.searchInput}
+            autoComplete="off"
+            enterKeyHint="search"
+            aria-describedby="blog-results-status"
           />
         </div>
       </div>
+
+      <p id="blog-results-status" className="sr-only" aria-live="polite">
+        {resultsAnnouncement}
+      </p>
 
       {hasActiveFilters && (
         <div className={styles.filterInfo}>
@@ -136,10 +163,10 @@ export default function BlogList({ posts, categories }: Props) {
                 <div className={styles.featuredCover}>
                   <Image
                     src={featured.coverImage}
-                    alt={featured.title}
+                    alt={featured.coverImageAlt ?? featured.title}
                     fill
                     sizes="(max-width: 768px) calc(100vw - 2.5rem), (max-width: 1200px) 52vw, 580px"
-                    quality={92}
+                    quality={88}
                     className={styles.featuredCoverImg}
                   />
                 </div>
@@ -184,6 +211,7 @@ export default function BlogList({ posts, categories }: Props) {
                   excerpt={post.excerpt}
                   category={post.category}
                   coverImage={post.coverImage}
+                  coverImageAlt={post.coverImageAlt}
                   readingTime={post.readingTime}
                 />
               ))}

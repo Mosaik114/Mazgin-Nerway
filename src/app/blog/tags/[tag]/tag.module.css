@@ -1,0 +1,44 @@
+.page {
+  padding: var(--space-2xl) 0 var(--section-gap);
+}
+
+.back {
+  composes: backLink from '../../../../styles/shared.module.css';
+}
+
+.header {
+  text-align: center;
+  margin: var(--space-lg) 0 var(--space-xl);
+}
+
+.tag {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-gold);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-size: clamp(1.9rem, 4.8vw, 3rem);
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+}
+

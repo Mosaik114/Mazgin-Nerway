@@ -1,42 +1,77 @@
 import type { MetadataRoute } from 'next';
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getAllTagsWithCount } from '@/lib/posts';
 import { SITE_URL } from '@/lib/config';
+
+function parseDateOrFallback(value: string | undefined, fallback: Date): Date {
+  if (!value) return fallback;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? fallback : parsed;
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
+  const tags = getAllTagsWithCount();
+  const now = new Date();
+  const latestPostDate = posts[0] ? parseDateOrFallback(posts[0].date, now) : now;
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: parseDateOrFallback(post.updatedAt ?? post.date, latestPostDate),
     changeFrequency: 'monthly',
-    priority: 0.8,
+    priority: 0.82,
+  }));
+
+  const tagEntries: MetadataRoute.Sitemap = tags.map((tag) => ({
+    url: `${SITE_URL}/blog/tags/${tag.slug}`,
+    lastModified: latestPostDate,
+    changeFrequency: 'monthly',
+    priority: 0.6,
   }));
 
   return [
     {
       url: SITE_URL,
-      lastModified: new Date(),
+      lastModified: latestPostDate,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${SITE_URL}/blog`,
-      lastModified: new Date(),
+      lastModified: latestPostDate,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.92,
     },
     {
       url: `${SITE_URL}/about`,
-      lastModified: new Date(),
+      lastModified: latestPostDate,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${SITE_URL}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
+      url: `${SITE_URL}/blog/tags`,
+      lastModified: latestPostDate,
+      changeFrequency: 'weekly',
+      priority: 0.76,
     },
+    {
+      url: `${SITE_URL}/blog/archiv`,
+      lastModified: latestPostDate,
+      changeFrequency: 'weekly',
+      priority: 0.72,
+    },
+    {
+      url: `${SITE_URL}/contact`,
+      lastModified: latestPostDate,
+      changeFrequency: 'yearly',
+      priority: 0.55,
+    },
+    {
+      url: `${SITE_URL}/feed.xml`,
+      lastModified: latestPostDate,
+      changeFrequency: 'daily',
+      priority: 0.4,
+    },
+    ...tagEntries,
     ...postEntries,
   ];
 }

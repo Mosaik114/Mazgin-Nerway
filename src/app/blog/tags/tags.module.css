@@ -1,0 +1,76 @@
+.page {
+  padding: var(--space-2xl) 0 var(--section-gap);
+}
+
+.back {
+  composes: backLink from '../../../styles/shared.module.css';
+}
+
+.header {
+  text-align: center;
+  margin: var(--space-lg) 0 var(--space-xl);
+}
+
+.tag {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-gold);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-size: clamp(1.9rem, 4.8vw, 3rem);
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  max-width: 62ch;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-sm);
+}
+
+.tagCard {
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.tagCard:is(:hover, :active) {
+  border-color: var(--color-gold-dim);
+  transform: translateY(-2px);
+}
+
+.tagName {
+  font-size: var(--text-base);
+  font-family: var(--font-heading);
+  color: var(--color-text);
+}
+
+.tagCount {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+

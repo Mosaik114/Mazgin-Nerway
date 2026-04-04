@@ -69,6 +69,38 @@
   font-style: italic;
 }
 
+.tagList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.tagItem {
+  display: inline-flex;
+}
+
+.tagLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+
+.tagLink:is(:hover, :active) {
+  border-color: var(--post-accent-border);
+  color: var(--post-accent);
+  background-color: var(--post-accent-bg);
+}
+
 /* Ornament-Trennlinie */
 .ornament {
   composes: ornament from '../../../styles/shared.module.css';
@@ -76,6 +108,11 @@
 }
 
 /* Markdown-Inhalt */
+.contentLayout {
+  display: grid;
+  gap: var(--space-lg);
+}
+
 .content {
   color: var(--color-text-soft);
   font-size: clamp(1.08rem, 1.1vw, 1.2rem);
@@ -87,6 +124,7 @@
   font-size: clamp(1.45rem, 2vw, 1.9rem);
   color: var(--color-text);
   margin: var(--space-lg) 0 1rem;
+  scroll-margin-top: calc(var(--header-height) + 1.2rem);
 }
 
 .content h3 {
@@ -94,6 +132,7 @@
   font-size: clamp(1.2rem, 1.5vw, 1.45rem);
   color: var(--color-text);
   margin: var(--space-lg) 0 var(--space-sm);
+  scroll-margin-top: calc(var(--header-height) + 1.2rem);
 }
 
 .content p {
@@ -163,6 +202,47 @@
   background: none;
   border: none;
   padding: 0;
+}
+
+.toc {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  background-color: var(--color-bg-card);
+  align-self: start;
+}
+
+.tocTitle {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.tocList {
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.tocItem {
+  display: block;
+}
+
+.tocLink {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  transition: color 0.2s;
+}
+
+.tocLink:is(:hover, :active) {
+  color: var(--color-gold);
+}
+
+.tocLinkSub {
+  display: inline-block;
+  padding-left: 0.9rem;
+  color: var(--color-text-soft);
 }
 
 /* Prev/Next Navigation */
@@ -321,6 +401,18 @@
   .content {
     font-size: 1.05rem;
     line-height: 1.85;
+  }
+}
+
+@media (min-width: 1080px) {
+  .contentLayout {
+    grid-template-columns: minmax(0, 1fr) 250px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: calc(var(--header-height) + 1rem);
   }
 }
 

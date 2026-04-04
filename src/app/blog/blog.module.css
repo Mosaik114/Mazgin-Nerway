@@ -50,6 +50,34 @@
   letter-spacing: 0.04em;
 }
 
+.exploreLinks {
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.exploreLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-size);
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+
+.exploreLink:is(:hover, :active) {
+  border-color: var(--color-gold-dim);
+  color: var(--color-gold);
+  background-color: rgba(var(--color-gold-rgb), 0.08);
+}
+
 .toolbar {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
@@ -65,6 +93,9 @@
 }
 
 .tag {
+  --tag-accent: var(--color-gold);
+  --tag-accent-bg: rgba(var(--color-gold-rgb), 0.08);
+  --tag-accent-border: var(--color-gold-dim);
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -97,14 +128,22 @@
 }
 
 .tag:is(:hover, :active) {
-  border-color: var(--color-gold-dim);
-  color: var(--color-gold);
+  border-color: var(--tag-accent-border);
+  color: var(--tag-accent);
+  background-color: var(--tag-accent-bg);
 }
 
 .tagActive {
-  border-color: var(--color-gold-dim);
-  color: var(--color-gold);
-  background-color: rgba(var(--color-gold-rgb), 0.08);
+  border-color: var(--tag-accent-border);
+  color: var(--tag-accent);
+  background-color: var(--tag-accent-bg);
+}
+
+.tag:is(:hover, :active) .tagCount,
+.tagActive .tagCount {
+  border-color: var(--tag-accent-border);
+  color: var(--tag-accent);
+  background-color: var(--tag-accent-bg);
 }
 
 .searchWrap {

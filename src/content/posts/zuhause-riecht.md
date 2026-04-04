@@ -1,11 +1,21 @@
-﻿---
-title: "Was zu Hause riecht"
-date: "2026-04-03"
-slug: "was-zu-hause-riecht"
-category: "Kindheit"
-coverImage: "/images/zuhause-riecht.png"
+---
+title: Was zu Hause riecht
+date: '2026-04-03'
+updatedAt: '2026-04-03'
+slug: was-zu-hause-riecht
+category: Kindheit
+tags:
+  - Kindheit
+  - Familie
+  - Erinnerung
+coverImage: /images/zuhause-riecht.png
+coverImageAlt: Warme Kueche als Erinnerung an Zuhause und Kindheit
+seoTitle: 'Was zu Hause riecht: Kindheit in einer Kueche'
+seoDescription: >-
+  Ein Text ueber Geruch, Heimweg und das Gefuehl von Geborgenheit, das in der
+  Kindheit in kleinen Ritualen wohnte.
 published: true
-excerpt: "Bevor man die Tür aufmacht, weiß man schon, dass alles gut ist."
+excerpt: 'Bevor man die Tür aufmacht, weiß man schon, dass alles gut ist.'
 ---
 Es gibt einen Moment auf der Treppe, irgendwo zwischen dem zweiten und dritten Stock, in dem man es schon riecht. Noch bevor man die Tür sieht. Noch bevor man klingelt. Die Beine, die eben noch schwer waren, werden leichter. Man nimmt die letzten Stufen schneller. Man weiß nicht warum. Man weiß es genau.
 

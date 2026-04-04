@@ -1,11 +1,23 @@
 ---
-title: "Ungerade"
-date: "2026-04-04"
-slug: "ungerade"
-category: "Identität"
-coverImage: "/images/ungrade.png"
+title: Ungerade
+date: '2026-04-04'
+updatedAt: '2026-04-04'
+slug: ungerade
+category: Identität
+tags:
+  - Identitaet
+  - Zugehoerigkeit
+  - Sprache
+coverImage: /images/ungrade.png
+coverImageAlt: Abstrakte Darstellung einer ungeraden Zahl als Identitaetssymbol
+seoTitle: 'Ungerade: Identitaet zwischen Sprachen'
+seoDescription: >-
+  Ueber die Erschoepfung, staendig erklaerbar sein zu muessen, und den Wunsch,
+  als ganze eigene Person gesehen zu werden.
 published: true
-excerpt: "Über die Erschöpfung, immer eine Antwort parat haben zu müssen. Und darüber, dass man nicht teilbar ist. Nicht als Kompromiss. Als eigene Zahl."
+excerpt: >-
+  Über die Erschöpfung, immer eine Antwort parat haben zu müssen. Und darüber,
+  dass man nicht teilbar ist. Nicht als Kompromiss. Als eigene Zahl.
 ---
 Man kennt das Lied, das die Großmutter sang, ohne den Text zu kennen. Man kennt den Geruch von Tee, der anders gezogen wird als hier. Und man kennt trotzdem den Moment, wenn der erste Schnee fällt und etwas in einem denkt: *endlich.*
 

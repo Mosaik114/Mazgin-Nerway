@@ -10,7 +10,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
-  const title = post?.title ?? 'Beitrag nicht gefunden';
+  const title = post?.seoTitle ?? post?.title ?? 'Beitrag nicht gefunden';
   const category = post?.category ?? '';
   const date = post ? formatDate(post.date) : '';
 

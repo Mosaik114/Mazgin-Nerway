@@ -1,11 +1,21 @@
 ---
-title: "Die Zunge zwischen den Zähnen"
-date: "2026-04-02"
-slug: "zunge-zwischen-den-zaehnen"
-category: "Streit"
-coverImage: "/images/zunge-zaehne.png"
+title: Die Zunge zwischen den Zähnen
+date: '2026-04-02'
+updatedAt: '2026-04-02'
+slug: zunge-zwischen-den-zaehnen
+category: Streit
+tags:
+  - Streit
+  - Sprache
+  - Beziehungen
+coverImage: /images/zunge-zaehne.png
+coverImageAlt: Spannung im Streit zwischen Zurueckhaltung und Wut
+seoTitle: 'Die Zunge zwischen den Zaehnen: Ueber Streitkultur'
+seoDescription: >-
+  Warum Schweigen im Streit manchmal staerker ist als das letzte Wort und was
+  Worte in der Stille danach hinterlassen.
 published: true
-excerpt: "Jedes weitere Wort ist ein Messer. Man weiß es. Und redet trotzdem weiter."
+excerpt: Jedes weitere Wort ist ein Messer. Man weiß es. Und redet trotzdem weiter.
 ---
 Es gibt Momente im Streit, in denen man das eigene Herz hört. Nicht vor Aufregung, vor Anspannung. Jedes weitere Wort ist ein Messer. Man weiß es. Und redet trotzdem weiter.
 

@@ -12,6 +12,7 @@ interface Props {
   excerpt: string;
   category?: string;
   coverImage?: string;
+  coverImageAlt?: string;
   readingTime?: number;
 }
 
@@ -22,6 +23,7 @@ export default function BlogCard({
   excerpt,
   category,
   coverImage,
+  coverImageAlt,
   readingTime,
 }: Props) {
   const formatted = formatDate(date);
@@ -37,10 +39,10 @@ export default function BlogCard({
           <div className={styles.cover}>
             <Image
               src={coverImage}
-              alt={title}
+              alt={coverImageAlt ?? title}
               fill
               sizes="(max-width: 768px) calc(100vw - 2.5rem), (max-width: 1200px) 50vw, 360px"
-              quality={92}
+              quality={86}
               className={styles.coverImg}
             />
           </div>

@@ -56,6 +56,7 @@ export default function Home() {
                   excerpt={latestPost.excerpt}
                   category={latestPost.category}
                   coverImage={latestPost.coverImage}
+                  coverImageAlt={latestPost.coverImageAlt}
                   readingTime={latestPost.readingTime}
                 />
               </div>
@@ -82,6 +83,7 @@ export default function Home() {
                 excerpt={post.excerpt}
                 category={post.category}
                 coverImage={post.coverImage}
+                coverImageAlt={post.coverImageAlt}
                 readingTime={post.readingTime}
               />
             ))}
