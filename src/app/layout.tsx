@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Analytics from '@/components/Analytics';
+import UmamiAnalytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/config';
 import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, toJsonLd } from '@/lib/seo';
 import { themeScript } from '@/lib/theme';
@@ -105,10 +106,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <a href="#main" className="skip-link">Zum Inhalt springen</a>
-        <Analytics />
+        <UmamiAnalytics />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
+        <VercelAnalytics />
       </body>
     </html>
   );
