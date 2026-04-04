@@ -8,9 +8,11 @@ import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Mazgin Nerway – Blog über Identität, Sprache und Kultur',
+  title: {
+    absolute: 'Nerway Blog',
+  },
   description:
-    'Mazgin Nerway schreibt über Identität, Sprache, Kultur und das Leben zwischen zwei Welten. Persönliche Essays und Gedanken auf Deutsch.',
+    'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
   alternates: {
     canonical: '/',
   },
@@ -18,24 +20,17 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'de_DE',
     url: '/',
-    title: 'Mazgin Nerway – Blog über Identität, Sprache und Kultur',
+    title: 'Nerway Blog',
     description:
-      'Persönliche Essays über Identität, Sprache und Kultur von Mazgin Nerway.',
-    images: [
-      {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
-        alt: 'Mazgin Nerway',
-      },
-    ],
+      'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
+    images: ['/images/ungrade.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mazgin Nerway – Blog über Identität, Sprache und Kultur',
+    title: 'Nerway Blog',
     description:
-      'Persönliche Essays über Identität, Sprache und Kultur von Mazgin Nerway.',
-    images: ['/opengraph-image'],
+      'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
+    images: ['/images/ungrade.png'],
   },
 };
 
