@@ -19,6 +19,7 @@ export interface Post {
 interface Frontmatter {
   title?: string;
   date?: string;
+  slug?: string;
   excerpt?: string;
   category?: string;
   coverImage?: string;
@@ -30,8 +31,21 @@ function calcReadingTime(content: string): number {
   return Math.max(1, Math.ceil(content.split(/\s+/).length / 200));
 }
 
+function normalizeSlug(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 function parsePost(filename: string, content: string, data: Frontmatter): Post {
-  const slug = filename.replace('.md', '');
+  const filenameSlug = filename.replace('.md', '');
+  const slug = normalizeSlug(data.slug ?? filenameSlug);
 
   return {
     slug,
@@ -70,5 +84,6 @@ export function getAllPosts(): Post[] {
 }
 
 export function getPostBySlug(slug: string): Post | null {
-  return getAllPosts().find((p) => p.slug === slug) ?? null;
+  const incoming = normalizeSlug(decodeURIComponent(slug));
+  return getAllPosts().find((p) => normalizeSlug(p.slug) === incoming) ?? null;
 }

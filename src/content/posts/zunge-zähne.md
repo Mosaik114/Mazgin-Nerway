@@ -1,7 +1,7 @@
 ---
 title: "Die Zunge zwischen den Zähnen"
 date: "2026-04-03"
-slug: "dritter-post"
+slug: "zunge-zwischen-den-zaehnen"
 category: "Gedanken"
 published: true
 excerpt: "Jedes weitere Wort ist ein Messer. Man weiß es. Und redet trotzdem weiter."
