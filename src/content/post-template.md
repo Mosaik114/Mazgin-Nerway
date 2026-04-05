@@ -15,9 +15,4 @@ seoDescription: "SEO-Beschreibung mit ca. 50 bis 170 Zeichen."
 published: true
 excerpt: "Kurzer Teaser (ca. 40 bis 220 Zeichen)."
 ---
-Einleitung...
-
-Hauptteil...
-
-Abschluss...
 
