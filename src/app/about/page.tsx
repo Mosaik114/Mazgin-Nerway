@@ -71,7 +71,7 @@ export default function AboutPage() {
         <div className={styles.body}>
           <div className={styles.imageWrap}>
             <Image
-              src="/images/PB-Bild.png"
+              src="/images/mazgin-rechts.png"
               alt="Porträt von Mazgin Nerway"
               fill
               sizes="(max-width: 768px) 470px, (max-width: 1024px) 575px, 685px"

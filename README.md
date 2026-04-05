@@ -60,3 +60,15 @@ Dieser Job enthält:
 - Health Endpoint: `GET /api/health`
 - Kontakt-API setzt `x-request-id` in Responses für bessere Fehleranalyse.
 - Logging-Level über `.env`: `LOG_LEVEL=debug|info|warn|error`
+
+## Impressum (Live)
+
+Fuer einen rechtssicheren Live-Betrieb muessen diese Variablen gesetzt sein:
+
+```bash
+LEGAL_STREET=...
+LEGAL_POSTAL_CODE=...
+LEGAL_CITY=...
+```
+
+Wenn eine davon fehlt, zeigt die Impressum-Seite einen Hinweis an.
