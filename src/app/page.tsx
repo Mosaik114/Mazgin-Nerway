@@ -23,14 +23,22 @@ export const metadata: Metadata = {
     title: 'Nerway Blog',
     description:
       'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
-    images: ['/images/ungrade.png'],
+    images: [
+      {
+        url: '/images/og-home.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Nerway Blog',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Nerway Blog',
     description:
       'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
-    images: ['/images/ungrade.png'],
+    images: ['/images/og-home.jpg'],
   },
 };
 
