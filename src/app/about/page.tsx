@@ -7,7 +7,7 @@ import styles from './about.module.css';
 export const metadata: Metadata = {
   title: 'Über mich',
   description:
-    'Ich bin Mazgin Nerway – Bloggerin und Autorin. Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
+    'Ich bin Mazgin Nerway – Blogger und Autor. Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
   alternates: {
     canonical: '/about',
   },
@@ -42,7 +42,7 @@ const personJsonLd = {
   name: SITE_NAME,
   url: SITE_URL,
   description:
-    'Mazgin Nerway ist Bloggerin und Autorin. Sie schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+    'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': `${SITE_URL}/about`,

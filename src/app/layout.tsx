@@ -128,7 +128,7 @@ const personJsonLd = {
   name: SITE_NAME,
   url: SITE_URL,
   description:
-    'Mazgin Nerway ist Bloggerin und Autorin. Sie schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+    'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   knowsLanguage: ['de', 'de-DE'],
   mainEntityOfPage: {
     '@type': 'WebPage',
