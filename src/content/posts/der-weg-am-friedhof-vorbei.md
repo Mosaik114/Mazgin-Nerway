@@ -3,11 +3,11 @@ title: "Der Weg am Friedhof vorbei"
 date: "2026-04-04"
 updatedAt: "2026-04-06"
 slug: "der-weg-am-friedhof-vorbei"
-category: "Gedanken"
+category: "Kindheit"
 tags:
-  - Herkunft
+  - Kindheit
   - Familie
-  - Ankommen
+  - Erinnerung
 coverImage: "/images/der-weg-am-friedhof-vorbei.png"
 coverImageAlt: "Ein Feldweg im Winter, Nebel über flachem Land"
 seoTitle: "Der Weg am Friedhof vorbei"
