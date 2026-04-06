@@ -1,53 +1,65 @@
 ---
-title: Nicht das sagen.
-date: '2026-04-02'
-updatedAt: '2026-04-06'
-slug: nicht-das-sagen
-category: Streit
+title: "Der Weg am Friedhof vorbei"
+date: "2026-04-06"
+updatedAt: "2026-04-06"
+slug: "der-weg-am-friedhof-vorbei"
+category: "Kindheit"
 tags:
-  - Streit
-  - Sprache
-  - Beziehungen
-coverImage: /images/nicht-das-sagen.png
-coverImageAlt: Spannung im Streit zwischen Zurueckhaltung und Wut
-seoTitle: 'Nicht das sagen: Ueber Streitkultur'
-seoDescription: >-
-  Warum Schweigen im Streit manchmal staerker ist als das letzte Wort und was
-  Worte in der Stille danach hinterlassen.
+  - Kindheit
+  - Familie
+  - Erinnerung
+coverImage: "/images/der-weg-am-friedhof-vorbei.png"
+coverImageAlt: "Ein Feldweg im Winter, Nebel über flachem Land"
+seoTitle: "Der Weg am Friedhof vorbei"
+seoDescription: "Über einen Weg, der in Ludwigslust beginnt und irgendwo endet, wo man nicht erwartet hätte anzukommen."
 published: true
-excerpt: Man weiß genau, welcher Satz alles beenden würde. Deshalb sagt man ihn nicht. Oder doch.
+excerpt: "Man kennt den Weg, bevor man weiß, was ein Weg ist."
 ---
 
-Man sitzt in einer Küche. Halb elf. Zwei Tassen Tee, die keiner trinkt. Der Streit hat irgendwo angefangen, bei einer Kleinigkeit, einer vergessenen Nachricht, einer Tür, die zu laut ins Schloss gefallen ist, und jetzt ist man woanders. An einem Ort, der mit der Tür nichts mehr zu tun hat.
+Man kennt den Weg, bevor man weiß, was ein Weg ist. Er beginnt am Asylheim, geht am Friedhof vorbei, durch ein Feld, das im Winter aussieht, als hätte jemand vergessen, es fertig zu machen, und endet an einem Kindergarten, in dem andere Kinder auch ankommen. Manche aus dem Dorf. Manche von weiter weg. Man weiß das nicht. Man weiß nur: Mutter geht vorne, man hält ihre Hand, und die Hand ist kalt, aber sie ist da.
 
-So geht das. Man fängt bei der Tür an und landet bei allem.
+Ludwigslust. Ein Ort, der so heißt, als hätte ihn jemand benannt, der nie dort war.
 
-*Du hörst mir nie zu.* Vier Worte. Und man weiß, dass sie nicht stimmen. Aber man weiß auch, dass sie sich wahr anfühlen, und das ist schlimmer. Gegen etwas, das sich wahr anfühlt, kommt kein Argument an.
+Man kommt aus einem Land, das weit weg ist. So weit, dass man als Kind nicht versteht, wie weit. Man versteht nur, dass man gegangen ist. Dass der Weg hierher lang war und nicht freiwillig. Dass Ludwigslust nicht der Ort ist, an dem man sich vorstellt zu landen. Und dass man trotzdem gelandet ist. Auf einem Feld, im Winter, mit einer Mutter, die jeden Morgen aufsteht, obwohl ihr Körper sagt, sie soll liegen bleiben.
 
-Dann passiert es. Man hört sich reden und merkt, dass die Stimme kippt. Nicht lauter wird. Leiser. Genauer. Das ist der gefährliche Moment. Nicht die Wut, die nach oben geht. Die Wut, die nach unten geht. Die Sätze, die man nicht schreit, sondern legt. Wie Steine. Einer auf den anderen.
+Sie war krank. Das versteht man erst später. Damals sieht man nur, dass sie manchmal sehr still ist. Dass sie sich bewegt, als kostet jeder Schritt etwas, das sie eigentlich nicht hat. Dass sie abends früh ins Bett geht und morgens trotzdem als Erste in der Küche steht. Drei Kinder, ein Weg, kein Auto. Bei Wind. Bei Schnee. Bei dem Wetter, das über Felder kommt, als hätte es es auf einen abgesehen.
 
-Man kennt den anderen gut genug, um zu wissen, wo es weich ist. Man weiß, welches Wort sitzt. Man weiß es so genau, dass man die Luft davor schon spürt, das kurze Zögern, die halbe Sekunde, in der man sich entscheidet.
+Man geht. Weil sie geht.
 
-Manchmal entscheidet man sich richtig. Manchmal nicht.
+Im Asylheim sagt eine Frau zu ihr: *Schon dich, du bist doch krank. Wenn die Kinder zwei, drei Tage nicht in den Kindergarten gehen, ist das doch kein Problem. Die gehen ja sowieso nicht zur Universität.*
 
-An einem Abend vor zwei Jahren sagt man einen Satz, an den man sich erinnert wie an einen Geschmack. Nicht an die Worte selbst. An das, was danach im Raum ist. Dieses Geräusch, das kein Geräusch ist. Die Stille, die eintritt, wenn jemand aufhört, mit einem zu streiten, und anfängt, einen nur noch anzusehen.
+Man hört das nicht selbst. Man erfährt es Jahre später, beiläufig, am Telefon, als sie es erzählt, als wäre es nichts. Aber man stellt es sich vor. Diesen Flur. Diese Stimme. Diesen Satz. Eine Zukunft, die jemand anderes schon entschieden hat. Für Kinder, die danebenstehen und nichts davon wissen.
 
-Man hat gewonnen. So fühlt es sich nicht an.
+Und sie antwortet: *Aus zwei, drei Tagen werden Wochen. Aus Wochen werden Monate. Wer jetzt nicht geht, geht später auch nicht. Wenn sie jetzt nicht gehen, werden sie die Universität nie sehen.*
 
-Um drei Uhr morgens liegt man wach und spielt den Satz noch einmal ab. Und noch einmal. Und der Satz wird nicht besser davon. Er wird nicht wahrer. Er wird nur lauter. In der eigenen Stimme, im eigenen Ton, in dem Gesicht, das man gesehen hat, als die Worte angekommen sind.
+Dieser Satz, gesagt in einem Flur, zwischen Müdigkeit und Desinteresse, entscheidet etwas. Ohne dass man dabei ist. Ohne dass man es weiß. Man lebt zwanzig Jahre mit einer Entscheidung, die jemand für einen getroffen hat, bevor man laufen konnte, und erfährt es erst, als man schon fast angekommen ist.
 
-Man denkt: Ich hätte schweigen können. Man denkt: Schweigen hätte sich angefühlt wie Verlieren. Man denkt: Und jetzt?
+Der Vater ist zu dieser Zeit ein Geräusch an der Tür spätabends. Ein leerer Stuhl morgens. Zwei Jobs, kein Pass, kein Ende in Sicht. Er kommt, wenn man schon schläft. Er geht, wenn man noch schläft. Manchmal liegen Schuhe im Flur, die morgens nicht mehr da sind, und das ist der Beweis, dass er existiert.
 
-Es gibt Dinge, die man sagt, und Dinge, die man gesagt hat. Das sind verschiedene Kategorien. Das eine lebt im Moment, das andere zieht ein und bleibt. Man kann sich entschuldigen. Man kann es erklären, einordnen, relativieren. Aber man kann sich nicht unhören lassen.
+Man versteht das erst, als man selbst einmal müde von der Arbeit kommt und merkt, dass man zu erschöpft ist, um zu reden. Dann denkt man an ihn. An seine Schuhe im Flur. Und der Abstand, der damals so groß war, wird kleiner, nicht weil man ihn versteht, sondern weil man anfängt zu ahnen, was es kostet.
 
-Dade hat einmal etwas gesagt, beiläufig, nicht als Lektion, eher als Beobachtung: *Dein Vater und ich, wir haben viel gestritten. Aber er hat nie etwas gesagt, das mich kleiner gemacht hat.*
+Zwei Eltern. Einer geht jeden Morgen los. Einer kommt jeden Abend spät nach Hause. Dazwischen: drei Kinder, ein Friedhof, ein Feld.
 
-Man versteht den Satz erst Jahre später. Nicht als Lob. Als Technik. Als etwas, das man üben kann. Nicht: nichts sagen. Sondern: nicht das sagen.
+Sie konnte kein Deutsch. Aber sie war Mathematiklehrerin. Damals, bevor alles anders wurde, bevor der Krieg entschieden hat, was aus einem wird. In einem anderen Land, in einem anderen Leben, hat sie vor einer Klasse gestanden und Gleichungen an eine Tafel geschrieben. Hier sitzt sie an einem Küchentisch in Ludwigslust und hilft einem Kind bei Hausaufgaben, die sie nicht lesen kann. Die Sprache hat sie nicht. Die Gleichung hat sie. Man sitzt daneben und sieht, wie sie Zahlen hinschreibt, sicher, ohne zu zögern, und für einen Moment ist sie nicht die Frau, die krank ist und kein Deutsch spricht. Für einen Moment ist sie die, die sie vorher war.
 
-Man übt das. Man ist nicht gut darin. Aber man übt es.
+Das reicht. Nicht als Antwort. Als Anfang.
 
-Manchmal gelingt es. Man schluckt den Satz, der alles beenden würde, und es brennt kurz im Hals. Und am nächsten Morgen sitzt man wieder in der Küche, mit Tee, der diesmal getrunken wird, und der Streit ist nicht vorbei, aber er ist noch reparierbar. Das ist das Wort. *Reparierbar.* Man hat nichts gesagt, was man nicht zurücknehmen kann. Man hat die Tür offen gelassen.
+Irgendwann auf diesem Weg, irgendwo zwischen sechs und zehn, fängt man an, schneller zu werden. Die Beine werden länger. Man geht voraus. Man wartet dann auf sie. Man dreht sich um und sieht sie kommen, durch das Feld, langsamer als man selbst, den Kopf leicht gesenkt gegen den Wind, und es ist das erste Mal, dass man etwas sieht, das man nicht benennen kann.
 
-Das fühlt sich nicht an wie Stärke. Es fühlt sich an wie der Moment, bevor man weiß, ob es das Richtige war.
+Es ist nicht Mitleid. Es hat keinen Namen. Es hat ihn bis heute nicht.
 
-Aber der Tee wird warm. Und der andere sitzt noch da.
+Mit vierzehn zieht man nach Kiel. Der Weg am Friedhof vorbei bleibt in Ludwigslust. Aber man trägt ihn mit, ohne es zu wissen. In den Beinen. In der Gewohnheit, früh aufzustehen. In dem Reflex, bei Regen nicht zu klagen. In der Überzeugung, dass Dinge, die schwer sind, trotzdem getan werden müssen, weil jemand das einmal vorgemacht hat, jeden Morgen, durch ein Feld, bei Schnee, krank, ohne ein Wort darüber zu verlieren.
+
+Und jetzt.
+
+Kiel. Ein Studium, das sich dem Ende nähert. Ein, zwei Semester noch. Man sitzt manchmal abends in der Bibliothek und der Satz kommt zurück. Der aus dem Flur. Der, den sie gesagt hat, unter Menschen, die es nicht glaubten. Sie hat ihn gesagt, krank, erschöpft, geflohen aus einem Land, das es in dieser Form nicht mehr gibt. Ohne zu wissen, ob er stimmt.
+
+Sie hat vielleicht nicht gewusst, ob es genug war. Ob sie genug war. Ob der Körper, der so oft Nein gesagt hat, ihr erlaubt, das zu sehen. Aber sie hat getan, was sie konnte. Und den Rest hat sie in Allahs Hände gelegt. Nicht resigniert. Sondern so, wie man etwas abgibt, weil man weiß, dass es dort besser aufgehoben ist als in den eigenen.
+
+Und jetzt geht der Wunsch in Erfüllung. Nicht meiner. Ihrer. Man wird in wenigen Monaten etwas abschließen, das sie sich vorgestellt hat, lange bevor man selbst wusste, was eine Universität ist. Man wird auf einer Bühne stehen und ein Stück Papier in der Hand halten, das eigentlich ihr gehört. Ihr und den Schuhen im Flur.
+
+Der Weg am Friedhof vorbei hat irgendwo hingeführt.
+
+Sie hat das gewusst. Man selbst hat es nur gegangen.
+
+
