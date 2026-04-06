@@ -24,7 +24,7 @@ So geht das. Man fängt bei der Tür an und landet bei allem.
 
 *Du hörst mir nie zu.* Vier Worte. Und man weiß, dass sie nicht stimmen. Aber man weiß auch, dass sie sich wahr anfühlen, und das ist schlimmer. Gegen etwas, das sich wahr anfühlt, kommt kein Argument an.
 
-Dann passiert es. Man hört sich reden und merkt, dass die Stimme kippt. Nicht lauter wird. Leiser. Genauer. Das ist der gefährliche Moment. Nicht die Wut, die nach oben geht. Die Wut, die nach unten geht. Die Sätze, die man nicht schreit, sondern legt. Wie Steine. Einer auf den anderen.
+Dann passiert es. Man hört sich reden und merkt, dass die Stimme kippt. Nicht lauter wird. Leiser. Genauer. Das ist der gefährliche Moment. Nicht die Wut, die nach oben geht. Die Wut, die nach unten geht. *Die Sätze, die man nicht schreit, sondern legt. Wie Steine. Einer auf den anderen.*
 
 Man kennt den anderen gut genug, um zu wissen, wo es weich ist. Man weiß, welches Wort sitzt. Man weiß es so genau, dass man die Luft davor schon spürt, das kurze Zögern, die halbe Sekunde, in der man sich entscheidet.
 
@@ -34,7 +34,7 @@ An einem Abend vor zwei Jahren sagt man einen Satz, an den man sich erinnert wie
 
 Man hat gewonnen. So fühlt es sich nicht an.
 
-Um drei Uhr morgens liegt man wach und spielt den Satz noch einmal ab. Und noch einmal. Und der Satz wird nicht besser davon. Er wird nicht wahrer. Er wird nur lauter. In der eigenen Stimme, im eigenen Ton, in dem Gesicht, das man gesehen hat, als die Worte angekommen sind.
+Um drei Uhr morgens liegt man wach und spielt den Satz noch einmal ab. Und noch einmal. Und der Satz wird nicht besser davon. *Er wird nicht wahrer.* Er wird nur lauter. In der eigenen Stimme, im eigenen Ton, in dem Gesicht, das man gesehen hat, als die Worte angekommen sind.
 
 Man denkt: Ich hätte schweigen können. Man denkt: Schweigen hätte sich angefühlt wie Verlieren. Man denkt: Und jetzt?
 
@@ -50,4 +50,4 @@ Manchmal gelingt es. Man schluckt den Satz, der alles beenden würde, und es bre
 
 Das fühlt sich nicht an wie Stärke. Es fühlt sich an wie der Moment, bevor man weiß, ob es das Richtige war.
 
-Aber der Tee wird warm. Und der andere sitzt noch da.
+*Aber der Tee wird warm. Und der andere sitzt noch da.*
