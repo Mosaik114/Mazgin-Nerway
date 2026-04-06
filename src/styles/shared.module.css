@@ -17,6 +17,7 @@
 
 /* Category Badge */
 .category {
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -43,6 +44,7 @@
 /* Back-Link */
 .backLink {
   display: inline-block;
+  font-family: var(--font-heading);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -56,6 +58,7 @@
 
 /* Page Header (tag + title + ornament) */
 .pageTag {
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.2em;

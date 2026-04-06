@@ -12,6 +12,7 @@
 }
 
 .tag {
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -91,4 +92,3 @@
     align-items: flex-start;
   }
 }
-

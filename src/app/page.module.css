@@ -37,6 +37,7 @@
 }
 
 .heroTag {
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -107,6 +108,7 @@
 }
 
 .heroAsideLabel {
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -142,6 +144,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.2rem 0.5rem;
+  font-family: var(--font-heading);
   border-radius: var(--radius-pill);
   border: 1px solid rgba(var(--color-gold-rgb), 0.55);
   font-size: 0.61rem;
@@ -189,6 +192,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.2rem 0.55rem;
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -199,6 +203,7 @@
 .heroAsideLink {
   align-self: flex-start;
   color: var(--color-gold);
+  font-family: var(--font-heading);
   font-size: var(--text-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -235,6 +240,7 @@
   justify-content: center;
   min-height: var(--tap-target-size);
   padding: 0.72rem 1.6rem;
+  font-family: var(--font-heading);
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;

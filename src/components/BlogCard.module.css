@@ -55,16 +55,17 @@
 }
 
 .title {
+  font-family: var(--font-heading);
   font-size: var(--text-lg);
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--card-accent);
   margin-bottom: var(--space-sm);
   line-height: 1.35;
   transition: color 0.2s;
 }
 
 .card:is(:hover, :active) .title {
-  color: var(--color-gold-light);
+  color: var(--card-accent);
 }
 
 .excerpt {
@@ -79,10 +80,11 @@
 }
 
 .readMore {
+  font-family: var(--font-heading);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-gold);
+  color: var(--card-accent);
   transition: letter-spacing 0.2s;
 }
 

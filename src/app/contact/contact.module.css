@@ -18,6 +18,7 @@
 
 .title {
   composes: pageTitle from '../../styles/shared.module.css';
+  color: var(--color-gold);
   margin-bottom: 1rem;
 }
 
@@ -56,6 +57,7 @@
 }
 
 .label {
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -114,7 +116,7 @@
   min-height: var(--tap-target-size);
   background-color: var(--color-gold);
   color: var(--color-on-gold);
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -180,7 +182,7 @@
 .infoTitle {
   font-family: var(--font-heading);
   font-size: var(--text-base);
-  color: var(--color-text);
+  color: var(--color-gold);
   margin-bottom: 0.4rem;
 }
 

@@ -18,6 +18,7 @@
 
 .title {
   composes: pageTitle from '../../styles/shared.module.css';
+  color: var(--color-gold);
   margin-bottom: var(--space-lg);
 }
 
@@ -84,6 +85,7 @@
 .cta {
   display: inline-block;
   margin-top: var(--space-xs);
+  font-family: var(--font-heading);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -119,4 +121,3 @@
     height: 260px;
   }
 }
-

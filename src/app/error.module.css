@@ -39,7 +39,7 @@
   padding: var(--space-sm) 1.75rem;
   background-color: var(--color-gold);
   color: var(--color-on-gold);
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -55,6 +55,7 @@
 }
 
 .link {
+  font-family: var(--font-heading);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;

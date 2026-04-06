@@ -22,8 +22,8 @@
   --color-overlay-rgb: 15, 14, 12;
 
   /* Typografie */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-heading: 'Caprasimo', Georgia, serif;
+  --font-body:    'Source Serif 4', Georgia, serif;
 
   /* Spacing-Scale */
   --space-xs:  0.5rem;

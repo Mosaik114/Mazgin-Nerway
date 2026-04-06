@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllPosts, getAllTagsWithCount } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
@@ -26,6 +26,7 @@ function firstParamValue(value: SearchParamValue): string {
   if (Array.isArray(value)) return value[0] ?? '';
   return value ?? '';
 }
+
 const BLOG_DESCRIPTION = 'Alle Beiträge von Mazgin Nerway - Gedanken, Geschichten und Reflexionen.';
 
 export const metadata: Metadata = {
@@ -145,16 +146,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <header className={styles.header}>
           <p className={styles.pageTag}>Blog</p>
           <h1 className={styles.pageTitle}>Die Bibliothek meiner Gedanken</h1>
-          <p className={styles.pageSubtitle}>
-            Hier findest du alle Beiträge - persönlich, nachdenklich und mit Blick auf das,
-            was zwischen den Zeilen liegt.
-          </p>
-          <div className={styles.stats}>
-            <span className={styles.stat}>{posts.length} Beiträge</span>
-            <span className={styles.stat}>{tags.length} Schlagwörter</span>
-            <span className={styles.stat}>{totalReadingTime} Min. Gesamtlesezeit</span>
-            {latestPost && <span className={styles.stat}>Neu: {formatDate(latestPost.date)}</span>}
-          </div>
           <div className={styles.exploreLinks}>
             <Link href="/blog/tags" className={styles.exploreLink}>Nach Schlagwort stöbern</Link>
             <Link href="/blog/archiv" className={styles.exploreLink}>Archiv nach Jahr</Link>
@@ -168,6 +159,13 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           initialActiveCategory={initialActiveCategory}
           initialQuery={initialQuery}
         />
+
+        <div className={styles.stats}>
+          <span className={styles.stat}>{posts.length} Beiträge</span>
+          <span className={styles.stat}>{tags.length} Schlagwörter</span>
+          <span className={styles.stat}>{totalReadingTime} Min. Gesamtlesezeit</span>
+          {latestPost && <span className={styles.stat}>Neu: {formatDate(latestPost.date)}</span>}
+        </div>
       </div>
     </section>
   );
