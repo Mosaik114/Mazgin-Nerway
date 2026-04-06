@@ -30,7 +30,7 @@ Im Asylheim sagt eine Frau zu ihr: *Schon dich, du bist doch krank. Wenn die Kin
 
 Man hört das nicht selbst. Man erfährt es Jahre später, beiläufig, am Telefon, als sie es erzählt, als wäre es nichts. Aber man stellt es sich vor. Diesen Flur. Diese Stimme. Diesen Satz. Eine Zukunft, die jemand anderes schon entschieden hat. Für Kinder, die danebenstehen und nichts davon wissen.
 
-Und sie antwortet: Aus zwei, drei Tagen werden Wochen. Aus Wochen werden Monate. Wer jetzt nicht geht, geht später auch nicht. Wenn sie jetzt nicht gehen, werden sie die Universität nie sehen.
+Und sie antwortet: *Aus zwei, drei Tagen werden Wochen. Aus Wochen werden Monate. Wer jetzt nicht geht, geht später auch nicht. Wenn sie jetzt nicht gehen, werden sie die Universität nie sehen.*
 
 Dieser Satz, gesagt in einem Flur, zwischen Müdigkeit und Desinteresse, entscheidet etwas. Ohne dass man dabei ist. Ohne dass man es weiß. Man lebt zwanzig Jahre mit einer Entscheidung, die jemand für einen getroffen hat, bevor man laufen konnte, und erfährt es erst, als man schon fast angekommen ist.
 
@@ -54,7 +54,7 @@ Und jetzt.
 
 Kiel. Ein Studium, das sich dem Ende nähert. Ein, zwei Semester noch. Man sitzt manchmal abends in der Bibliothek und der Satz kommt zurück. Der aus dem Flur. Der, den sie gesagt hat, unter Menschen, die es nicht glaubten. Sie hat ihn gesagt, krank, erschöpft, geflohen aus einem Land, das es in dieser Form nicht mehr gibt. Ohne zu wissen, ob er stimmt.
 
-*Inshallah*, hat sie vielleicht gesagt. Nicht als Vertröstung. Als Haltung. Als das Einzige, was man sagen kann, wenn man alles getan hat und der Rest nicht in den eigenen Händen liegt.
+Sie hat vielleicht nicht gewusst, ob es genug war. Ob sie genug war. Ob der Körper, der so oft Nein gesagt hat, ihr erlaubt, das zu sehen. Aber sie hat getan, was sie konnte. Und den Rest hat sie in Allahs Hände gelegt. Nicht resigniert. Sondern so, wie man etwas abgibt, weil man weiß, dass es dort besser aufgehoben ist als in den eigenen.
 
 Und jetzt geht der Wunsch in Erfüllung. Nicht meiner. Ihrer. Man wird in wenigen Monaten etwas abschließen, das sie sich vorgestellt hat, lange bevor man selbst wusste, was eine Universität ist. Man wird auf einer Bühne stehen und ein Stück Papier in der Hand halten, das eigentlich ihr gehört. Ihr und den Schuhen im Flur.
 
