@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import UmamiAnalytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/config';
-import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, toJsonLd } from '@/lib/seo';
+import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, SITE_PERSON_GENDER, toJsonLd } from '@/lib/seo';
 import { themeScript } from '@/lib/theme';
 
 const playfair = Playfair_Display({
@@ -119,6 +119,7 @@ const websiteJsonLd = {
   publisher: {
     '@type': 'Person',
     name: SITE_NAME,
+    gender: SITE_PERSON_GENDER,
   },
 };
 
@@ -126,9 +127,13 @@ const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: SITE_NAME,
+  alternateName: ['Nerway', 'Mazgin'],
   url: SITE_URL,
+  image: `${SITE_URL}/images/mazgin-rechts.png`,
+  jobTitle: 'Autor & Blogger',
   description:
     'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+  gender: SITE_PERSON_GENDER,
   knowsLanguage: ['de', 'de-DE'],
   mainEntityOfPage: {
     '@type': 'WebPage',

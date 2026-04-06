@@ -1,12 +1,55 @@
+import type { Metadata } from 'next';
+import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import ContactForm from './ContactForm';
 import styles from './contact.module.css';
 
-export const metadata = {
+const CONTACT_DESCRIPTION = 'Kontaktiere Mazgin Nerway – für Fragen, Kooperationen oder einfach um hallo zu sagen.';
+
+export const metadata: Metadata = {
   title: 'Kontakt',
+  description: CONTACT_DESCRIPTION,
+  alternates: {
+    canonical: '/contact',
+    languages: {
+      [SITE_LANGUAGE]: '/contact',
+      'x-default': '/contact',
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'de_DE',
+    title: `Kontakt | ${SITE_NAME}`,
+    description: CONTACT_DESCRIPTION,
+    url: '/contact',
+  },
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Startseite',
+      item: toAbsoluteUrl('/'),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Kontakt',
+      item: toAbsoluteUrl('/contact'),
+    },
+  ],
 };
 
 export default function ContactPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
+      />
     <section className={styles.page}>
       <div className="container">
 
@@ -51,5 +94,6 @@ export default function ContactPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

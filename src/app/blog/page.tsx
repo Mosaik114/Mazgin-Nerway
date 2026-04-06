@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/config';
 import {
   SITE_LANGUAGE,
   SITE_NAME,
+  SITE_PERSON_GENDER,
   toAbsoluteUrl,
   toIsoDateOrNull,
   toJsonLd,
@@ -94,6 +95,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     publisher: {
       '@type': 'Person',
       name: SITE_NAME,
+      gender: SITE_PERSON_GENDER,
     },
     ...(latestPostIso ? { dateModified: latestPostIso } : {}),
     blogPost: posts.map((post) => {

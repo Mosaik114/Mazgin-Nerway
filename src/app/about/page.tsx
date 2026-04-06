@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SITE_URL } from '@/lib/config';
-import { SITE_NAME, toJsonLd } from '@/lib/seo';
+import { SITE_NAME, SITE_PERSON_GENDER, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './about.module.css';
 
 export const metadata: Metadata = {
@@ -40,13 +40,47 @@ const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: SITE_NAME,
+  alternateName: ['Nerway', 'Mazgin'],
   url: SITE_URL,
+  image: `${SITE_URL}/images/mazgin-rechts.png`,
+  jobTitle: 'Autor & Blogger',
   description:
     'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+  gender: SITE_PERSON_GENDER,
+  knowsLanguage: ['de', 'de-DE'],
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': `${SITE_URL}/about`,
   },
+};
+
+const profilePageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: `Über mich | ${SITE_NAME}`,
+  url: `${SITE_URL}/about`,
+  description:
+    'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+  mainEntity: personJsonLd,
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Startseite',
+      item: toAbsoluteUrl('/'),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Über mich',
+      item: toAbsoluteUrl('/about'),
+    },
+  ],
 };
 
 export default function AboutPage() {
@@ -55,6 +89,14 @@ export default function AboutPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJsonLd(profilePageJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />
     <section className={styles.page}>
       <div className="container">

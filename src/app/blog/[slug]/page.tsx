@@ -12,6 +12,7 @@ import ReadingProgress from '@/components/ReadingProgress';
 import {
   SITE_LANGUAGE,
   SITE_NAME,
+  SITE_PERSON_GENDER,
   toAbsoluteUrl,
   toIsoDateOrNull,
   toJsonLd,
@@ -265,7 +266,11 @@ export default async function BlogPostPage({ params }: Props) {
     ...(publishedIso ? { datePublished: publishedIso } : {}),
     ...(modifiedIso ? { dateModified: modifiedIso } : {}),
     image: post.coverImage
-      ? [toAbsoluteUrl(post.coverImage)]
+      ? [{
+          '@type': 'ImageObject',
+          url: toAbsoluteUrl(post.coverImage),
+          caption: post.coverImageAlt ?? post.title,
+        }]
       : [toAbsoluteUrl(`/blog/${post.slug}/opengraph-image`)],
     keywords: post.tags,
     wordCount,
@@ -273,10 +278,12 @@ export default async function BlogPostPage({ params }: Props) {
     author: {
       '@type': 'Person',
       name: SITE_NAME,
+      gender: SITE_PERSON_GENDER,
     },
     publisher: {
       '@type': 'Person',
       name: SITE_NAME,
+      gender: SITE_PERSON_GENDER,
     },
     isPartOf: {
       '@type': 'Blog',
