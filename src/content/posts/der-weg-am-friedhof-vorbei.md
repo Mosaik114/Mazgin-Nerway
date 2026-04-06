@@ -60,6 +60,7 @@ Und jetzt geht der Wunsch in Erfüllung. Nicht meiner. Ihrer. Man wird in wenige
 
 Der Weg am Friedhof vorbei hat irgendwo hingeführt.
 
-Sie hat das gewusst. *Man selbst ist es nur gegangen.*
+*Sie hat das gewusst. Man selbst ist es nur gegangen.*
 
 
+In Erinnerung, Mazgin Nerway

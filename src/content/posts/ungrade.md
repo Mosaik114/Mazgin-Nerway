@@ -19,41 +19,39 @@ excerpt: >-
   Man ist keine Summe. Man ist keine Hälfte von zwei Dingen. Man ist eine
   eigene Zahl, und die ist ungerade.
 ---
+Man kennt das Lied, das die Großmutter sang, ohne den Text zu kennen. Man kennt den Geruch von Tee, der anders gezogen wird als hier. Und man kennt trotzdem den Moment, wenn der erste Schnee fällt und etwas in einem denkt: *endlich.*
 
-Man kennt das Lied, das die Großmutter sang, ohne den Text zu kennen. Man summt es manchmal beim Abwaschen, abends, wenn niemand da ist, und man weiß nicht, wo es aufhört und wo die Erinnerung anfängt. Man kennt den Geruch von Tee, der anders gezogen wird als hier, länger, dunkler, in einem Glas statt in einer Tasse. Und man kennt den Moment, wenn der erste Schnee auf den Gehweg fällt und etwas in einem still wird, ganz ohne Grund.
+Das ist kein Widerspruch. Aber andere machen einen daraus.
 
-Beides gleichzeitig. Beides echt. Und für manche Leute: ein Problem.
+Man hat Kafka gelesen, weil man wollte. Man kennt den Mauerfall, das Wirtschaftswunder, die Nachkriegsjahre. Nicht als Stoff, sondern als Luft. Diese Geschichte ist durch einen hindurchgegangen wie durch jemanden, der dazugehört. Weil man dazugehört.
 
-In der Schule liest man Kafka. *Die Verwandlung*. Man liest es nicht, weil es auf dem Lehrplan steht, sondern weil man in der Bücherei danach greift, aus einem Instinkt heraus, den man nicht erklären kann. Man liest den ersten Satz und denkt: Ja. Nicht weil man sich in einen Käfer verwandelt. Sondern weil jemand aufwacht und die Welt passt nicht mehr um ihn herum, und er kann nichts dafür.
+*Und trotzdem.*
 
-Man erzählt das niemandem.
+Trotzdem sieht man in den Spiegel und sieht etwas, das diese Geschichte nicht meint, wenn sie „wir“ sagt. Das ist kein Vorwurf. Das ist eine Tatsache, die man irgendwann aufgehört hat, zu erklären.
 
-Auf dem Schulhof fragt jemand: *Wo kommst du her?* Man sagt: Kiel. Der andere schüttelt den Kopf. *Nein, ich mein richtig.* Als wäre Kiel eine Lüge. Als hätte man die falsche Antwort auf eine Frage gegeben, die nur eine richtige hat.
+Kurde ist man, weil die Wurzeln so verlaufen. Weil der Körper eine Richtung kennt, die älter ist als jede Sprache, die man spricht. Weil manchmal ein Wort auf Kurdisch sitzt, wo auf Deutsch nur Stille ist. Das ist nicht weniger wahr. Aber es ist auch nicht die ganze Wahrheit.
 
-Man lernt, dass es zwei Versionen von einem gibt. Die, die man selbst kennt. Und die, die in den Köpfen der anderen steht, fertig gerahmt, bevor man den Mund aufmacht. Man lernt das mit elf, mit dreizehn, mit sechzehn. Man lernt es immer wieder neu, als hätte man es vergessen können.
+Die ganze Wahrheit passt nirgendwo hin. Sie hat nie gepasst. Das ist das Erste, was man lernen muss. Und das Schwerste.
 
-Bei der WM schreit man mit, wenn Deutschland ein Tor schießt. Man schreit, weil man will, nicht weil man muss. Jemand neben einem lacht und sagt: *Ey, du feierst ja mehr als wir.* Und in diesem *wir* ist man nicht drin. Selbst wenn man gerade noch geschrien hat.
+Dann kommt das Müdewerden. Nicht das Traurige. *Das Müde.* Die Erschöpfung, die keine Wunde braucht, um zu schmerzen. Nur Wiederholung. Die Frage, die immer wieder kommt. Nicht böse gemeint. Fast nie böse gemeint.
 
-Man könnte jetzt erklären. Man könnte sagen: Meine Eltern kommen aus Kurdistan, aber ich bin hier aufgewachsen, ich bin hier zur Schule gegangen, ich träume auf Deutsch, ich denke auf Deutsch, ich streite auf Deutsch, und wenn ich fluche, dann fluche ich auf Deutsch, außer wenn ich richtig fluche, dann auf Kurdisch, und beides ist meins. Man könnte das sagen. Man hat es gesagt. Hundertmal. Auf Elternabenden, in Vorlesungen, auf Partys, in Bewerbungsgesprächen, in denen die Frage nicht gestellt wird, aber im Raum steht wie ein Stuhl, den niemand anbietet.
+Und trotzdem:
 
-Irgendwann wird man müde davon. Nicht traurig. *Müde.* Die Art von müde, die nicht vom Schlafen kommt, sondern davon, dass man sich selbst zu oft übersetzt hat. In eine Sprache, die man beherrscht, aber die einen trotzdem nicht ganz fasst.
+*Was bist du eigentlich?*
 
-Es gibt ein kurdisches Wort, das man nicht übersetzen kann. Es beschreibt das Gefühl, an einem Ort zu sein, der einem gehört, und trotzdem zu spüren, dass der Ort das nicht weiß. Das ist kein Heimweh. Heimweh setzt voraus, dass man weiß, wo das Heim ist.
+Als hätte man beim letzten Mal keine Antwort gegeben. Als wäre Identität etwas, das man anderen schuldet. Als könnte man nur eines sein, und man stünde jetzt, Stift in der Hand, vor einem Formular mit zwei Feldern.
 
-Im Studium sitzt man in einem Seminar über Migration. Der Professor sagt etwas über *hybride Identitäten*. Zwei Worte, die klingen, als hätte jemand einen in eine Tabelle eingetragen. Spalte A: deutsch. Spalte B: kurdisch. Ergebnis: hybrid. Als wäre man ein Auto, das mit zwei Motoren läuft. Als bestünde man aus Teilen, die jemand zusammengesetzt hat.
+Aber was, wenn das Formular falsch ist?
 
-Aber man ist nicht zusammengesetzt. Man ist nicht die Hälfte von zwei Dingen. Man ist nicht links Deutsch und rechts Kurdisch und in der Mitte ein Kompromiss.
+Nicht weil man sich schämt. Nicht weil man nicht weiß, woher man kommt. Sondern weil man in deutschen Sätzen träumt und diese Sätze trotzdem nicht alles von einem kennen. Weil man kurdische Wurzeln hat und trotzdem nicht jede Erwartung erfüllen muss, die damit kommt.
 
-Man ist eine eigene Zahl.
+Weil man nicht die Summe zweier Hälften ist. Man ist eine eigene Zahl. Ungerade. Nicht teilbar. Keine Zwischenlösung, kein Kompromiss, kein Bindestrich-Mensch. Etwas, für das es noch kein Wort gibt. In keiner der Sprachen, die man spricht.
 
-Ungerade. Nicht teilbar. Nicht das Ergebnis einer Addition, sondern etwas, das für sich steht, auch wenn es in keine Spalte passt. Eine Zahl, für die es kein Feld gibt im Formular.
+Vielleicht kommt das Wort noch. Vielleicht baut man es selbst, aus dem, was man hat: dem Lied ohne Text, dem ersten Schnee, dem Tee, dem Spiegel, der Müdigkeit, dem Trotzdem.
 
-Dade hat das nie so gesagt. Dade hat nie über Identität gesprochen, nicht in diesen Worten. Aber wenn man als Kind nach Hause kommt und auf Deutsch erzählt, was in der Schule passiert ist, und mitten im Satz auf Kurdisch wechselt, weil das Wort dort besser sitzt, dann schaut sie nicht irritiert. Dann nickt sie. Als wäre das die normalste Sache der Welt.
+Das sagt sich leicht.
 
-Vielleicht ist es das.
+*Es zu glauben dauert ein Leben. Aber man hat ja eines.*
 
-Vielleicht ist man nicht zerrissen. Vielleicht war man das nie. Vielleicht haben nur andere beschlossen, dass zwei Dinge nicht gleichzeitig wahr sein können, und man hat ihnen zu lange geglaubt.
 
-Der erste Schnee fällt. Das Lied der Großmutter läuft irgendwo im Hintergrund, ohne Ton. Der Tee zieht zu lange, wie immer. Und man steht da, in einer Sprache, die einem gehört, in einem Land, das einem gehört, in einem Körper, der sich nichts aussuchen musste, weil er schon alles ist.
-
-Ungerade. Unteilbar. Ganz.
+In Erinnerung, Mazgin Nerway

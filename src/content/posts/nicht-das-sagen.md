@@ -51,3 +51,6 @@ Manchmal gelingt es. Man schluckt den Satz, der alles beenden würde, und es bre
 Das fühlt sich nicht an wie Stärke. Es fühlt sich an wie der Moment, bevor man weiß, ob es das Richtige war.
 
 *Aber der Tee wird warm. Und der andere sitzt noch da.*
+
+
+In Erinnerung, Mazgin Nerway
