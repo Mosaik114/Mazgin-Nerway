@@ -52,7 +52,7 @@ Mit vierzehn zieht man nach Kiel. Der Weg am Friedhof vorbei bleibt in Ludwigslu
 
 Und jetzt.
 
-Kiel. Ein Studium, das sich dem Ende nähert. Ein, zwei Semester noch. Man sitzt manchmal abends in der Bibliothek und der Satz kommt zurück. Der aus dem Flur. Der, den sie gesagt hat, unter Menschen, die es nicht glaubten. Sie hat ihn gesagt, krank, erschöpft, geflohen aus einem Land, das es in dieser Form nicht mehr gibt. Ohne zu wissen, ob er stimmt.
+Kiel. Ein Studium, das sich dem Ende nähert. Ein, zwei Semester noch. Man sitzt manchmal abends in der Bibliothek und der Satz kommt zurück. Der aus dem Flur. Der, den sie gesagt hat, unter Menschen, die es nicht glaubten. Sie hat es gesagt, krank, erschöpft, geflohen aus einem Land, das es in dieser Form nicht mehr gibt. Ohne zu wissen, ob er stimmt.
 
 Sie hat vielleicht nicht gewusst, ob es genug war. Ob sie genug war. Ob der Körper, der so oft Nein gesagt hat, ihr erlaubt, das zu sehen. Aber sie hat getan, was sie konnte. Und den Rest hat sie in Allahs Hände gelegt. Nicht resigniert. Sondern so, wie man etwas abgibt, weil man weiß, dass es dort besser aufgehoben ist als in den eigenen.
 
