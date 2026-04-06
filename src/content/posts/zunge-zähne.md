@@ -1,7 +1,7 @@
 ---
 title: Nicht das sagen.
 date: '2026-04-02'
-updatedAt: '2026-04-06'
+updatedAt: '2026-04-02'
 slug: nicht-das-sagen
 category: Streit
 tags:
