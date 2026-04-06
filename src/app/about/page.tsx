@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { SITE_URL } from '@/lib/config';
+import { SITE_URL, SOCIAL_LINKS } from '@/lib/config';
 import { SITE_NAME, SITE_PERSON_GENDER, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './about.module.css';
 
@@ -47,6 +47,7 @@ const personJsonLd = {
   description:
     'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   gender: SITE_PERSON_GENDER,
+  sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok],
   knowsLanguage: ['de', 'de-DE'],
   mainEntityOfPage: {
     '@type': 'WebPage',

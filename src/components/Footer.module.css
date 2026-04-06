@@ -70,6 +70,31 @@
   color: var(--color-gold);
 }
 
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.social a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-size);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  opacity: 0.8;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.social a:is(:hover, :active) {
+  color: var(--color-gold);
+  opacity: 1;
+}
+
 .legal {
   display: flex;
   flex-wrap: wrap;

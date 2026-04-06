@@ -1,5 +1,9 @@
 export const SITE_URL = 'https://www.nerway.de';
 export const LOCALE = 'de-DE';
+export const SOCIAL_LINKS = {
+  instagram: 'https://www.instagram.com/mazgin.nerway/',
+  tiktok: 'https://www.tiktok.com/@mazgin.nerway',
+} as const;
 
 export function formatDate(date: string): string {
   return new Date(date).toLocaleDateString(LOCALE, {
