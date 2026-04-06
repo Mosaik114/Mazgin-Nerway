@@ -1,16 +1,16 @@
 ---
-title: Die Zunge zwischen den Zähnen
+title: Nicht das sagen.
 date: '2026-04-02'
 updatedAt: '2026-04-06'
-slug: zunge-zwischen-den-zaehnen
+slug: nicht-das-sagen
 category: Streit
 tags:
   - Streit
   - Sprache
   - Beziehungen
-coverImage: /images/zunge-zaehne.png
+coverImage: /images/nicht-das-sagen.png
 coverImageAlt: Spannung im Streit zwischen Zurueckhaltung und Wut
-seoTitle: 'Die Zunge zwischen den Zaehnen: Ueber Streitkultur'
+seoTitle: 'Nicht das sagen: Ueber Streitkultur'
 seoDescription: >-
   Warum Schweigen im Streit manchmal staerker ist als das letzte Wort und was
   Worte in der Stille danach hinterlassen.
@@ -44,9 +44,7 @@ Dade hat einmal etwas gesagt, beiläufig, nicht als Lektion, eher als Beobachtun
 
 Man versteht den Satz erst Jahre später. Nicht als Lob. Als Technik. Als etwas, das man üben kann. Nicht: nichts sagen. Sondern: nicht das sagen.
 
-Es gibt ein Wort auf Kurdisch, das man nicht übersetzen kann, das ungefähr bedeutet: die Zunge zwischen die Zähne nehmen. Nicht als Schwäche. Als Entscheidung. Als der Moment, in dem man den Mund schließt, nicht weil einem nichts einfällt, sondern weil einem zu viel einfällt.
-
-Man übt das. Man ist nicht gut darin. Aber man übt es, weil man den Geschmack des anderen kennt. Den Geschmack von Sätzen, die um drei Uhr morgens noch da sind.
+Man übt das. Man ist nicht gut darin. Aber man übt es.
 
 Manchmal gelingt es. Man schluckt den Satz, der alles beenden würde, und es brennt kurz im Hals. Und am nächsten Morgen sitzt man wieder in der Küche, mit Tee, der diesmal getrunken wird, und der Streit ist nicht vorbei, aber er ist noch reparierbar. Das ist das Wort. *Reparierbar.* Man hat nichts gesagt, was man nicht zurücknehmen kann. Man hat die Tür offen gelassen.
 
