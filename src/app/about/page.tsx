@@ -47,7 +47,7 @@ const personJsonLd = {
   description:
     'Mazgin Nerway ist Blogger und Autor. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   gender: SITE_PERSON_GENDER,
-  sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok],
+  sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok, SOCIAL_LINKS.youtube],
   knowsLanguage: ['de', 'de-DE'],
   mainEntityOfPage: {
     '@type': 'WebPage',

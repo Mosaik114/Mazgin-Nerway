@@ -25,6 +25,9 @@ export default function Footer() {
             <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer">
               TikTok
             </a>
+            <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer">
+              YouTube
+            </a>
           </nav>
           <div className={styles.legal}>
             <Link href="/impressum">Impressum</Link>
