@@ -1,8 +1,8 @@
 export const SITE_URL = 'https://www.nerway.de';
 export const LOCALE = 'de-DE';
 export const SOCIAL_LINKS = {
-  instagram: 'https://www.instagram.com/mazgin.nerway/',
-  tiktok: 'https://www.tiktok.com/@mazgin.nerway',
+  instagram: 'https://www.instagram.com/mazgin_nerway/',
+  tiktok: 'https://www.tiktok.com/@mazgin_nerway',
 } as const;
 
 export function formatDate(date: string): string {
