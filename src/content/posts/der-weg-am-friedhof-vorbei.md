@@ -9,7 +9,7 @@ tags:
   - Familie
   - Erinnerung
 coverImage: "/images/der-weg-am-friedhof-vorbei.png"
-coverImageAlt: "Ein Feldweg im Winter, Nebel über flachem Land"
+coverImageAlt: "Schmaler Feldweg im Winternebel, kahle Bäume am Rand, flaches norddeutsches Land"
 seoTitle: "Der Weg am Friedhof vorbei"
 seoDescription: "Über einen Weg, der in Ludwigslust beginnt und irgendwo endet, wo man nicht erwartet hätte anzukommen."
 published: true

@@ -8,9 +8,11 @@ tags:
   - Familie
   - Dankbarkeit
   - Glaube
+coverImage: "/images/der-taxifahrer.png"
+coverImageAlt: "Blick durch die Windschutzscheibe auf eine Straße, Beifahrersitz unscharf im Vordergrund"
 seoTitle: "Der Taxifahrer – wenn Fahren ein Geschenk ist"
 seoDescription: "Über einen Nachmittag, einen beiläufigen Satz der Mutter und das Vergessen, was man hat."
-published: false
+published: true
 excerpt: "Man hat den Führerschein seit ein paar Monaten. Seitdem schrumpft der eigene Tag. Bis sie etwas sagt."
 ---
 Man hat den Führerschein seit ein paar Monaten. Das weiß man. Die Familie weiß es auch.
