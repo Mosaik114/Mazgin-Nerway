@@ -8,8 +8,6 @@ tags:
   - Familie
   - Dankbarkeit
   - Glaube
-coverImage: "/images/der-taxifahrer.png"
-coverImageAlt: "Eine Straße aus der Fahrerperspektive, Beifahrersitz unscharf"
 seoTitle: "Der Taxifahrer – wenn Fahren ein Geschenk ist"
 seoDescription: "Über einen Nachmittag, einen beiläufigen Satz der Mutter und das Vergessen, was man hat."
 published: false

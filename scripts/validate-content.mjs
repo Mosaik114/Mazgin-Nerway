@@ -20,11 +20,13 @@ const knownCategories = new Set([
   'Persönliches',
   'Schreiben',
   'Gedanken',
+  'Glaube',
   'Streit',
   'Kindheit',
   'Kultur',
   'Literatur',
   'Identität',
+  'Liebe',
 ]);
 
 const strictDatePattern = /^\d{4}-\d{2}-\d{2}$/;
