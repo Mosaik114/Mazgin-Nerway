@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { getAllPosts, getAllTagsWithCount } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
-import { formatDate } from '@/lib/config';
+import { formatDate, SITE_URL } from '@/lib/config';
 import {
   SITE_LANGUAGE,
   SITE_NAME,
@@ -95,6 +95,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     inLanguage: SITE_LANGUAGE,
     publisher: {
       '@type': 'Person',
+      '@id': `${SITE_URL}/about#person`,
       name: SITE_NAME,
       gender: SITE_PERSON_GENDER,
     },

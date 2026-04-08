@@ -126,6 +126,7 @@ const websiteJsonLd = {
 const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${SITE_URL}/about#person`,
   name: SITE_NAME,
   alternateName: ['Nerway', 'Mazgin'],
   url: SITE_URL,
