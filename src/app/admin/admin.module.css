@@ -168,4 +168,58 @@
   .statsGrid {
     grid-template-columns: 1fr;
   }
+
+  .tableWrap {
+    overflow-x: visible;
+    border: none;
+    background: transparent;
+  }
+
+  .table {
+    min-width: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .table tr {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+  }
+
+  .table td {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .inlineForm {
+    flex-wrap: wrap;
+  }
+
+  .actionGroup {
+    gap: 0.6rem;
+  }
 }

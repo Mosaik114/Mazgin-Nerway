@@ -98,21 +98,21 @@ export default async function AdminPage() {
 
               return (
                 <tr key={user.id}>
-                  <td>
+                  <td data-label="Nutzer">
                     <div className={styles.userCell}>
                       <strong>{displayName}</strong>
                       <span>{user.email ?? 'Keine E-Mail'}</span>
                     </div>
                   </td>
-                  <td>{user.role}</td>
-                  <td>
+                  <td data-label="Rolle">{user.role}</td>
+                  <td data-label="Status">
                     <span className={user.isBlocked ? styles.badgeDanger : styles.badgeOkay}>
                       {user.isBlocked ? 'Gesperrt' : 'Aktiv'}
                     </span>
                   </td>
-                  <td>{formatDateTime(user.createdAt)}</td>
-                  <td>{formatDateTime(user.lastLoginAt)}</td>
-                  <td>
+                  <td data-label="Erstellt">{formatDateTime(user.createdAt)}</td>
+                  <td data-label="Letzter Login">{formatDateTime(user.lastLoginAt)}</td>
+                  <td data-label="Aktionen">
                     <div className={styles.actionGroup}>
                       <form action={setUserRoleAction} className={styles.inlineForm}>
                         <input type="hidden" name="userId" value={user.id} />

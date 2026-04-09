@@ -385,7 +385,8 @@
   }
 
   .searchWrap {
-    max-width: 360px;
+    max-width: none;
+    width: 100%;
   }
 }
 

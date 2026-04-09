@@ -254,13 +254,21 @@
   color: var(--color-danger);
 }
 
+@media (max-width: 768px) {
+  .fieldRow {
+    flex-direction: column;
+  }
+
+  .fieldRow .input,
+  .fieldRow .select,
+  .fieldRow .saveBtn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 480px) {
   .card {
     padding: var(--space-md);
-  }
-
-  .fieldRow {
-    flex-direction: column;
   }
 
   .input,
