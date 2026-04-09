@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import AuthProvider from '@/components/AuthProvider';
 import UmamiAnalytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/config';
 import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, SITE_PERSON_GENDER, toJsonLd } from '@/lib/seo';
@@ -158,9 +159,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a href="#main" className="skip-link">Zum Inhalt springen</a>
         <UmamiAnalytics />
-        <Navbar />
-        <main id="main">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main id="main">{children}</main>
+          <Footer />
+        </AuthProvider>
         <VercelAnalytics />
         <SpeedInsights />
       </body>

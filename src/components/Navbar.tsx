@@ -1,13 +1,14 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './Navbar.module.css';
 import ThemeToggle from './ThemeToggle';
 
-const links = [
+const publicLinks = [
   { href: '/', label: 'Start' },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'Über mich' },
@@ -22,12 +23,76 @@ function isActiveLink(pathname: string, href: string): boolean {
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const [fallbackUser, setFallbackUser] = useState<{
+    name?: string | null;
+    email?: string | null;
+    role?: 'USER' | 'ADMIN';
+  } | null>(null);
   const menuId = 'mobile-navigation';
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const currentUser = session?.user ?? fallbackUser;
+  const isAuthenticated = status === 'authenticated' ? Boolean(session?.user) : Boolean(currentUser);
+  const isAdmin = currentUser?.role === 'ADMIN';
+  const visibleLinks = isAdmin ? [...publicLinks, { href: '/admin', label: 'Admin' }] : publicLinks;
+  const displayName = currentUser?.name ?? currentUser?.email?.split('@')[0] ?? 'Konto';
+  const signInHref = `/api/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
+
+  const handleSignOut = () => {
+    setOpen(false);
+    void signOut({ callbackUrl: '/' });
+  };
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    let active = true;
+
+    if (session?.user) {
+      setFallbackUser(null);
+      return () => {
+        active = false;
+      };
+    }
+
+    const fetchFallbackSession = async () => {
+      try {
+        const response = await fetch('/api/session', {
+          method: 'GET',
+          cache: 'no-store',
+          credentials: 'same-origin',
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const data = (await response.json()) as {
+          user?: {
+            name?: string | null;
+            email?: string | null;
+            role?: 'USER' | 'ADMIN';
+          } | null;
+        };
+
+        if (active) {
+          setFallbackUser(data.user ?? null);
+        }
+      } catch {
+        if (active) {
+          setFallbackUser(null);
+        }
+      }
+    };
+
+    void fetchFallbackSession();
+
+    return () => {
+      active = false;
+    };
+  }, [pathname, session?.user]);
 
   useEffect(() => {
     const mobileNav = mobileNavRef.current;
@@ -100,7 +165,7 @@ export default function Navbar() {
         </Link>
 
         <nav className={styles.nav} aria-label="Hauptnavigation">
-          {links.map(({ href, label }) => {
+          {visibleLinks.map(({ href, label }) => {
             const isActive = isActiveLink(pathname, href);
             return (
               <Link
@@ -114,6 +179,20 @@ export default function Navbar() {
             );
           })}
           <ThemeToggle />
+          {isAuthenticated ? (
+            <div className={styles.authRow}>
+              <span className={styles.userBadge} title={currentUser?.email ?? undefined}>
+                {displayName}
+              </span>
+              <button type="button" className={styles.authButton} onClick={handleSignOut}>
+                Abmelden
+              </button>
+            </div>
+          ) : (
+            <Link href={signInHref} className={styles.authButton} onClick={() => setOpen(false)}>
+              Anmelden
+            </Link>
+          )}
         </nav>
 
         <button
@@ -136,7 +215,7 @@ export default function Navbar() {
         className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}
         aria-hidden={!open}
       >
-        {links.map(({ href, label }) => {
+        {visibleLinks.map(({ href, label }) => {
           const isActive = isActiveLink(pathname, href);
           return (
             <Link
@@ -150,6 +229,22 @@ export default function Navbar() {
             </Link>
           );
         })}
+        <div className={styles.mobileAuthRow}>
+          {isAuthenticated && (
+            <span className={styles.mobileUserBadge} title={currentUser?.email ?? undefined}>
+              {displayName}
+            </span>
+          )}
+          {isAuthenticated ? (
+            <button type="button" className={styles.mobileAuthButton} onClick={handleSignOut}>
+              Abmelden
+            </button>
+          ) : (
+            <Link href={signInHref} className={styles.mobileAuthButton} onClick={() => setOpen(false)}>
+              Anmelden mit Google
+            </Link>
+          )}
+        </div>
         <div className={styles.mobileThemeRow}>
           <span className={styles.mobileThemeLabel}>Design</span>
           <ThemeToggle />

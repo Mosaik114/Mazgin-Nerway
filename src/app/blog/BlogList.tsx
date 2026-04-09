@@ -1,14 +1,21 @@
 ﻿'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import BlogCard from '@/components/BlogCard';
 import type { Post } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
 import styles from './blog.module.css';
+
+interface UserInteraction {
+  postSlug: string;
+  isRead: boolean;
+  bookmarkPercent: number | null;
+}
 
 interface Props {
   posts: Post[];
@@ -31,9 +38,22 @@ export default function BlogList({
   initialActiveCategory = 'Alle',
   initialQuery = '',
 }: Props) {
+  const { status } = useSession();
   const initialActive = categories.includes(initialActiveCategory) ? initialActiveCategory : 'Alle';
   const [active, setActive] = useState(initialActive);
   const [query, setQuery] = useState(initialQuery);
+  const [interactionsMap, setInteractionsMap] = useState<Map<string, UserInteraction>>(new Map());
+
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+
+    void fetch('/api/interactions', { cache: 'no-store', credentials: 'same-origin' })
+      .then((r) => (r.ok ? (r.json() as Promise<UserInteraction[]>) : []))
+      .then((data) => {
+        setInteractionsMap(new Map(data.map((i) => [i.postSlug, i])));
+      })
+      .catch(() => {});
+  }, [status]);
   const normalizedQuery = normalizeForSearch(query.trim());
 
   const buildFilterHref = (category: string, nextQuery: string): string => {
@@ -218,19 +238,24 @@ export default function BlogList({
 
           {rest.length > 0 && (
             <div className={styles.grid}>
-              {rest.map((post) => (
-                <BlogCard
-                  key={post.slug}
-                  title={post.title}
-                  slug={post.slug}
-                  date={post.date}
-                  excerpt={post.excerpt}
-                  category={post.category}
-                  coverImage={post.coverImage}
-                  coverImageAlt={post.coverImageAlt}
-                  readingTime={post.readingTime}
-                />
-              ))}
+              {rest.map((post) => {
+                const interaction = interactionsMap.get(post.slug);
+                return (
+                  <BlogCard
+                    key={post.slug}
+                    title={post.title}
+                    slug={post.slug}
+                    date={post.date}
+                    excerpt={post.excerpt}
+                    category={post.category}
+                    coverImage={post.coverImage}
+                    coverImageAlt={post.coverImageAlt}
+                    readingTime={post.readingTime}
+                    isRead={interaction?.isRead}
+                    hasBookmark={interaction?.bookmarkPercent !== null && interaction?.bookmarkPercent !== undefined}
+                  />
+                );
+              })}
             </div>
           )}
         </>

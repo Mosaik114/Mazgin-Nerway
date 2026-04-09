@@ -9,6 +9,7 @@ import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { getAllPosts, getPostBySlug, getTagSlug } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
 import ReadingProgress from '@/components/ReadingProgress';
+import PostInteractionBar from '@/components/PostInteractionBar';
 import {
   SITE_LANGUAGE,
   SITE_NAME,
@@ -404,6 +405,8 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
+
+          <PostInteractionBar postSlug={post.slug} />
 
           <nav className={styles.postNav} aria-label="Beitragsnavigation">
             <div className={styles.navItem}>

@@ -14,6 +14,8 @@ interface Props {
   coverImage?: string;
   coverImageAlt?: string;
   readingTime?: number;
+  isRead?: boolean;
+  hasBookmark?: boolean;
 }
 
 export default function BlogCard({
@@ -25,6 +27,8 @@ export default function BlogCard({
   coverImage,
   coverImageAlt,
   readingTime,
+  isRead,
+  hasBookmark,
 }: Props) {
   const formatted = formatDate(date);
   const accentColor = category
@@ -63,6 +67,8 @@ export default function BlogCard({
             )}
             <time className={styles.date}>{formatted}</time>
             {readingTime && <span className={styles.readTime}>{readingTime} Min.</span>}
+            {hasBookmark && <span className={styles.bookmarkBadge} title="Lesezeichen gesetzt">🔖</span>}
+            {isRead && <span className={styles.readBadge} title="Gelesen">✓</span>}
           </div>
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.excerpt}>{excerpt}</p>

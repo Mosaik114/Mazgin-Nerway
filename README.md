@@ -8,6 +8,35 @@ Persoenliche Website und Blog mit Next.js.
 npm run dev
 ```
 
+## Auth & Datenbank (neu)
+
+Installierte Basis:
+
+- Auth.js (`next-auth` v5 beta) mit Google Provider
+- Prisma + PostgreSQL Schema
+- Auth-Route unter `src/app/api/auth/[...nextauth]/route.ts`
+- Navbar zeigt Login/Logout via Google
+- Admin-Panel unter `/admin` (nur Rolle `ADMIN`)
+
+Wichtige Befehle:
+
+```bash
+npm run db:generate
+npm run db:migrate
+npm run db:push
+npm run db:studio
+```
+
+Noetige Env-Variablen (siehe `.env.local.example`):
+
+```bash
+AUTH_SECRET=
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+ADMIN_EMAILS=
+DATABASE_URL=
+```
+
 ## Quality Checks
 
 ```bash

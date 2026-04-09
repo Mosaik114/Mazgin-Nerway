@@ -66,6 +66,9 @@ function buildSecurityHeaders() {
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    qualities: [75, 86, 88, 90],
+  },
   async redirects() {
     return [
       {
