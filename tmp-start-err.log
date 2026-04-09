@@ -1,0 +1,11 @@
+[31m[auth][error][0m UnknownAction: Unsupported action. Read more at https://errors.authjs.dev#unknownaction
+    at Object.signin (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\chunks\44.js:380:5567)
+    at fF (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\chunks\44.js:404:50187)
+    at async fH (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\chunks\44.js:404:54683)
+    at async rH.do (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:5:21048)
+    at async rH.handle (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:5:25866)
+    at async k (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\app\api\auth\[...nextauth]\route.js:1:6380)
+    at async rH.handleResponse (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:1:110620)
+    at async g (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\app\api\auth\[...nextauth]\route.js:1:7383)
+    at async B (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\app\api\auth\[...nextauth]\route.js:1:8505)
+    at async NextNodeServer.renderToResponseWithComponentsImpl (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\node_modules\next\dist\server\base-server.js:1422:9)
