@@ -38,7 +38,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
   const callbackUrl = getSafeCallbackUrl(firstParamValue(resolvedSearchParams.callbackUrl));
 
   if (hasGoogleOAuthConfig()) {
-    redirect(`/api/auth/signin/google?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+    redirect(`/auth/signin/google?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   }
 
   return (

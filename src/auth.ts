@@ -76,24 +76,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       const normalizedEmail = user.email.trim().toLowerCase();
-      const dbUser = await prisma.user.findFirst({
-        where: {
-          email: {
-            equals: normalizedEmail,
-            mode: 'insensitive',
+      try {
+        const dbUser = await prisma.user.findFirst({
+          where: {
+            email: {
+              equals: normalizedEmail,
+              mode: 'insensitive',
+            },
           },
-        },
-      });
+        });
 
-      if (!dbUser) {
+        if (!dbUser) {
+          return true;
+        }
+
+        if (dbUser.isBlocked) {
+          return false;
+        }
+
         return true;
-      }
-
-      if (dbUser.isBlocked) {
+      } catch (error) {
+        console.error('[auth] Failed to validate sign-in request.', {
+          email: normalizedEmail,
+          error,
+        });
         return false;
       }
-
-      return true;
     },
     async session({ session, user }) {
       if (session.user) {
@@ -112,20 +120,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       const normalizedEmail = user.email.trim().toLowerCase();
-
-      await prisma.user.updateMany({
-        where: {
-          email: {
-            equals: normalizedEmail,
-            mode: 'insensitive',
+      try {
+        await prisma.user.updateMany({
+          where: {
+            email: {
+              equals: normalizedEmail,
+              mode: 'insensitive',
+            },
           },
-        },
-        data: {
+          data: {
+            email: normalizedEmail,
+            lastLoginAt: new Date(),
+            ...(adminEmails.has(normalizedEmail) ? { role: Role.ADMIN } : {}),
+          },
+        });
+      } catch (error) {
+        console.error('[auth] Failed to persist sign-in metadata.', {
           email: normalizedEmail,
-          lastLoginAt: new Date(),
-          ...(adminEmails.has(normalizedEmail) ? { role: Role.ADMIN } : {}),
-        },
-      });
+          error,
+        });
+      }
     },
   },
 });
