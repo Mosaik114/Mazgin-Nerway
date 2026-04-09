@@ -1,11 +1,10 @@
-/* Ornament (dezente Signatur) */
+/* Ornament (goldene Trennlinie mit Symbol) */
 .ornament {
   display: flex;
   align-items: center;
   gap: 1rem;
   color: var(--color-gold);
-  font-size: 0.6rem;
-  opacity: 0.72;
+  font-size: 0.7rem;
 }
 
 .ornament::before,
@@ -19,13 +18,13 @@
 /* Category Badge */
 .category {
   font-family: var(--font-heading);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-gold);
-  background-color: rgba(var(--color-gold-rgb), 0.12);
+  background-color: rgba(var(--color-gold-rgb), 0.1);
   border: 1px solid var(--color-border);
-  padding: 0.2rem 0.62rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--radius-pill);
 }
 
@@ -34,7 +33,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: var(--space-sm);
 }
 
 .metaText {
@@ -44,15 +43,13 @@
 
 /* Back-Link */
 .backLink {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.1rem;
+  display: inline-block;
   font-family: var(--font-heading);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .backLink:is(:hover, :active) {
@@ -62,11 +59,11 @@
 /* Page Header (tag + title + ornament) */
 .pageTag {
   font-family: var(--font-heading);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   color: var(--color-gold);
-  margin-bottom: 0.55rem;
+  margin-bottom: 1rem;
 }
 
 .pageTitle {
@@ -74,117 +71,4 @@
   font-weight: 700;
   color: var(--color-text);
   margin-bottom: var(--space-md);
-}
-
-/* Buttons */
-.buttonBase {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--tap-target-size);
-  padding: 0.7rem 1.35rem;
-  font-family: var(--font-heading);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  transition:
-    transform var(--motion-fast) var(--ease-standard),
-    border-color var(--motion-fast) var(--ease-standard),
-    color var(--motion-fast) var(--ease-standard),
-    background-color var(--motion-fast) var(--ease-standard),
-    box-shadow var(--motion-fast) var(--ease-standard);
-}
-
-.buttonPrimary {
-  color: var(--color-on-gold);
-  background-color: var(--color-gold);
-}
-
-.buttonPrimary:is(:hover, :active) {
-  background-color: var(--color-gold-light);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(var(--color-gold-rgb), 0.2);
-}
-
-.buttonSecondary {
-  color: var(--color-gold);
-  border-color: rgba(var(--color-gold-rgb), 0.42);
-  background-color: rgba(var(--color-gold-rgb), 0.06);
-}
-
-.buttonSecondary:is(:hover, :active) {
-  color: var(--color-gold-light);
-  border-color: rgba(var(--color-gold-rgb), 0.6);
-  background-color: rgba(var(--color-gold-rgb), 0.12);
-  transform: translateY(-1px);
-}
-
-.buttonGhost {
-  color: var(--color-text-muted);
-  border-color: var(--color-border);
-  background-color: var(--color-bg-soft);
-}
-
-.buttonGhost:is(:hover, :active) {
-  color: var(--color-text);
-  border-color: rgba(var(--color-gold-rgb), 0.45);
-  background-color: rgba(var(--color-gold-rgb), 0.08);
-  transform: translateY(-1px);
-}
-
-/* Surface / Card */
-.panel {
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-}
-
-.cardInteractive {
-  composes: panel;
-  transition:
-    border-color var(--motion-base) var(--ease-standard),
-    transform var(--motion-base) var(--ease-standard),
-    box-shadow var(--motion-base) var(--ease-standard);
-}
-
-.cardInteractive:is(:hover, :active) {
-  transform: translateY(-2px);
-  border-color: rgba(var(--color-gold-rgb), 0.4);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
-}
-
-/* Form controls */
-.inputField {
-  width: 100%;
-  background-color: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  padding: 0.64rem 0.9rem;
-  outline: none;
-  transition:
-    border-color var(--motion-fast) var(--ease-standard),
-    box-shadow var(--motion-fast) var(--ease-standard);
-}
-
-.inputField::placeholder {
-  color: var(--color-text-muted);
-  opacity: 0.62;
-}
-
-.inputField:focus {
-  border-color: rgba(var(--color-gold-rgb), 0.52);
-  box-shadow: 0 0 0 3px rgba(var(--color-gold-rgb), 0.14);
-}
-
-/* Empty / message blocks */
-.emptyState {
-  composes: panel;
-  padding: var(--space-xl);
-  text-align: center;
 }

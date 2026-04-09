@@ -1,15 +1,12 @@
 .card {
-  composes: cardInteractive from '../styles/shared.module.css';
   --card-accent: var(--color-gold-dim);
   display: block;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.25s, transform 0.25s;
   position: relative;
   overflow: hidden;
-}
-
-.card article {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 
 .cover {
@@ -21,7 +18,7 @@
 
 .coverImg {
   object-fit: cover;
-  transition: transform var(--motion-slow) var(--ease-standard);
+  transition: transform 0.4s ease;
   transform: scale(1);
 }
 
@@ -40,13 +37,11 @@
 
 .body {
   padding: var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  flex: 1;
 }
 
 .card:is(:hover, :active) {
   border-color: var(--card-accent);
+  transform: translateY(-2px);
 }
 
 .meta {
@@ -75,7 +70,7 @@
   color: var(--card-accent);
   margin-bottom: var(--space-sm);
   line-height: 1.35;
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .card:is(:hover, :active) .title {
@@ -91,14 +86,13 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  flex: 1;
 }
 
 .readBadge {
   display: inline-flex;
   align-items: center;
   font-size: var(--text-xs);
-  color: #76b792;
+  color: #6aaf8e;
   font-weight: 600;
 }
 
@@ -108,7 +102,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--card-accent);
-  transition: letter-spacing var(--motion-fast) var(--ease-standard);
+  transition: letter-spacing 0.2s;
 }
 
 .card:is(:hover, :active) .readMore {

@@ -29,7 +29,6 @@
 /* Header */
 .header {
   margin-bottom: var(--space-lg);
-  max-width: var(--content-max-width);
 }
 
 .meta {
@@ -83,47 +82,37 @@
 }
 
 .tagLink {
-  composes: buttonGhost from '../../../styles/shared.module.css';
   display: inline-flex;
   align-items: center;
   min-height: 34px;
   padding: 0.25rem 0.7rem;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
-  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
   letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
 .tagLink:is(:hover, :active) {
+  border-color: var(--post-accent-border);
   color: var(--post-accent);
   background-color: var(--post-accent-bg);
 }
 
-.readerLayout {
-  display: block;
-}
-
-.readerLayout:not(.readerLayoutSingle) {
-  display: grid;
-  gap: var(--space-lg);
-}
-
-.readerLayoutSingle {
-  display: block;
-}
-
-.readerMain {
-  min-width: 0;
-  width: min(100%, var(--reading-max-width));
-  margin-inline: auto;
+/* Ornament-Trennlinie */
+.ornament {
+  composes: ornament from '../../../styles/shared.module.css';
+  margin: var(--space-md) 0;
 }
 
 /* Markdown-Inhalt */
 .content {
   color: var(--color-text-soft);
-  font-size: clamp(1.02rem, 0.95rem + 0.28vw, 1.12rem);
+  font-size: clamp(1.08rem, 1.1vw, 1.2rem);
   line-height: 1.9;
-  width: 100%;
-  max-width: none;
 }
 
 .content h2 {
@@ -212,8 +201,10 @@
 }
 
 .toc {
-  composes: panel from '../../../styles/shared.module.css';
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: var(--space-md);
+  background-color: var(--color-bg-card);
   margin-bottom: var(--space-lg);
 }
 
@@ -237,7 +228,7 @@
   color: var(--color-text-muted);
   font-size: var(--text-sm);
   line-height: 1.45;
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .tocLink:is(:hover, :active) {
@@ -286,7 +277,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .navLink:is(:hover, :active) .navLabel {
@@ -298,7 +289,7 @@
   font-family: var(--font-heading);
   color: var(--color-text);
   line-height: 1.35;
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .navLink:is(:hover, :active) .navTitle {
@@ -324,15 +315,19 @@
 }
 
 .relatedCard {
-  composes: cardInteractive from '../../../styles/shared.module.css';
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: var(--space-md);
+  transition: border-color 0.2s, transform 0.2s;
 }
 
 .relatedCard:is(:hover, :active) {
   border-color: var(--post-accent-border);
+  transform: translateY(-2px);
 }
 
 .relatedCategory {
@@ -344,7 +339,7 @@
   font-size: 1rem;
   color: var(--color-text);
   line-height: 1.35;
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .relatedCard:is(:hover, :active) .relatedCardTitle {
@@ -378,26 +373,6 @@
 
 .backBottom {
   composes: backLink from '../../../styles/shared.module.css';
-}
-
-@media (min-width: 1080px) {
-  .readerLayout:not(.readerLayoutSingle) {
-    grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
-    align-items: start;
-    column-gap: var(--space-xl);
-  }
-
-  .readerLayout:not(.readerLayoutSingle) .readerMain {
-    width: 100%;
-    max-width: var(--reading-max-width);
-    margin-inline: 0;
-  }
-
-  .toc {
-    position: sticky;
-    top: calc(var(--header-height) + 1rem);
-    margin-bottom: 0;
-  }
 }
 
 @media (max-width: 768px) {

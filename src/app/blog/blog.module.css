@@ -8,13 +8,15 @@
   align-items: center;
   text-align: center;
   gap: var(--space-sm);
-  max-width: 760px;
-  margin: 0 auto var(--space-xl);
+  margin-bottom: var(--space-xl);
 }
 
 .pageTag {
-  composes: pageTag from '../../styles/shared.module.css';
-  margin-bottom: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #c9a84c;
 }
 
 .pageTitle {
@@ -59,24 +61,31 @@
 }
 
 .exploreLink {
-  composes: buttonBase buttonGhost from '../../styles/shared.module.css';
-  min-height: 2.2rem;
-  padding: 0.35rem 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-size);
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
 .exploreLink:is(:hover, :active) {
-  color: var(--color-gold-light);
+  border-color: var(--color-gold-dim);
+  color: var(--color-gold);
+  background-color: rgba(var(--color-gold-rgb), 0.08);
 }
 
 .toolbar {
-  composes: panel from '../../styles/shared.module.css';
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
   gap: var(--space-md);
-  align-items: start;
-  padding: var(--space-sm);
+  align-items: end;
   margin-bottom: var(--space-md);
 }
 
@@ -104,10 +113,7 @@
   cursor: pointer;
   background: none;
   font-family: var(--font-heading);
-  transition:
-    border-color var(--motion-fast) var(--ease-standard),
-    color var(--motion-fast) var(--ease-standard),
-    background-color var(--motion-fast) var(--ease-standard);
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
 .tagCount {
@@ -147,8 +153,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
-  justify-self: end;
-  width: min(100%, 340px);
 }
 
 .searchLabel {
@@ -160,16 +164,36 @@
 }
 
 .searchInput {
-  composes: inputField from '../../styles/shared.module.css';
+  width: 100%;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  padding: 0.64rem 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.searchInput:focus {
+  border-color: var(--color-gold-dim);
 }
 
 .filterInfo {
-  composes: panel from '../../styles/shared.module.css';
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
   padding: 0.65rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-soft);
   margin-bottom: var(--space-md);
 }
 
@@ -179,29 +203,44 @@
 }
 
 .clearBtn {
-  composes: buttonBase buttonGhost from '../../styles/shared.module.css';
-  min-height: 2.2rem;
-  padding: 0.35rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
+  background-color: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
 .clearBtn:is(:hover, :active) {
-  color: var(--color-gold-light);
+  border-color: var(--color-gold-dim);
+  color: var(--color-gold);
+  background-color: rgba(var(--color-gold-rgb), 0.08);
 }
 
 .featured {
-  composes: cardInteractive from '../../styles/shared.module.css';
   --featured-accent: var(--color-gold-dim);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
   margin-bottom: var(--space-lg);
+  transition: border-color 0.25s, transform 0.25s;
   position: relative;
 }
 
 .featured:is(:hover, :active) {
   border-color: var(--featured-accent);
+  transform: translateY(-2px);
 }
 
 .featuredCover,
@@ -243,7 +282,7 @@
 
 .featuredCoverImg {
   object-fit: cover;
-  transition: transform var(--motion-slow) var(--ease-standard);
+  transition: transform 0.4s ease;
   transform: scale(1);
 }
 
@@ -252,7 +291,7 @@
 }
 
 .featuredBody {
-  padding: calc(var(--space-lg) + 0.15rem);
+  padding: var(--space-lg);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -279,7 +318,7 @@
   font-weight: 700;
   color: var(--featured-accent);
   line-height: 1.25;
-  transition: color var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s;
 }
 
 .featured:is(:hover, :active) .featuredTitle {
@@ -303,7 +342,7 @@
   letter-spacing: 0.1em;
   color: var(--featured-accent);
   margin-top: var(--space-xs);
-  transition: letter-spacing var(--motion-fast) var(--ease-standard);
+  transition: letter-spacing 0.2s;
 }
 
 .featured:is(:hover, :active) .featuredReadMore {
@@ -316,18 +355,12 @@
   gap: var(--space-md);
 }
 
-@media (min-width: 1100px) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .featured {
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  }
-}
-
 .empty {
-  composes: emptyState from '../../styles/shared.module.css';
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-card);
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -352,8 +385,6 @@
   }
 
   .searchWrap {
-    justify-self: stretch;
-    width: 100%;
     max-width: 360px;
   }
 }
@@ -361,9 +392,6 @@
 @media (max-width: 768px) {
   .toolbar {
     gap: var(--space-sm);
-    padding: 0;
-    border: none;
-    background: transparent;
   }
 
   .tags {

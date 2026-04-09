@@ -390,34 +390,32 @@ export default async function BlogPostPage({ params }: Props) {
               </ul>
             )}
 
+            <div className={styles.ornament}>
+              <span>✦</span>
+            </div>
           </header>
 
-          <div
-            className={`${styles.readerLayout} ${tocHeadings.length === 0 ? styles.readerLayoutSingle : ''}`}
-          >
-            {tocHeadings.length > 0 && (
-              <aside className={styles.toc} aria-labelledby="toc-heading">
-                <h2 id="toc-heading" className={styles.tocTitle}>Inhalt</h2>
-                <ol className={styles.tocList}>
-                  {tocHeadings.map((heading) => (
-                    <li key={heading.id} className={styles.tocItem}>
-                      <a
-                        href={`#${heading.id}`}
-                        className={`${styles.tocLink} ${heading.level === 3 ? styles.tocLinkSub : ''}`}
-                      >
-                        {heading.text}
-                      </a>
-                    </li>
-                  ))}
-                </ol>
-              </aside>
-            )}
+          {tocHeadings.length > 0 && (
+            <aside className={styles.toc} aria-labelledby="toc-heading">
+              <h2 id="toc-heading" className={styles.tocTitle}>Inhalt</h2>
+              <ol className={styles.tocList}>
+                {tocHeadings.map((heading) => (
+                  <li key={heading.id} className={styles.tocItem}>
+                    <a
+                      href={`#${heading.id}`}
+                      className={`${styles.tocLink} ${heading.level === 3 ? styles.tocLinkSub : ''}`}
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </aside>
+          )}
 
-            <div className={styles.readerMain}>
-              <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
-              <PostInteractionBar postSlug={post.slug} />
-            </div>
-          </div>
+          <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
+
+          <PostInteractionBar postSlug={post.slug} />
 
           <nav className={styles.postNav} aria-label="Beitragsnavigation">
             <div className={styles.navItem}>
@@ -440,6 +438,9 @@ export default async function BlogPostPage({ params }: Props) {
 
           {relatedTop.length > 0 && (
             <aside className={styles.related}>
+              <div className={styles.ornament}>
+                <span>✦</span>
+              </div>
               <h2 className={styles.relatedTitle}>Weiterlesen zum Thema</h2>
               <div className={styles.relatedGrid}>
                 {relatedTop.map((relatedPost) => {
@@ -468,6 +469,9 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           <footer className={styles.postFooter}>
+            <div className={styles.ornament}>
+              <span>✦</span>
+            </div>
             <Link href="/blog" className={styles.backBottom}>
               ← Alle Beiträge
             </Link>

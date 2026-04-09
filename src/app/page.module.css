@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  overflow: clip;
+  overflow: hidden;
   padding: calc(var(--space-xl) + 0.5rem) 0 var(--space-xl);
 }
 
@@ -9,8 +9,9 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 14% 12%, rgba(var(--color-gold-rgb), 0.1) 0%, transparent 44%),
-    linear-gradient(to bottom, rgba(var(--color-gold-rgb), 0.03), transparent 36%);
+    radial-gradient(circle at 15% 15%, rgba(var(--color-gold-rgb), 0.14) 0%, transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(var(--color-gold-rgb), 0.1) 0%, transparent 46%),
+    linear-gradient(to bottom, rgba(var(--color-gold-rgb), 0.03), transparent 40%);
   pointer-events: none;
 }
 
@@ -20,7 +21,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
   gap: var(--space-xl);
-  align-items: start;
+  align-items: end;
 }
 
 .heroSingle {
@@ -31,14 +32,16 @@
 .heroContent {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
-  max-width: 62ch;
+  gap: var(--space-md);
   animation: fadeUp 0.6s ease both;
 }
 
 .heroTag {
-  composes: pageTag from '../styles/shared.module.css';
-  margin-bottom: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold);
 }
 
 .heroTitle {
@@ -64,7 +67,7 @@
 .heroActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .heroMeta {
@@ -144,15 +147,12 @@
   font-family: var(--font-heading);
   border-radius: var(--radius-pill);
   border: 1px solid rgba(var(--color-gold-rgb), 0.55);
-  font-size: 0.65rem;
+  font-size: 0.61rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   pointer-events: none;
   backdrop-filter: blur(2px);
-  transition:
-    transform var(--motion-fast) var(--ease-standard),
-    box-shadow var(--motion-fast) var(--ease-standard),
-    letter-spacing var(--motion-fast) var(--ease-standard);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, letter-spacing 0.22s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
@@ -207,9 +207,7 @@
   font-size: var(--text-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition:
-    color var(--motion-fast) var(--ease-standard),
-    letter-spacing var(--motion-fast) var(--ease-standard);
+  transition: color 0.2s, letter-spacing 0.2s;
 }
 
 .heroAsideLink:is(:hover, :active) {
@@ -222,22 +220,67 @@
   letter-spacing: 0.11em;
 }
 
+.heroOrn {
+  position: absolute;
+  right: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 17rem;
+  color: rgba(var(--color-gold-rgb), 0.05);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
 .btnPrimary,
 .btnSecondary,
 .btnGhost {
-  composes: buttonBase from '../styles/shared.module.css';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-target-size);
+  padding: 0.72rem 1.6rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-sm);
+  transition: transform 0.2s, border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
 .btnPrimary {
-  composes: buttonPrimary from '../styles/shared.module.css';
+  background-color: var(--color-gold);
+  color: var(--color-on-gold);
+  border: 1px solid transparent;
+}
+
+.btnPrimary:is(:hover, :active) {
+  background-color: var(--color-gold-light);
+  transform: translateY(-1px);
 }
 
 .btnSecondary {
-  composes: buttonSecondary from '../styles/shared.module.css';
+  border: 1px solid var(--color-gold-dim);
+  color: var(--color-gold);
+}
+
+.btnSecondary:is(:hover, :active) {
+  color: var(--color-gold-light);
+  border-color: var(--color-gold);
+  transform: translateY(-1px);
 }
 
 .btnGhost {
-  composes: buttonGhost from '../styles/shared.module.css';
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-soft);
+}
+
+.btnGhost:is(:hover, :active) {
+  color: var(--color-text);
+  border-color: var(--color-gold-dim);
+  transform: translateY(-1px);
 }
 
 .section {
@@ -262,7 +305,7 @@
 }
 
 .aboutInner {
-  max-width: 760px;
+  max-width: 680px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -271,15 +314,21 @@
   gap: var(--space-sm);
 }
 
-@media (min-width: 1040px) {
-  .heroAside {
-    position: sticky;
-    top: calc(var(--header-height) + 1rem);
-  }
+.aboutOrn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  color: var(--color-gold);
+  font-size: 0.7rem;
+}
 
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.aboutOrn::before,
+.aboutOrn::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-dim), transparent);
 }
 
 .aboutTitle {
@@ -313,6 +362,12 @@
   .heroAside {
     max-width: 620px;
   }
+
+  .heroOrn {
+    font-size: 12rem;
+    right: -1rem;
+    top: 38%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -332,6 +387,12 @@
   .btnSecondary,
   .btnGhost {
     min-width: 9rem;
+  }
+
+  .heroOrn {
+    font-size: 8.8rem;
+    opacity: 0.5;
+    right: -1.6rem;
   }
 
   .grid {

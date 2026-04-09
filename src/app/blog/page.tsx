@@ -151,9 +151,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <header className={styles.header}>
           <p className={styles.pageTag}>Blog</p>
           <h1 className={styles.pageTitle}>Die Bibliothek meiner Gedanken</h1>
-          <p className={styles.pageSubtitle}>
-            Texte, Beobachtungen und Gedanken aus dem Alltag zwischen Sprache, Herkunft und Gegenwart.
-          </p>
           <div className={styles.exploreLinks}>
             <Link href="/blog/tags" className={styles.exploreLink}>Nach Schlagwort stöbern</Link>
             <Link href="/blog/archiv" className={styles.exploreLink}>Archiv nach Jahr</Link>
