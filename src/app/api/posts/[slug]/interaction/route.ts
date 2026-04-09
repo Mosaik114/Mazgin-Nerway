@@ -20,11 +20,11 @@ export async function GET(_req: Request, { params }: Params) {
     where: {
       userId_postSlug: { userId: session.user.id, postSlug: slug },
     },
-    select: { isRead: true, bookmarkPercent: true, note: true },
+    select: { isRead: true, bookmarkPercent: true, note: true, isFavorite: true, isOnReadingList: true },
   });
 
   return NextResponse.json(
-    interaction ?? { isRead: false, bookmarkPercent: null, note: '' },
+    interaction ?? { isRead: false, bookmarkPercent: null, note: '', isFavorite: false, isOnReadingList: false },
     { headers: { 'Cache-Control': 'no-store, max-age=0' } },
   );
 }
@@ -59,6 +59,12 @@ export async function PATCH(req: Request, { params }: Params) {
   if (typeof body.note === 'string') {
     data.note = body.note.slice(0, 5000);
   }
+  if (typeof body.isFavorite === 'boolean') {
+    data.isFavorite = body.isFavorite;
+  }
+  if (typeof body.isOnReadingList === 'boolean') {
+    data.isOnReadingList = body.isOnReadingList;
+  }
 
   if (Object.keys(data).length === 0) {
     return NextResponse.json({ error: 'Keine gültigen Felder' }, { status: 400 });
@@ -70,7 +76,7 @@ export async function PATCH(req: Request, { params }: Params) {
     },
     create: { userId: session.user.id, postSlug: slug, ...data },
     update: data,
-    select: { isRead: true, bookmarkPercent: true, note: true },
+    select: { isRead: true, bookmarkPercent: true, note: true, isFavorite: true, isOnReadingList: true },
   });
 
   return NextResponse.json(interaction);

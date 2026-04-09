@@ -14,5 +14,6 @@ declare module 'next-auth' {
     role?: Role;
     isBlocked?: boolean;
     lastLoginAt?: Date | null;
+    image?: string | null;
   }
 }

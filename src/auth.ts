@@ -108,6 +108,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = user.id;
         session.user.role = user.role ?? Role.USER;
         session.user.isBlocked = user.isBlocked ?? false;
+        session.user.image = user.image ?? null;
+
+        // displayName aus DB laden (nicht im user-Objekt des Adapters)
+        const dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: { displayName: true },
+        });
+        if (dbUser?.displayName) {
+          session.user.name = dbUser.displayName;
+        }
       }
 
       return session;

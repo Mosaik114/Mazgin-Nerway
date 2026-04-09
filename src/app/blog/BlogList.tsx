@@ -15,6 +15,8 @@ interface UserInteraction {
   postSlug: string;
   isRead: boolean;
   bookmarkPercent: number | null;
+  isFavorite: boolean;
+  isOnReadingList: boolean;
 }
 
 interface Props {
@@ -253,6 +255,9 @@ export default function BlogList({
                     readingTime={post.readingTime}
                     isRead={interaction?.isRead}
                     hasBookmark={interaction?.bookmarkPercent !== null && interaction?.bookmarkPercent !== undefined}
+                    isFavorite={interaction?.isFavorite}
+                    isOnReadingList={interaction?.isOnReadingList}
+                    showActions={status === 'authenticated'}
                   />
                 );
               })}

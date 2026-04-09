@@ -1,0 +1,247 @@
+.page {
+  padding-top: calc(var(--header-height) + var(--space-lg));
+  padding-bottom: var(--space-2xl);
+  display: grid;
+  gap: var(--space-lg);
+  max-width: 640px;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.backLink {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  transition: color 0.15s;
+  width: fit-content;
+}
+
+.backLink:hover {
+  color: var(--color-gold-light);
+}
+
+.title {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  letter-spacing: 0.02em;
+}
+
+/* Karten */
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  padding: var(--space-md) var(--space-lg);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-md);
+  letter-spacing: 0.03em;
+}
+
+.cardDescription {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Formular-Zeilen */
+.fieldRow {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.input {
+  flex: 1;
+  min-height: 40px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(var(--color-gold-rgb), 0.45);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.select {
+  flex: 1;
+  min-height: 40px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.saveBtn {
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: rgba(var(--color-gold-rgb), 0.08);
+  color: var(--color-text-soft);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.saveBtn:hover {
+  border-color: rgba(var(--color-gold-rgb), 0.45);
+  color: var(--color-text);
+}
+
+/* Konto-Info */
+.infoGrid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.infoLabel {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.infoValue {
+  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+}
+
+/* Gefahrenzone */
+.dangerCard {
+  border-color: rgba(var(--color-danger-rgb), 0.3);
+}
+
+.dangerCard .cardTitle {
+  color: var(--color-danger);
+}
+
+.dangerBtn {
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(var(--color-danger-rgb), 0.4);
+  border-radius: var(--radius-sm);
+  background: rgba(var(--color-danger-rgb), 0.08);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.dangerBtn:hover:not(:disabled) {
+  border-color: var(--color-danger);
+  background: rgba(var(--color-danger-rgb), 0.14);
+}
+
+.dangerBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dangerNote {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.confirmBox {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px dashed rgba(var(--color-danger-rgb), 0.3);
+  border-radius: var(--radius-sm);
+}
+
+.confirmText {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.confirmForm {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.confirmActions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.cancelBtn {
+  min-height: 40px;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-soft);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.cancelBtn:hover {
+  border-color: rgba(var(--color-gold-rgb), 0.45);
+  color: var(--color-text);
+}
+
+.errorText {
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: var(--space-md);
+  }
+
+  .fieldRow {
+    flex-direction: column;
+  }
+
+  .input,
+  .select {
+    width: 100%;
+  }
+
+  .confirmActions {
+    flex-direction: column;
+  }
+
+  .infoRow {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+}

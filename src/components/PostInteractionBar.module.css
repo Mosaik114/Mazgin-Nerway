@@ -71,6 +71,56 @@
   line-height: 1;
 }
 
+/* Quick Actions (Favorite + Reading List) */
+.quickActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.favoriteBtn,
+.readingListBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--tap-target-size);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-soft);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+
+.favoriteBtn svg,
+.readingListBtn svg {
+  flex-shrink: 0;
+}
+
+.favoriteBtn:is(:hover, :focus-visible) {
+  border-color: rgba(192, 112, 112, 0.5);
+  color: #c07070;
+}
+
+.favoriteBtnActive {
+  border-color: rgba(192, 112, 112, 0.5);
+  background: rgba(192, 112, 112, 0.08);
+  color: #c07070;
+}
+
+.readingListBtn:is(:hover, :focus-visible) {
+  border-color: rgba(var(--color-gold-rgb), 0.5);
+  color: var(--color-gold-light);
+}
+
+.readingListBtnActive {
+  border-color: rgba(var(--color-gold-rgb), 0.5);
+  background: rgba(var(--color-gold-rgb), 0.08);
+  color: var(--color-gold);
+}
+
 /* Bookmark */
 .bookmarkRow {
   display: flex;

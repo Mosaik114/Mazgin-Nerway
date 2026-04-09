@@ -3,6 +3,8 @@ import Image from 'next/image';
 import type { CSSProperties } from 'react';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { formatDate } from '@/lib/config';
+import FavoriteButton from './FavoriteButton';
+import ReadingListButton from './ReadingListButton';
 import styles from './BlogCard.module.css';
 
 interface Props {
@@ -16,6 +18,9 @@ interface Props {
   readingTime?: number;
   isRead?: boolean;
   hasBookmark?: boolean;
+  isFavorite?: boolean;
+  isOnReadingList?: boolean;
+  showActions?: boolean;
 }
 
 export default function BlogCard({
@@ -29,6 +34,9 @@ export default function BlogCard({
   readingTime,
   isRead,
   hasBookmark,
+  isFavorite,
+  isOnReadingList,
+  showActions = false,
 }: Props) {
   const formatted = formatDate(date);
   const accentColor = category
@@ -49,6 +57,12 @@ export default function BlogCard({
               quality={86}
               className={styles.coverImg}
             />
+          </div>
+        )}
+        {showActions && (
+          <div className={styles.actions}>
+            <FavoriteButton postSlug={slug} initialFavorite={isFavorite} variant="icon" />
+            <ReadingListButton postSlug={slug} initialOnList={isOnReadingList} variant="icon" />
           </div>
         )}
         <div className={styles.body}>

@@ -7,6 +7,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import styles from './Navbar.module.css';
 import ThemeToggle from './ThemeToggle';
+import UserDropdown from './UserDropdown';
 
 const publicLinks = [
   { href: '/', label: 'Start' },
@@ -27,6 +28,7 @@ export default function Navbar() {
   const [fallbackUser, setFallbackUser] = useState<{
     name?: string | null;
     email?: string | null;
+    image?: string | null;
     role?: 'USER' | 'ADMIN';
   } | null>(null);
   const menuId = 'mobile-navigation';
@@ -34,7 +36,6 @@ export default function Navbar() {
   const currentUser = session?.user ?? fallbackUser;
   const isAuthenticated = status === 'authenticated' ? Boolean(session?.user) : Boolean(currentUser);
   const isAdmin = currentUser?.role === 'ADMIN';
-  const visibleLinks = isAdmin ? [...publicLinks, { href: '/admin', label: 'Admin' }] : publicLinks;
   const displayName = currentUser?.name ?? currentUser?.email?.split('@')[0] ?? 'Konto';
   const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
 
@@ -73,6 +74,7 @@ export default function Navbar() {
           user?: {
             name?: string | null;
             email?: string | null;
+            image?: string | null;
             role?: 'USER' | 'ADMIN';
           } | null;
         };
@@ -165,7 +167,7 @@ export default function Navbar() {
         </Link>
 
         <nav className={styles.nav} aria-label="Hauptnavigation">
-          {visibleLinks.map(({ href, label }) => {
+          {publicLinks.map(({ href, label }) => {
             const isActive = isActiveLink(pathname, href);
             return (
               <Link
@@ -178,16 +180,13 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <ThemeToggle />
           {isAuthenticated ? (
-            <div className={styles.authRow}>
-              <span className={styles.userBadge} title={currentUser?.email ?? undefined}>
-                {displayName}
-              </span>
-              <button type="button" className={styles.authButton} onClick={handleSignOut}>
-                Abmelden
-              </button>
-            </div>
+            <UserDropdown
+              name={currentUser?.name}
+              email={currentUser?.email}
+              image={currentUser?.image}
+              isAdmin={isAdmin}
+            />
           ) : (
             <Link href={signInHref} className={styles.authButton} onClick={() => setOpen(false)}>
               Anmelden
@@ -215,7 +214,7 @@ export default function Navbar() {
         className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}
         aria-hidden={!open}
       >
-        {visibleLinks.map(({ href, label }) => {
+        {publicLinks.map(({ href, label }) => {
           const isActive = isActiveLink(pathname, href);
           return (
             <Link
@@ -229,12 +228,40 @@ export default function Navbar() {
             </Link>
           );
         })}
+
+        {isAuthenticated ? (
+          <>
+            <div className={styles.mobileUserHeader}>
+              <span className={styles.mobileUserName}>{displayName}</span>
+              {currentUser?.email && (
+                <span className={styles.mobileUserEmail}>{currentUser.email}</span>
+              )}
+            </div>
+            <Link
+              href="/mein-bereich"
+              className={styles.mobileLink}
+              onClick={() => setOpen(false)}
+            >
+              Mein Bereich
+            </Link>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className={`${styles.mobileLink} ${isActiveLink(pathname, '/admin') ? styles.active : ''}`}
+                onClick={() => setOpen(false)}
+              >
+                Admin
+              </Link>
+            )}
+          </>
+        ) : null}
+
+        <div className={styles.mobileThemeRow}>
+          <span className={styles.mobileThemeLabel}>Design</span>
+          <ThemeToggle />
+        </div>
+
         <div className={styles.mobileAuthRow}>
-          {isAuthenticated && (
-            <span className={styles.mobileUserBadge} title={currentUser?.email ?? undefined}>
-              {displayName}
-            </span>
-          )}
           {isAuthenticated ? (
             <button type="button" className={styles.mobileAuthButton} onClick={handleSignOut}>
               Abmelden
@@ -244,10 +271,6 @@ export default function Navbar() {
               Anmelden mit Google
             </Link>
           )}
-        </div>
-        <div className={styles.mobileThemeRow}>
-          <span className={styles.mobileThemeLabel}>Design</span>
-          <ThemeToggle />
         </div>
       </div>
     </header>

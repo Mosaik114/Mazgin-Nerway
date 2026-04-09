@@ -80,26 +80,7 @@
   width: 100%;
 }
 
-.authRow {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.userBadge {
-  max-width: 8.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-text-soft);
-}
-
-.authButton,
-.mobileAuthButton {
+.authButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -117,17 +98,10 @@
   transition: border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
-.authButton:is(:hover, :active),
-.mobileAuthButton:is(:hover, :active) {
+.authButton:is(:hover, :active) {
   border-color: rgba(var(--color-gold-rgb), 0.48);
   color: var(--color-text);
   background: rgba(var(--color-gold-rgb), 0.2);
-}
-
-.authButton:disabled,
-.mobileAuthButton:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 .hamburger {
@@ -182,7 +156,7 @@
 }
 
 .mobileNavOpen {
-  max-height: min(70vh, 420px);
+  max-height: min(70vh, 520px);
   overflow-y: auto;
   border-color: var(--color-border);
   border-bottom-left-radius: var(--radius-md);
@@ -212,6 +186,29 @@
   padding-left: var(--space-lg);
 }
 
+.mobileUserHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem var(--space-md) 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mobileUserName {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+}
+
+.mobileUserEmail {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .mobileThemeRow {
   display: flex;
   align-items: center;
@@ -234,21 +231,32 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.45rem;
   padding: 0.8rem var(--space-md);
   border-bottom: 1px solid var(--color-border);
 }
 
-.mobileUserBadge {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.mobileAuthButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: rgba(var(--color-gold-rgb), 0.11);
+  color: var(--color-gold-light);
   font-family: var(--font-heading);
-  font-size: 0.76rem;
-  letter-spacing: 0.07em;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-soft);
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+}
+
+.mobileAuthButton:is(:hover, :active) {
+  border-color: rgba(var(--color-gold-rgb), 0.48);
+  color: var(--color-text);
+  background: rgba(var(--color-gold-rgb), 0.2);
 }
 
 @media (max-width: 860px) {

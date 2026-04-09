@@ -21,6 +21,8 @@ model User {
   role             Role                  @default(USER)
   isBlocked        Boolean               @default(false)
   lastLoginAt      DateTime?
+  displayName      String?
+  themePreference  String?
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
   accounts         Account[]
@@ -36,6 +38,8 @@ model UserPostInteraction {
   bookmarkPercent Int?
   isRead          Boolean   @default(false)
   readAt          DateTime?
+  isFavorite      Boolean   @default(false)
+  isOnReadingList Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 

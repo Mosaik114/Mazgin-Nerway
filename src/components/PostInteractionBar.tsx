@@ -9,6 +9,8 @@ interface Interaction {
   isRead: boolean;
   bookmarkPercent: number | null;
   note: string;
+  isFavorite: boolean;
+  isOnReadingList: boolean;
 }
 
 type State =
@@ -55,7 +57,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
   }, [postSlug]);
 
   const patch = useCallback(
-    async (updates: Partial<{ isRead: boolean; bookmarkPercent: number | null; note: string }>) => {
+    async (updates: Partial<{ isRead: boolean; bookmarkPercent: number | null; note: string; isFavorite: boolean; isOnReadingList: boolean }>) => {
       const res = await fetch(`/api/posts/${postSlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -76,6 +78,20 @@ export default function PostInteractionBar({ postSlug }: Props) {
     if (state.kind !== 'ready') return;
     try {
       update(await patch({ isRead: !state.interaction.isRead }));
+    } catch { /* silent */ }
+  };
+
+  const toggleFavorite = async () => {
+    if (state.kind !== 'ready') return;
+    try {
+      update(await patch({ isFavorite: !state.interaction.isFavorite }));
+    } catch { /* silent */ }
+  };
+
+  const toggleReadingList = async () => {
+    if (state.kind !== 'ready') return;
+    try {
+      update(await patch({ isOnReadingList: !state.interaction.isOnReadingList }));
     } catch { /* silent */ }
   };
 
@@ -145,6 +161,33 @@ export default function PostInteractionBar({ postSlug }: Props) {
             </span>
             {interaction.isRead ? 'Gelesen' : 'Als gelesen markieren'}
           </button>
+        </div>
+
+        <div className={styles.section}>
+          <div className={styles.quickActions}>
+            <button
+              type="button"
+              className={`${styles.favoriteBtn} ${interaction.isFavorite ? styles.favoriteBtnActive : ''}`}
+              onClick={toggleFavorite}
+              aria-pressed={interaction.isFavorite}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={interaction.isFavorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              {interaction.isFavorite ? 'Favorisiert' : 'Favorit'}
+            </button>
+            <button
+              type="button"
+              className={`${styles.readingListBtn} ${interaction.isOnReadingList ? styles.readingListBtnActive : ''}`}
+              onClick={toggleReadingList}
+              aria-pressed={interaction.isOnReadingList}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={interaction.isOnReadingList ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+              {interaction.isOnReadingList ? 'Auf Leseliste' : 'Später lesen'}
+            </button>
+          </div>
         </div>
 
         <div className={styles.section}>

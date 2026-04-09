@@ -26,6 +26,15 @@
   transform: scale(1.02);
 }
 
+.actions {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 2;
+  display: flex;
+  gap: 0.35rem;
+}
+
 .body {
   padding: var(--space-lg);
 }
