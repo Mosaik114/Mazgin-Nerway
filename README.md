@@ -37,6 +37,15 @@ ADMIN_EMAILS=
 DATABASE_URL=
 ```
 
+Hinweis fuer Deployments (z. B. Vercel):
+
+- Pflicht fuer Login: `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `DATABASE_URL`
+- Kompatible Alias-Namen werden ebenfalls akzeptiert:
+  `NEXTAUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
+- Die Variablen muessen in der jeweiligen Umgebung gesetzt sein (`Production`, optional `Preview`).
+- Wenn beim Login `Fehler 400: invalid_request` mit `Missing required parameter: client_id` erscheint:
+  In der aktiven Umgebung fehlt mindestens `AUTH_GOOGLE_ID` oder `GOOGLE_CLIENT_ID`.
+
 ## Quality Checks
 
 ```bash

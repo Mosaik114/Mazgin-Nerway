@@ -36,7 +36,7 @@ export default function Navbar() {
   const isAdmin = currentUser?.role === 'ADMIN';
   const visibleLinks = isAdmin ? [...publicLinks, { href: '/admin', label: 'Admin' }] : publicLinks;
   const displayName = currentUser?.name ?? currentUser?.email?.split('@')[0] ?? 'Konto';
-  const signInHref = `/api/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
+  const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
 
   const handleSignOut = () => {
     setOpen(false);

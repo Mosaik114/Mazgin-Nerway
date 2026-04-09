@@ -113,7 +113,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
   if (state.kind === 'loading') return null;
 
   if (state.kind === 'unauthenticated') {
-    const signInHref = `/api/auth/signin?callbackUrl=${encodeURIComponent(pathname ?? '/')}`;
+    const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname ?? '/')}`;
     return (
       <div className={styles.loginHint}>
         <p className={styles.loginHintText}>
