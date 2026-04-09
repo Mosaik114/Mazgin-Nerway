@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { buildSignInPath } from '@/lib/auth-redirect';
 import styles from './PostInteractionBar.module.css';
 
 interface Interaction {
@@ -108,7 +109,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
   if (state.kind === 'loading') return null;
 
   if (state.kind === 'unauthenticated') {
-    const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname ?? '/')}`;
+    const signInHref = buildSignInPath(pathname ?? '/');
     return (
       <div className={styles.loginHint}>
         <p className={styles.loginHintText}>

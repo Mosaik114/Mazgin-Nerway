@@ -3,6 +3,7 @@ import { Role } from '@prisma/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
+import { resolveProtectedRoute } from '@/lib/auth-flow';
 import { prisma } from '@/lib/prisma';
 import { updateDisplayNameAction, updateThemePreferenceAction } from './actions';
 import AvatarUpload from './AvatarUpload';
@@ -18,13 +19,14 @@ export const metadata: Metadata = {
 
 export default async function EinstellungenPage() {
   const session = await auth();
+  const access = resolveProtectedRoute(session, '/einstellungen');
 
-  if (!session?.user) {
-    redirect('/auth/signin?callbackUrl=%2Feinstellungen');
+  if (access.type === 'redirect') {
+    redirect(access.location);
   }
 
   const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: access.user.id },
     select: {
       displayName: true,
       name: true,

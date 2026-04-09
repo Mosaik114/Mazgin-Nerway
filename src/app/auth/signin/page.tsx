@@ -1,30 +1,13 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { auth } from '@/auth';
+import { getSignInPageDecision } from '@/lib/auth-flow';
 import styles from './signin.module.css';
 
-type SearchParamValue = string | string[] | undefined;
-type SignInSearchParams = Record<string, SearchParamValue>;
+type SignInSearchParams = Record<string, string | string[] | undefined>;
 
 interface SignInPageProps {
   searchParams?: Promise<SignInSearchParams>;
-}
-
-function firstParamValue(value: SearchParamValue): string {
-  if (Array.isArray(value)) return value[0] ?? '';
-  return value ?? '';
-}
-
-function getSafeCallbackUrl(rawCallbackUrl: string): string {
-  const callbackUrl = rawCallbackUrl.trim();
-  if (!callbackUrl) {
-    return '/';
-  }
-
-  if (callbackUrl.startsWith('/') && !callbackUrl.startsWith('//')) {
-    return callbackUrl;
-  }
-
-  return '/';
 }
 
 function hasGoogleOAuthConfig(): boolean {
@@ -35,10 +18,15 @@ function hasGoogleOAuthConfig(): boolean {
 
 export default async function SignInPage({ searchParams }: SignInPageProps) {
   const resolvedSearchParams = (await searchParams) ?? {};
-  const callbackUrl = getSafeCallbackUrl(firstParamValue(resolvedSearchParams.callbackUrl));
+  const session = await auth();
+  const decision = getSignInPageDecision({
+    callbackParam: resolvedSearchParams.callbackUrl,
+    isAuthenticated: Boolean(session?.user),
+    hasGoogleOAuthConfig: hasGoogleOAuthConfig(),
+  });
 
-  if (hasGoogleOAuthConfig()) {
-    redirect(`/auth/signin/google?callbackUrl=${encodeURIComponent(callbackUrl)}`);
+  if (decision.type === 'redirect') {
+    redirect(decision.location);
   }
 
   return (

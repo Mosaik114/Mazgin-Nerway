@@ -2,6 +2,7 @@ import { Role } from '@prisma/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
+import { resolveProtectedRoute } from '@/lib/auth-flow';
 import { prisma } from '@/lib/prisma';
 import { setUserRoleAction, toggleUserBlockAction } from './actions';
 import styles from './admin.module.css';
@@ -21,12 +22,13 @@ function formatDateTime(value: Date | null): string {
 
 export default async function AdminPage() {
   const session = await auth();
+  const access = resolveProtectedRoute(session, '/admin');
 
-  if (!session?.user) {
-    redirect('/auth/signin?callbackUrl=%2Fadmin');
+  if (access.type === 'redirect') {
+    redirect(access.location);
   }
 
-  if (session.user.role !== Role.ADMIN) {
+  if (access.user.role !== Role.ADMIN) {
     return (
       <section className={`container ${styles.page}`}>
         <h1 className={styles.title}>Kein Zugriff</h1>
@@ -63,7 +65,7 @@ export default async function AdminPage() {
       <div className={styles.header}>
         <h1 className={styles.title}>Admin Dashboard</h1>
         <p className={styles.description}>
-          Eingeloggt als <strong>{session.user.email}</strong>.
+          Eingeloggt als <strong>{access.user.email}</strong>.
         </p>
       </div>
 
@@ -96,7 +98,7 @@ export default async function AdminPage() {
           </thead>
           <tbody>
             {users.map((user) => {
-              const isCurrentAdmin = session.user.id === user.id;
+              const isCurrentAdmin = access.user.id === user.id;
               const displayName = user.name ?? user.email ?? 'Unbekannt';
 
               return (

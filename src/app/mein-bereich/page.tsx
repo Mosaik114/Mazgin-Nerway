@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
+import { resolveProtectedRoute } from '@/lib/auth-flow';
 import { prisma } from '@/lib/prisma';
 import { getAllPosts } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
@@ -19,18 +20,19 @@ export const metadata: Metadata = {
 
 export default async function MeinBereichPage() {
   const session = await auth();
+  const access = resolveProtectedRoute(session, '/mein-bereich');
 
-  if (!session?.user) {
-    redirect('/auth/signin?callbackUrl=%2Fmein-bereich');
+  if (access.type === 'redirect') {
+    redirect(access.location);
   }
 
   const [interactions, user] = await Promise.all([
     prisma.userPostInteraction.findMany({
-      where: { userId: session.user.id },
+      where: { userId: access.user.id },
       orderBy: { updatedAt: 'desc' },
     }),
     prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: access.user.id },
       select: { displayName: true, name: true, email: true, image: true },
     }),
   ]);
@@ -38,7 +40,7 @@ export default async function MeinBereichPage() {
   const allPosts = getAllPosts();
   const postMap = new Map(allPosts.map((p) => [p.slug, p]));
 
-  const displayName = user?.displayName ?? user?.name ?? session.user.email?.split('@')[0] ?? 'dort';
+  const displayName = user?.displayName ?? user?.name ?? access.user.email?.split('@')[0] ?? 'dort';
 
   // Daten gruppieren
   const readingList = interactions.filter((i) => i.isOnReadingList);

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
+import { buildSignInPath } from '@/lib/auth-redirect';
 import styles from './Navbar.module.css';
 import ThemeToggle from './ThemeToggle';
 import UserDropdown from './UserDropdown';
@@ -32,7 +33,7 @@ export default function Navbar() {
   const currentUser = session?.user ?? null;
   const isAdmin = currentUser?.role === 'ADMIN';
   const displayName = currentUser?.name ?? currentUser?.email?.split('@')[0] ?? 'Konto';
-  const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
+  const signInHref = buildSignInPath(pathname || '/');
 
   const handleSignOut = () => {
     setOpen(false);
