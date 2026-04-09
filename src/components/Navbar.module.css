@@ -104,6 +104,20 @@
   background: rgba(var(--color-gold-rgb), 0.2);
 }
 
+.avatarSkeleton {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-border);
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
 .hamburger {
   display: none;
   flex-direction: column;

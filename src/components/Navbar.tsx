@@ -25,16 +25,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { data: session, status } = useSession();
-  const [fallbackUser, setFallbackUser] = useState<{
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-    role?: 'USER' | 'ADMIN';
-  } | null>(null);
   const menuId = 'mobile-navigation';
   const mobileNavRef = useRef<HTMLDivElement>(null);
-  const currentUser = session?.user ?? fallbackUser;
-  const isAuthenticated = status === 'authenticated' ? Boolean(session?.user) : Boolean(currentUser);
+  const isLoading = status === 'loading';
+  const isAuthenticated = status === 'authenticated' && Boolean(session?.user);
+  const currentUser = session?.user ?? null;
   const isAdmin = currentUser?.role === 'ADMIN';
   const displayName = currentUser?.name ?? currentUser?.email?.split('@')[0] ?? 'Konto';
   const signInHref = `/auth/signin?callbackUrl=${encodeURIComponent(pathname || '/')}`;
@@ -47,54 +42,6 @@ export default function Navbar() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
-
-  useEffect(() => {
-    let active = true;
-
-    if (session?.user) {
-      setFallbackUser(null);
-      return () => {
-        active = false;
-      };
-    }
-
-    const fetchFallbackSession = async () => {
-      try {
-        const response = await fetch('/api/session', {
-          method: 'GET',
-          cache: 'no-store',
-          credentials: 'same-origin',
-        });
-
-        if (!response.ok) {
-          return;
-        }
-
-        const data = (await response.json()) as {
-          user?: {
-            name?: string | null;
-            email?: string | null;
-            image?: string | null;
-            role?: 'USER' | 'ADMIN';
-          } | null;
-        };
-
-        if (active) {
-          setFallbackUser(data.user ?? null);
-        }
-      } catch {
-        if (active) {
-          setFallbackUser(null);
-        }
-      }
-    };
-
-    void fetchFallbackSession();
-
-    return () => {
-      active = false;
-    };
-  }, [pathname, session?.user]);
 
   useEffect(() => {
     const mobileNav = mobileNavRef.current;
@@ -180,7 +127,9 @@ export default function Navbar() {
               </Link>
             );
           })}
-          {isAuthenticated ? (
+          {isLoading ? (
+            <span className={styles.avatarSkeleton} />
+          ) : isAuthenticated ? (
             <UserDropdown
               name={currentUser?.name}
               email={currentUser?.email}
@@ -229,7 +178,7 @@ export default function Navbar() {
           );
         })}
 
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <>
             <div className={styles.mobileUserHeader}>
               <span className={styles.mobileUserName}>{displayName}</span>
@@ -244,6 +193,13 @@ export default function Navbar() {
             >
               Mein Bereich
             </Link>
+            <Link
+              href="/einstellungen"
+              className={styles.mobileLink}
+              onClick={() => setOpen(false)}
+            >
+              Einstellungen
+            </Link>
             {isAdmin && (
               <Link
                 href="/admin"
@@ -254,7 +210,7 @@ export default function Navbar() {
               </Link>
             )}
           </>
-        ) : null}
+        )}
 
         <div className={styles.mobileThemeRow}>
           <span className={styles.mobileThemeLabel}>Design</span>
@@ -262,7 +218,9 @@ export default function Navbar() {
         </div>
 
         <div className={styles.mobileAuthRow}>
-          {isAuthenticated ? (
+          {isLoading ? (
+            <span className={styles.mobileAuthButton} style={{ opacity: 0.5 }}>Laden …</span>
+          ) : isAuthenticated ? (
             <button type="button" className={styles.mobileAuthButton} onClick={handleSignOut}>
               Abmelden
             </button>
