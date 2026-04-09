@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import styles from './PostInteractionBar.module.css';
 
 interface Interaction {
@@ -12,42 +11,55 @@ interface Interaction {
   note: string;
 }
 
+type State =
+  | { kind: 'loading' }
+  | { kind: 'unauthenticated' }
+  | { kind: 'ready'; interaction: Interaction };
+
 interface Props {
   postSlug: string;
 }
 
 export default function PostInteractionBar({ postSlug }: Props) {
-  const { status } = useSession();
   const pathname = usePathname();
-  const [interaction, setInteraction] = useState<Interaction | null>(null);
+  const [state, setState] = useState<State>({ kind: 'loading' });
   const [noteValue, setNoteValue] = useState('');
   const [noteChanged, setNoteChanged] = useState(false);
   const [noteSaving, setNoteSaving] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
 
   useEffect(() => {
-    if (status !== 'authenticated') return;
+    let cancelled = false;
 
     void fetch(`/api/posts/${postSlug}/interaction`, {
       cache: 'no-store',
-      credentials: 'same-origin',
+      credentials: 'include',
     })
-      .then((r) => (r.ok ? (r.json() as Promise<Interaction>) : null))
+      .then((r) => (r.ok ? (r.json() as Promise<Interaction | null>) : null))
       .then((data) => {
-        if (data) {
-          setInteraction(data);
+        if (cancelled) return;
+        if (data === null || data === undefined) {
+          setState({ kind: 'unauthenticated' });
+        } else {
+          setState({ kind: 'ready', interaction: data });
           setNoteValue(data.note ?? '');
         }
       })
-      .catch(() => {});
-  }, [postSlug, status]);
+      .catch(() => {
+        if (!cancelled) setState({ kind: 'unauthenticated' });
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [postSlug]);
 
   const patch = useCallback(
     async (updates: Partial<{ isRead: boolean; bookmarkPercent: number | null; note: string }>) => {
       const res = await fetch(`/api/posts/${postSlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin',
+        credentials: 'include',
         body: JSON.stringify(updates),
       });
       if (!res.ok) throw new Error('Fehler');
@@ -56,58 +68,51 @@ export default function PostInteractionBar({ postSlug }: Props) {
     [postSlug],
   );
 
+  const update = useCallback((interaction: Interaction) => {
+    setState({ kind: 'ready', interaction });
+  }, []);
+
   const toggleRead = async () => {
-    if (!interaction) return;
+    if (state.kind !== 'ready') return;
     try {
-      const updated = await patch({ isRead: !interaction.isRead });
-      setInteraction(updated);
-    } catch {
-      // silent
-    }
+      update(await patch({ isRead: !state.interaction.isRead }));
+    } catch { /* silent */ }
   };
 
   const setBookmark = async () => {
     const scrollable = document.body.scrollHeight - window.innerHeight;
     const percent = scrollable > 0 ? Math.round((window.scrollY / scrollable) * 100) : 0;
     try {
-      const updated = await patch({ bookmarkPercent: percent });
-      setInteraction(updated);
-    } catch {
-      // silent
-    }
+      update(await patch({ bookmarkPercent: percent }));
+    } catch { /* silent */ }
   };
 
   const clearBookmark = async () => {
     try {
-      const updated = await patch({ bookmarkPercent: null });
-      setInteraction(updated);
-    } catch {
-      // silent
-    }
+      update(await patch({ bookmarkPercent: null }));
+    } catch { /* silent */ }
   };
 
   const jumpToBookmark = () => {
-    if (interaction?.bookmarkPercent == null) return;
+    if (state.kind !== 'ready' || state.interaction.bookmarkPercent == null) return;
     const scrollable = document.body.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: (scrollable * interaction.bookmarkPercent) / 100, behavior: 'smooth' });
+    window.scrollTo({ top: (scrollable * state.interaction.bookmarkPercent) / 100, behavior: 'smooth' });
   };
 
   const saveNote = async () => {
     setNoteSaving(true);
     try {
-      const updated = await patch({ note: noteValue });
-      setInteraction(updated);
+      update(await patch({ note: noteValue }));
       setNoteChanged(false);
       setNoteSaved(true);
       setTimeout(() => setNoteSaved(false), 2500);
-    } catch {
-      // silent
-    } finally {
-      setNoteSaving(false);
-    }
+    } catch { /* silent */ }
+    finally { setNoteSaving(false); }
   };
 
-  if (status === 'unauthenticated') {
+  if (state.kind === 'loading') return null;
+
+  if (state.kind === 'unauthenticated') {
     const signInHref = `/api/auth/signin?callbackUrl=${encodeURIComponent(pathname ?? '/')}`;
     return (
       <div className={styles.loginHint}>
@@ -121,9 +126,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
     );
   }
 
-  if (status !== 'authenticated' || !interaction) {
-    return null;
-  }
+  const { interaction } = state;
 
   return (
     <div className={styles.bar}>
