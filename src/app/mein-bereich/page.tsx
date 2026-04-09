@@ -5,7 +5,8 @@ import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { getAllPosts } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
-import { removeFromReadingListAction, removeFavoriteAction, clearBookmarkAction } from './actions';
+import UserAvatar from '@/components/UserAvatar';
+import { removeFromReadingListAction, removeFavoriteAction } from './actions';
 import ReadHistoryList from './ReadHistoryList';
 import styles from './mein-bereich.module.css';
 
@@ -30,7 +31,7 @@ export default async function MeinBereichPage() {
     }),
     prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { displayName: true, name: true },
+      select: { displayName: true, name: true, email: true, image: true },
     }),
   ]);
 
@@ -42,15 +43,10 @@ export default async function MeinBereichPage() {
   // Daten gruppieren
   const readingList = interactions.filter((i) => i.isOnReadingList);
   const favorites = interactions.filter((i) => i.isFavorite);
-  const bookmarked = interactions.filter((i) => i.bookmarkPercent !== null);
   const withNotes = interactions.filter((i) => i.note && i.note.trim().length > 0);
   const readPosts = interactions
     .filter((i) => i.isRead && i.readAt)
     .sort((a, b) => (b.readAt?.getTime() ?? 0) - (a.readAt?.getTime() ?? 0));
-
-  // Weiterlesen: neuester Post mit Lesezeichen
-  const continueReading = bookmarked[0] ?? null;
-  const continuePost = continueReading ? postMap.get(continueReading.postSlug) : null;
 
   const totalRead = readPosts.length;
   const totalFavorites = favorites.length;
@@ -58,52 +54,60 @@ export default async function MeinBereichPage() {
 
   return (
     <section className={`container ${styles.page}`}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Hallo, {displayName}</h1>
-        <p className={styles.subtitle}>Dein persönlicher Lesebereich.</p>
+      {/* Profil-Header */}
+      <div className={styles.profileHeader}>
+        <div className={styles.profileInfo}>
+          <UserAvatar image={user?.image} name={displayName} size={72} />
+          <div className={styles.profileText}>
+            <h1 className={styles.title}>Hallo, {displayName}</h1>
+            {user?.email && <p className={styles.profileEmail}>{user.email}</p>}
+          </div>
+        </div>
+        <Link href="/einstellungen" className={styles.settingsBtn}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          Einstellungen
+        </Link>
       </div>
 
       {/* Schnellstatistiken */}
       <div className={styles.statsGrid}>
         <article className={styles.statCard}>
-          <span className={styles.statLabel}>Gelesen</span>
-          <strong className={styles.statValue}>{totalRead}</strong>
+          <span className={styles.statIcon} aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </svg>
+          </span>
+          <div className={styles.statContent}>
+            <strong className={styles.statValue}>{totalRead}</strong>
+            <span className={styles.statLabel}>Gelesen</span>
+          </div>
         </article>
         <article className={styles.statCard}>
-          <span className={styles.statLabel}>Favoriten</span>
-          <strong className={styles.statValue}>{totalFavorites}</strong>
+          <span className={styles.statIcon} aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </span>
+          <div className={styles.statContent}>
+            <strong className={styles.statValue}>{totalFavorites}</strong>
+            <span className={styles.statLabel}>Favoriten</span>
+          </div>
         </article>
         <article className={styles.statCard}>
-          <span className={styles.statLabel}>Notizen</span>
-          <strong className={styles.statValue}>{totalNotes}</strong>
+          <span className={styles.statIcon} aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+          </span>
+          <div className={styles.statContent}>
+            <strong className={styles.statValue}>{totalNotes}</strong>
+            <span className={styles.statLabel}>Notizen</span>
+          </div>
         </article>
       </div>
-
-      {/* Weiterlesen */}
-      {continuePost && continueReading && (
-        <div className={styles.sectionBlock} id="weiterlesen">
-          <h2 className={styles.sectionTitle}>Weiterlesen</h2>
-          <div className={styles.continueCard}>
-            <div className={styles.continueInfo}>
-              <Link href={`/blog/${continuePost.slug}`} className={styles.continueTitle}>
-                {continuePost.title}
-              </Link>
-              {continuePost.category && (
-                <span className={styles.continueMeta}>{continuePost.category}</span>
-              )}
-            </div>
-            <div className={styles.progressWrap}>
-              <div className={styles.progressBar}>
-                <div
-                  className={styles.progressFill}
-                  style={{ width: `${continueReading.bookmarkPercent}%` }}
-                />
-              </div>
-              <span className={styles.progressLabel}>{continueReading.bookmarkPercent}%</span>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Leseliste */}
       <div className={styles.sectionBlock} id="leseliste">
@@ -174,50 +178,34 @@ export default async function MeinBereichPage() {
         )}
       </div>
 
-      {/* Lesezeichen & Notizen */}
-      <div className={styles.sectionBlock} id="lesezeichen">
-        <h2 className={styles.sectionTitle}>Lesezeichen &amp; Notizen</h2>
-        {bookmarked.length === 0 && withNotes.length === 0 ? (
+      {/* Notizen */}
+      <div className={styles.sectionBlock} id="notizen">
+        <h2 className={styles.sectionTitle}>Notizen</h2>
+        {withNotes.length === 0 ? (
           <p className={styles.emptyText}>
-            Noch keine Lesezeichen oder Notizen vorhanden.
+            Noch keine Notizen vorhanden.
           </p>
         ) : (
           <div className={styles.cardGrid}>
-            {/* Merge bookmarked + notes, deduplizieren */}
-            {[...new Map([...bookmarked, ...withNotes].map((i) => [i.postSlug, i])).values()].map(
-              (item) => {
-                const post = postMap.get(item.postSlug);
-                if (!post) return null;
-                return (
-                  <div key={item.postSlug} className={styles.noteCard}>
-                    <div className={styles.noteCardHeader}>
-                      <Link href={`/blog/${post.slug}`} className={styles.miniCardTitle}>
-                        {post.title}
-                      </Link>
-                      {item.bookmarkPercent !== null && (
-                        <span className={styles.bookmarkBadge}>
-                          Lesezeichen bei {item.bookmarkPercent}%
-                        </span>
-                      )}
-                    </div>
-                    {item.note && item.note.trim() && (
-                      <p className={styles.notePreview}>
-                        {item.note.slice(0, 150)}
-                        {item.note.length > 150 ? ' …' : ''}
-                      </p>
-                    )}
-                    {item.bookmarkPercent !== null && (
-                      <form action={clearBookmarkAction} className={styles.inlineAction}>
-                        <input type="hidden" name="postSlug" value={item.postSlug} />
-                        <button type="submit" className={styles.smallActionBtn}>
-                          Lesezeichen entfernen
-                        </button>
-                      </form>
-                    )}
+            {withNotes.map((item) => {
+              const post = postMap.get(item.postSlug);
+              if (!post) return null;
+              return (
+                <div key={item.postSlug} className={styles.noteCard}>
+                  <div className={styles.noteCardHeader}>
+                    <Link href={`/blog/${post.slug}`} className={styles.miniCardTitle}>
+                      {post.title}
+                    </Link>
                   </div>
-                );
-              },
-            )}
+                  {item.note && item.note.trim() && (
+                    <p className={styles.notePreview}>
+                      {item.note.slice(0, 150)}
+                      {item.note.length > 150 ? ' …' : ''}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -248,12 +236,6 @@ export default async function MeinBereichPage() {
         )}
       </div>
 
-      {/* Link zu Einstellungen */}
-      <div className={styles.footerLink}>
-        <Link href="/einstellungen" className={styles.settingsLink}>
-          Einstellungen →
-        </Link>
-      </div>
     </section>
   );
 }
