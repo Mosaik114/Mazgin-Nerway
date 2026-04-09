@@ -99,16 +99,22 @@
 }
 
 .readerLayout {
+  display: block;
+}
+
+.readerLayout:not(.readerLayoutSingle) {
   display: grid;
   gap: var(--space-lg);
 }
 
 .readerLayoutSingle {
-  grid-template-columns: 1fr;
+  display: block;
 }
 
 .readerMain {
   min-width: 0;
+  width: min(100%, var(--reading-max-width));
+  margin-inline: auto;
 }
 
 /* Markdown-Inhalt */
@@ -116,7 +122,8 @@
   color: var(--color-text-soft);
   font-size: clamp(1.02rem, 0.95rem + 0.28vw, 1.12rem);
   line-height: 1.9;
-  max-width: min(var(--reading-max-width), 100%);
+  width: 100%;
+  max-width: none;
 }
 
 .content h2 {
@@ -374,19 +381,16 @@
 }
 
 @media (min-width: 1080px) {
-  .readerLayout {
+  .readerLayout:not(.readerLayoutSingle) {
     grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
     align-items: start;
     column-gap: var(--space-xl);
   }
 
-  .readerMain {
+  .readerLayout:not(.readerLayoutSingle) .readerMain {
     width: 100%;
     max-width: var(--reading-max-width);
-  }
-
-  .readerLayoutSingle .readerMain {
-    margin-inline: auto;
+    margin-inline: 0;
   }
 
   .toc {
