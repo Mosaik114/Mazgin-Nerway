@@ -35,7 +35,6 @@ model UserPostInteraction {
   userId          String
   postSlug        String
   note            String?   @db.Text
-  bookmarkPercent Int?
   isRead          Boolean   @default(false)
   readAt          DateTime?
   isFavorite      Boolean   @default(false)

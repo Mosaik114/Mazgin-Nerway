@@ -44,18 +44,3 @@ export async function removeFavoriteAction(formData: FormData) {
   revalidatePath('/mein-bereich');
 }
 
-export async function clearBookmarkAction(formData: FormData) {
-  const session = await requireSession();
-  const postSlug = formData.get('postSlug');
-
-  if (typeof postSlug !== 'string' || !postSlug.trim()) {
-    throw new Error('Ungültiger Beitrag');
-  }
-
-  await prisma.userPostInteraction.updateMany({
-    where: { userId: session.user.id, postSlug },
-    data: { bookmarkPercent: null },
-  });
-
-  revalidatePath('/mein-bereich');
-}

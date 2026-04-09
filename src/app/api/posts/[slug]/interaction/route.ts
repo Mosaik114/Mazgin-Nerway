@@ -20,11 +20,11 @@ export async function GET(_req: Request, { params }: Params) {
     where: {
       userId_postSlug: { userId: session.user.id, postSlug: slug },
     },
-    select: { isRead: true, bookmarkPercent: true, note: true, isFavorite: true, isOnReadingList: true },
+    select: { isRead: true, note: true, isFavorite: true, isOnReadingList: true },
   });
 
   return NextResponse.json(
-    interaction ?? { isRead: false, bookmarkPercent: null, note: '', isFavorite: false, isOnReadingList: false },
+    interaction ?? { isRead: false, note: '', isFavorite: false, isOnReadingList: false },
     { headers: { 'Cache-Control': 'no-store, max-age=0' } },
   );
 }
@@ -50,12 +50,6 @@ export async function PATCH(req: Request, { params }: Params) {
     data.isRead = body.isRead;
     data.readAt = body.isRead ? new Date() : null;
   }
-  if (typeof body.bookmarkPercent === 'number') {
-    data.bookmarkPercent = Math.max(0, Math.min(100, Math.round(body.bookmarkPercent)));
-  }
-  if (body.bookmarkPercent === null) {
-    data.bookmarkPercent = null;
-  }
   if (typeof body.note === 'string') {
     data.note = body.note.slice(0, 5000);
   }
@@ -76,7 +70,7 @@ export async function PATCH(req: Request, { params }: Params) {
     },
     create: { userId: session.user.id, postSlug: slug, ...data },
     update: data,
-    select: { isRead: true, bookmarkPercent: true, note: true, isFavorite: true, isOnReadingList: true },
+    select: { isRead: true, note: true, isFavorite: true, isOnReadingList: true },
   });
 
   return NextResponse.json(interaction);

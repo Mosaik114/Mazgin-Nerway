@@ -17,7 +17,6 @@ interface Props {
   coverImageAlt?: string;
   readingTime?: number;
   isRead?: boolean;
-  hasBookmark?: boolean;
   isFavorite?: boolean;
   isOnReadingList?: boolean;
   showActions?: boolean;
@@ -33,7 +32,6 @@ export default function BlogCard({
   coverImageAlt,
   readingTime,
   isRead,
-  hasBookmark,
   isFavorite,
   isOnReadingList,
   showActions = false,
@@ -81,7 +79,6 @@ export default function BlogCard({
             )}
             <time className={styles.date}>{formatted}</time>
             {readingTime && <span className={styles.readTime}>{readingTime} Min.</span>}
-            {hasBookmark && <span className={styles.bookmarkBadge} title="Lesezeichen gesetzt">🔖</span>}
             {isRead && <span className={styles.readBadge} title="Gelesen">✓</span>}
           </div>
           <h3 className={styles.title}>{title}</h3>

@@ -14,7 +14,6 @@ import styles from './blog.module.css';
 interface UserInteraction {
   postSlug: string;
   isRead: boolean;
-  bookmarkPercent: number | null;
   isFavorite: boolean;
   isOnReadingList: boolean;
 }
@@ -254,7 +253,6 @@ export default function BlogList({
                     coverImageAlt={post.coverImageAlt}
                     readingTime={post.readingTime}
                     isRead={interaction?.isRead}
-                    hasBookmark={interaction?.bookmarkPercent !== null && interaction?.bookmarkPercent !== undefined}
                     isFavorite={interaction?.isFavorite}
                     isOnReadingList={interaction?.isOnReadingList}
                     showActions={status === 'authenticated'}

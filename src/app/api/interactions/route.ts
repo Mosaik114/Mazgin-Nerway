@@ -12,7 +12,7 @@ export async function GET() {
 
   const interactions = await prisma.userPostInteraction.findMany({
     where: { userId: session.user.id },
-    select: { postSlug: true, isRead: true, bookmarkPercent: true, isFavorite: true, isOnReadingList: true },
+    select: { postSlug: true, isRead: true, isFavorite: true, isOnReadingList: true },
   });
 
   return NextResponse.json(interactions, {

@@ -7,7 +7,6 @@ import styles from './PostInteractionBar.module.css';
 
 interface Interaction {
   isRead: boolean;
-  bookmarkPercent: number | null;
   note: string;
   isFavorite: boolean;
   isOnReadingList: boolean;
@@ -57,7 +56,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
   }, [postSlug]);
 
   const patch = useCallback(
-    async (updates: Partial<{ isRead: boolean; bookmarkPercent: number | null; note: string; isFavorite: boolean; isOnReadingList: boolean }>) => {
+    async (updates: Partial<{ isRead: boolean; note: string; isFavorite: boolean; isOnReadingList: boolean }>) => {
       const res = await fetch(`/api/posts/${postSlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -95,26 +94,6 @@ export default function PostInteractionBar({ postSlug }: Props) {
     } catch { /* silent */ }
   };
 
-  const setBookmark = async () => {
-    const scrollable = document.body.scrollHeight - window.innerHeight;
-    const percent = scrollable > 0 ? Math.round((window.scrollY / scrollable) * 100) : 0;
-    try {
-      update(await patch({ bookmarkPercent: percent }));
-    } catch { /* silent */ }
-  };
-
-  const clearBookmark = async () => {
-    try {
-      update(await patch({ bookmarkPercent: null }));
-    } catch { /* silent */ }
-  };
-
-  const jumpToBookmark = () => {
-    if (state.kind !== 'ready' || state.interaction.bookmarkPercent == null) return;
-    const scrollable = document.body.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: (scrollable * state.interaction.bookmarkPercent) / 100, behavior: 'smooth' });
-  };
-
   const saveNote = async () => {
     setNoteSaving(true);
     try {
@@ -133,7 +112,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
     return (
       <div className={styles.loginHint}>
         <p className={styles.loginHintText}>
-          Melde dich an, um Notizen zu hinterlassen, Beiträge als gelesen zu markieren und Lesezeichen zu setzen.
+          Melde dich an, um Notizen zu hinterlassen und Beiträge als gelesen zu markieren.
         </p>
         <Link href={signInHref} className={styles.loginHintLink}>
           Anmelden →
@@ -187,31 +166,6 @@ export default function PostInteractionBar({ postSlug }: Props) {
               </svg>
               {interaction.isOnReadingList ? 'Auf Leseliste' : 'Später lesen'}
             </button>
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <p className={styles.sectionLabel}>Lesezeichen</p>
-          <div className={styles.bookmarkRow}>
-            <button type="button" className={styles.bookmarkBtn} onClick={setBookmark}>
-              Lesezeichen hier setzen
-            </button>
-            {interaction.bookmarkPercent !== null && (
-              <>
-                <button type="button" className={styles.jumpBtn} onClick={jumpToBookmark}>
-                  Zum Lesezeichen springen · {interaction.bookmarkPercent}%
-                </button>
-                <button
-                  type="button"
-                  className={styles.clearBookmarkBtn}
-                  onClick={clearBookmark}
-                  aria-label="Lesezeichen entfernen"
-                  title="Lesezeichen entfernen"
-                >
-                  ×
-                </button>
-              </>
-            )}
           </div>
         </div>
 

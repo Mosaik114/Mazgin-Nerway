@@ -121,74 +121,6 @@
   color: var(--color-gold);
 }
 
-/* Bookmark */
-.bookmarkRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.bookmarkBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  min-height: 36px;
-  padding: 0.35rem 0.85rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: rgba(var(--color-gold-rgb), 0.07);
-  color: var(--color-text-soft);
-  font-size: var(--text-sm);
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.bookmarkBtn:is(:hover, :focus-visible) {
-  border-color: rgba(var(--color-gold-rgb), 0.45);
-  color: var(--color-gold-light);
-}
-
-.jumpBtn {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  padding: 0.35rem 0.85rem;
-  border: 1px solid rgba(var(--color-gold-rgb), 0.3);
-  border-radius: var(--radius-sm);
-  background: rgba(var(--color-gold-rgb), 0.08);
-  color: var(--color-gold-light);
-  font-size: var(--text-sm);
-  cursor: pointer;
-  transition: border-color 0.2s, background-color 0.2s;
-}
-
-.jumpBtn:is(:hover, :focus-visible) {
-  border-color: rgba(var(--color-gold-rgb), 0.55);
-  background: rgba(var(--color-gold-rgb), 0.14);
-}
-
-.clearBookmarkBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--color-text-muted);
-  font-size: 1rem;
-  cursor: pointer;
-  line-height: 1;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.clearBookmarkBtn:is(:hover, :focus-visible) {
-  border-color: var(--color-danger);
-  color: var(--color-danger);
-}
-
 /* Note */
 .noteTextarea {
   width: 100%;
@@ -301,13 +233,4 @@
     align-items: flex-start;
   }
 
-  .bookmarkRow {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .jumpBtn {
-    width: 100%;
-    justify-content: center;
-  }
 }

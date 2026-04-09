@@ -96,12 +96,6 @@
   font-weight: 600;
 }
 
-.bookmarkBadge {
-  display: inline-flex;
-  align-items: center;
-  font-size: var(--text-xs);
-}
-
 .readMore {
   font-family: var(--font-heading);
   font-size: var(--text-sm);
