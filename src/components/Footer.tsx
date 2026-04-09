@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SOCIAL_LINKS } from '@/lib/config';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -16,6 +17,17 @@ export default function Footer() {
             <Link href="/blog">Blog</Link>
             <Link href="/about">Über mich</Link>
             <Link href="/contact">Kontakt</Link>
+          </nav>
+          <nav className={styles.social} aria-label="Social Media">
+            <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer">
+              Instagram
+            </a>
+            <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer">
+              TikTok
+            </a>
+            <a href={SOCIAL_LINKS.youtube} target="_blank" rel="noopener noreferrer">
+              YouTube
+            </a>
           </nav>
           <div className={styles.legal}>
             <Link href="/impressum">Impressum</Link>

@@ -40,6 +40,8 @@ Man wurde eingeladen.
 
 Nicht wegen dem, was man getan hat. Trotz dem, was man nicht getan hat.
 
-Die Tausenden um einen: da, und trotzdem ist man allein. Nicht einsam. Allein.
+Und Tausende sind um einen herum: Trotzdem ist man allein. Nicht einsam. Allein.
 
 *Sie war immer genau hier. Man selbst hat nur den Weg gebraucht.*
+
+In Erinnerung, Mazgin Nerway

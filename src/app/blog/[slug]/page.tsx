@@ -7,7 +7,7 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { getAllPosts, getPostBySlug, getTagSlug } from '@/lib/posts';
-import { formatDate } from '@/lib/config';
+import { formatDate, SITE_URL, SOCIAL_LINKS } from '@/lib/config';
 import ReadingProgress from '@/components/ReadingProgress';
 import PostInteractionBar from '@/components/PostInteractionBar';
 import {
@@ -278,13 +278,18 @@ export default async function BlogPostPage({ params }: Props) {
     timeRequired: `PT${post.readingTime}M`,
     author: {
       '@type': 'Person',
+      '@id': `${SITE_URL}/about#person`,
       name: SITE_NAME,
       gender: SITE_PERSON_GENDER,
+      url: toAbsoluteUrl('/about'),
+      sameAs: Object.values(SOCIAL_LINKS),
     },
     publisher: {
       '@type': 'Person',
+      '@id': `${SITE_URL}/about#person`,
       name: SITE_NAME,
       gender: SITE_PERSON_GENDER,
+      url: toAbsoluteUrl('/about'),
     },
     isPartOf: {
       '@type': 'Blog',
