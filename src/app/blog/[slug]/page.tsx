@@ -8,6 +8,7 @@ import html from 'remark-html';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { getAllPosts, getPostBySlug, getTagSlug } from '@/lib/posts';
 import { formatDate, SITE_URL, SOCIAL_LINKS } from '@/lib/config';
+import { getCspNonce } from '@/lib/csp';
 import ReadingProgress from '@/components/ReadingProgress';
 import PostInteractionBar from '@/components/PostInteractionBar';
 import {
@@ -185,6 +186,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
+  const nonce = await getCspNonce();
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) notFound();
@@ -327,10 +329,12 @@ export default async function BlogPostPage({ params }: Props) {
     <>
       <ReadingProgress />
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(blogPostingJsonLd) }}
       />
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />

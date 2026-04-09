@@ -4,6 +4,7 @@ import { formatDate } from '@/lib/config';
 import { getAllPosts } from '@/lib/posts';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import BlogCard from '@/components/BlogCard';
+import HomeLatestPostCard from '@/components/HomeLatestPostCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
 
@@ -85,16 +86,7 @@ export default function Home() {
                 >
                   Neuester Beitrag
                 </span>
-                <BlogCard
-                  title={latestPost.title}
-                  slug={latestPost.slug}
-                  date={latestPost.date}
-                  excerpt={latestPost.excerpt}
-                  category={latestPost.category}
-                  coverImage={latestPost.coverImage}
-                  coverImageAlt={latestPost.coverImageAlt}
-                  readingTime={latestPost.readingTime}
-                />
+                <HomeLatestPostCard post={latestPost} />
               </div>
             </div>
           )}

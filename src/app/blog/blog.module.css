@@ -249,6 +249,15 @@
   min-height: 300px;
 }
 
+.featuredActions {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 3;
+  display: flex;
+  gap: 0.35rem;
+}
+
 .featuredFallback {
   display: flex;
   align-items: center;

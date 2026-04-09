@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import BlogCard from '@/components/BlogCard';
+import FavoriteButton from '@/components/FavoriteButton';
+import ReadingListButton from '@/components/ReadingListButton';
 import type { Post } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
 import styles from './blog.module.css';
@@ -112,6 +114,7 @@ export default function BlogList({
       : null;
 
   const rest = featured ? filtered.filter((post) => post.slug !== featured.slug) : filtered;
+  const featuredInteraction = featured ? interactionsMap.get(featured.slug) : undefined;
   const featuredDate = featured ? formatDate(featured.date) : null;
   const featuredAccent = featured?.category
     ? (CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold-dim)')
@@ -210,6 +213,21 @@ export default function BlogList({
               ) : (
                 <div className={styles.featuredFallback} aria-hidden>
                   <span>{featured.category ?? 'Beitrag'}</span>
+                </div>
+              )}
+
+              {status === 'authenticated' && (
+                <div className={styles.featuredActions}>
+                  <FavoriteButton
+                    postSlug={featured.slug}
+                    initialFavorite={featuredInteraction?.isFavorite}
+                    variant="icon"
+                  />
+                  <ReadingListButton
+                    postSlug={featured.slug}
+                    initialOnList={featuredInteraction?.isOnReadingList}
+                    variant="icon"
+                  />
                 </div>
               )}
 

@@ -1,8 +1,7 @@
 import { Role } from '@prisma/client';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import { resolveProtectedRoute } from '@/lib/auth-flow';
+import { requireActivePageSession } from '@/lib/auth-page-guard';
+import { isAdminEmail } from '@/lib/auth-policy';
 import { prisma } from '@/lib/prisma';
 import { setUserRoleAction, toggleUserBlockAction } from './actions';
 import styles from './admin.module.css';
@@ -21,14 +20,10 @@ function formatDateTime(value: Date | null): string {
 }
 
 export default async function AdminPage() {
-  const session = await auth();
-  const access = resolveProtectedRoute(session, '/admin');
+  const access = await requireActivePageSession('/admin');
+  const isAdmin = isAdminEmail(access.user.email);
 
-  if (access.type === 'redirect') {
-    redirect(access.location);
-  }
-
-  if (access.user.role !== Role.ADMIN) {
+  if (!isAdmin) {
     return (
       <section className={`container ${styles.page}`}>
         <h1 className={styles.title}>Kein Zugriff</h1>

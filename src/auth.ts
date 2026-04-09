@@ -1,7 +1,7 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { Role } from '@prisma/client';
 import NextAuth from 'next-auth';
 import { prisma } from '@/lib/prisma';
+import { normalizeEmail, parseAdminEmails, resolveRoleForEmail } from '@/lib/auth-policy';
 import authConfig from '@/auth.config';
 
 function readEnv(...keys: string[]): string {
@@ -18,13 +18,6 @@ function readEnv(...keys: string[]): string {
   return '';
 }
 
-const adminEmails = new Set(
-  (process.env.ADMIN_EMAILS ?? '')
-    .split(',')
-    .map((email) => email.trim().toLowerCase())
-    .filter(Boolean),
-);
-
 const authSecret = readEnv('AUTH_SECRET', 'NEXTAUTH_SECRET');
 
 const missingAuthConfig: string[] = [];
@@ -38,7 +31,13 @@ if (!process.env.DATABASE_URL) {
 }
 
 if (missingAuthConfig.length > 0) {
-  console.error(`[auth] Missing required environment variables: ${missingAuthConfig.join(', ')}`);
+  const message = `[auth] Missing required environment variables: ${missingAuthConfig.join(', ')}`;
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(message);
+  }
+
+  console.error(message);
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -54,7 +53,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return false;
       }
 
-      const normalizedEmail = user.email.trim().toLowerCase();
+      const normalizedEmail = normalizeEmail(user.email);
       try {
         const dbUser = await prisma.user.findFirst({
           where: {
@@ -84,8 +83,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, user }) {
       if (session.user) {
+        const policyRole = resolveRoleForEmail(user.email);
+
         session.user.id = user.id;
-        session.user.role = user.role ?? Role.USER;
+        session.user.role = policyRole;
         session.user.isBlocked = user.isBlocked ?? false;
         session.user.image = user.image ?? null;
 
@@ -108,7 +109,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return;
       }
 
-      const normalizedEmail = user.email.trim().toLowerCase();
+      const normalizedEmail = normalizeEmail(user.email);
+      const adminEmails = parseAdminEmails();
+      const roleByPolicy = resolveRoleForEmail(normalizedEmail, adminEmails);
+
       try {
         await prisma.user.updateMany({
           where: {
@@ -120,7 +124,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           data: {
             email: normalizedEmail,
             lastLoginAt: new Date(),
-            ...(adminEmails.has(normalizedEmail) ? { role: Role.ADMIN } : {}),
+            role: roleByPolicy,
           },
         });
       } catch (error) {

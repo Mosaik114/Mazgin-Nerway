@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllPosts, getAllTagsWithCount } from '@/lib/posts';
 import { CATEGORIES } from '@/lib/categories';
 import { formatDate, SITE_URL } from '@/lib/config';
+import { getCspNonce } from '@/lib/csp';
 import {
   SITE_LANGUAGE,
   SITE_NAME,
@@ -63,6 +64,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const nonce = await getCspNonce();
   const posts = getAllPosts();
   const tags = getAllTagsWithCount();
   const postCategories = Array.from(
@@ -135,10 +137,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   return (
     <section className={styles.page}>
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(blogJsonLd) }}
       />
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />

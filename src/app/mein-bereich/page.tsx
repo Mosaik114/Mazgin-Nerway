@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import { resolveProtectedRoute } from '@/lib/auth-flow';
+import { requireActivePageSession } from '@/lib/auth-page-guard';
 import { prisma } from '@/lib/prisma';
 import { getAllPosts } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
@@ -19,12 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MeinBereichPage() {
-  const session = await auth();
-  const access = resolveProtectedRoute(session, '/mein-bereich');
-
-  if (access.type === 'redirect') {
-    redirect(access.location);
-  }
+  const access = await requireActivePageSession('/mein-bereich');
 
   const [interactions, user] = await Promise.all([
     prisma.userPostInteraction.findMany({

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { AuthGuardError, requireActiveSession, toAuthErrorResponse } from '@/lib/auth-guard';
+import { getPostBySlug } from '@/lib/posts';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -8,17 +9,33 @@ interface Params {
   params: Promise<{ slug: string }>;
 }
 
+function resolveCanonicalPostSlug(rawSlug: string): string | null {
+  const post = getPostBySlug(rawSlug);
+  return post?.slug ?? null;
+}
+
 export async function GET(_req: Request, { params }: Params) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json(null);
+  let access;
+  try {
+    access = await requireActiveSession();
+  } catch (error) {
+    if (error instanceof AuthGuardError && error.code === 'UNAUTHENTICATED') {
+      return NextResponse.json(null);
+    }
+
+    return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
   const { slug } = await params;
+  const canonicalSlug = resolveCanonicalPostSlug(slug);
+
+  if (!canonicalSlug) {
+    return NextResponse.json({ error: 'Beitrag nicht gefunden' }, { status: 404 });
+  }
 
   const interaction = await prisma.userPostInteraction.findUnique({
     where: {
-      userId_postSlug: { userId: session.user.id, postSlug: slug },
+      userId_postSlug: { userId: access.user.id, postSlug: canonicalSlug },
     },
     select: { isRead: true, note: true, isFavorite: true, isOnReadingList: true },
   });
@@ -30,12 +47,19 @@ export async function GET(_req: Request, { params }: Params) {
 }
 
 export async function PATCH(req: Request, { params }: Params) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Nicht eingeloggt' }, { status: 401 });
+  let access;
+  try {
+    access = await requireActiveSession();
+  } catch (error) {
+    return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
   const { slug } = await params;
+  const canonicalSlug = resolveCanonicalPostSlug(slug);
+
+  if (!canonicalSlug) {
+    return NextResponse.json({ error: 'Beitrag nicht gefunden' }, { status: 404 });
+  }
 
   let body: Record<string, unknown>;
   try {
@@ -66,9 +90,9 @@ export async function PATCH(req: Request, { params }: Params) {
 
   const interaction = await prisma.userPostInteraction.upsert({
     where: {
-      userId_postSlug: { userId: session.user.id, postSlug: slug },
+      userId_postSlug: { userId: access.user.id, postSlug: canonicalSlug },
     },
-    create: { userId: session.user.id, postSlug: slug, ...data },
+    create: { userId: access.user.id, postSlug: canonicalSlug, ...data },
     update: data,
     select: { isRead: true, note: true, isFavorite: true, isOnReadingList: true },
   });

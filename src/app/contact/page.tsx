@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getCspNonce } from '@/lib/csp';
 import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import ContactForm from './ContactForm';
 import styles from './contact.module.css';
@@ -43,10 +44,13 @@ const breadcrumbJsonLd = {
   ],
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const nonce = await getCspNonce();
+
   return (
     <>
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />

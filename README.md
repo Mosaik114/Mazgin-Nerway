@@ -1,4 +1,4 @@
-# Mazgin Nerway
+﻿# Mazgin Nerway
 
 Persoenliche Website und Blog mit Next.js.
 
@@ -25,6 +25,13 @@ npm run db:generate
 npm run db:migrate
 npm run db:push
 npm run db:studio
+```
+
+Nach Schema-Aenderungen (z. B. neue Rate-Limit-Tabellen) zusaetzlich ausfuehren:
+
+```bash
+npm run db:push
+npm run db:generate
 ```
 
 Noetige Env-Variablen (siehe `.env.local.example`):
@@ -81,22 +88,29 @@ npm run lint
 npm run validate:content
 npm run test
 npm run build
+npm run security:audit:prod
 ```
 
 ## CI Workflow
 
-GitHub Actions führt bei Pushes/PRs den Workflow `.github/workflows/ci.yml` aus:
+GitHub Actions fÃ¼hrt bei Pushes/PRs den Workflow `.github/workflows/ci.yml` aus:
 
 ```bash
 npm run ci:check
 ```
 
-Dieser Job enthält:
+Dieser Job enthÃ¤lt:
 
+- Security-Audit fuer Production-Dependencies
 - ESLint
 - Content-Validation
 - Unit-Tests (Vitest)
 - Production-Build
+
+Dependabot ist zusaetzlich aktiv (`.github/dependabot.yml`) und aktualisiert:
+
+- npm-Abhaengigkeiten (woechentlich)
+- GitHub Actions (woechentlich)
 
 ## Content Workflow
 
@@ -124,8 +138,10 @@ Dieser Job enthält:
 ## Monitoring & Betrieb
 
 - Health Endpoint: `GET /api/health`
-- Kontakt-API setzt `x-request-id` in Responses für bessere Fehleranalyse.
-- Logging-Level über `.env`: `LOG_LEVEL=debug|info|warn|error`
+- Detail-Health nur mit Header `x-health-token: <HEALTHCHECK_TOKEN>`
+- Kontakt-API setzt `x-request-id` in Responses fÃ¼r bessere Fehleranalyse.
+- Kontakt-Rate-Limit nutzt gehashte Keys (optional eigener Salt: `CONTACT_RATE_LIMIT_SALT`)
+- Logging-Level Ã¼ber `.env`: `LOG_LEVEL=debug|info|warn|error`
 
 ## Impressum (Live)
 
@@ -138,3 +154,4 @@ LEGAL_CITY=...
 ```
 
 Wenn eine davon fehlt, zeigt die Impressum-Seite einen Hinweis an.
+

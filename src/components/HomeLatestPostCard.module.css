@@ -1,0 +1,7 @@
+.loginHint {
+  margin-top: 0.55rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}

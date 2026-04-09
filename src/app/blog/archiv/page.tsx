@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getArchiveByYear } from '@/lib/posts';
 import { formatDate } from '@/lib/config';
+import { getCspNonce } from '@/lib/csp';
 import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './archiv.module.css';
 
@@ -26,7 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogArchivePage() {
+export default async function BlogArchivePage() {
+  const nonce = await getCspNonce();
   const archive = getArchiveByYear();
 
   const breadcrumbJsonLd = {
@@ -57,6 +59,7 @@ export default function BlogArchivePage() {
   return (
     <section className={styles.page}>
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />
@@ -95,4 +98,3 @@ export default function BlogArchivePage() {
     </section>
   );
 }
-

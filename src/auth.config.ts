@@ -18,6 +18,12 @@ function readEnv(...keys: string[]): string {
 const googleClientId = readEnv('AUTH_GOOGLE_ID', 'GOOGLE_CLIENT_ID');
 const googleClientSecret = readEnv('AUTH_GOOGLE_SECRET', 'GOOGLE_CLIENT_SECRET');
 const googleOAuthConfigured = Boolean(googleClientId && googleClientSecret);
+const authUrl = readEnv('AUTH_URL', 'NEXTAUTH_URL');
+const trustHost = process.env.NODE_ENV === 'production' ? Boolean(authUrl) : true;
+
+if (process.env.NODE_ENV === 'production' && !authUrl) {
+  console.error('[auth] AUTH_URL (or NEXTAUTH_URL) is missing in production. trustHost is disabled.');
+}
 
 const providers: NextAuthConfig['providers'] = googleOAuthConfigured
   ? [
@@ -30,5 +36,5 @@ const providers: NextAuthConfig['providers'] = googleOAuthConfigured
 
 export default {
   providers,
-  trustHost: true,
+  trustHost,
 } satisfies NextAuthConfig;

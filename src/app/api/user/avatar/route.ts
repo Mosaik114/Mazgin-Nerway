@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { requireActiveSession, toAuthErrorResponse } from '@/lib/auth-guard';
 import { prisma } from '@/lib/prisma';
 
 const MAX_SIZE = 512 * 1024; // 512 KB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export async function POST(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Nicht eingeloggt' }, { status: 401 });
+  let access;
+  try {
+    access = await requireActiveSession();
+  } catch (error) {
+    return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
   let body: { image?: string };
@@ -43,7 +45,7 @@ export async function POST(req: Request) {
   }
 
   await prisma.user.update({
-    where: { id: session.user.id },
+    where: { id: access.user.id },
     data: { image },
   });
 
@@ -51,13 +53,15 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE() {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Nicht eingeloggt' }, { status: 401 });
+  let access;
+  try {
+    access = await requireActiveSession();
+  } catch (error) {
+    return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
   await prisma.user.update({
-    where: { id: session.user.id },
+    where: { id: access.user.id },
     data: { image: null },
   });
 

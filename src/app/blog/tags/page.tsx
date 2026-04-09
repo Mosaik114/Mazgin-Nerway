@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllTagsWithCount } from '@/lib/posts';
+import { getCspNonce } from '@/lib/csp';
 import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './tags.module.css';
 
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogTagsPage() {
+export default async function BlogTagsPage() {
+  const nonce = await getCspNonce();
   const tags = getAllTagsWithCount();
 
   const breadcrumbJsonLd = {
@@ -56,6 +58,7 @@ export default function BlogTagsPage() {
   return (
     <section className={styles.page}>
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />
@@ -83,4 +86,3 @@ export default function BlogTagsPage() {
     </section>
   );
 }
-

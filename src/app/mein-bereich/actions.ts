@@ -1,27 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { auth } from '@/auth';
+import { requireActiveSession } from '@/lib/auth-guard';
 import { prisma } from '@/lib/prisma';
 
-async function requireSession() {
-  const session = await auth();
-  if (!session?.user?.id) {
-    throw new Error('Nicht eingeloggt');
-  }
-  return session;
-}
-
 export async function removeFromReadingListAction(formData: FormData) {
-  const session = await requireSession();
+  const access = await requireActiveSession();
   const postSlug = formData.get('postSlug');
 
   if (typeof postSlug !== 'string' || !postSlug.trim()) {
-    throw new Error('Ungültiger Beitrag');
+    throw new Error('Ungueltiger Beitrag');
   }
 
   await prisma.userPostInteraction.updateMany({
-    where: { userId: session.user.id, postSlug },
+    where: { userId: access.user.id, postSlug },
     data: { isOnReadingList: false },
   });
 
@@ -29,18 +21,17 @@ export async function removeFromReadingListAction(formData: FormData) {
 }
 
 export async function removeFavoriteAction(formData: FormData) {
-  const session = await requireSession();
+  const access = await requireActiveSession();
   const postSlug = formData.get('postSlug');
 
   if (typeof postSlug !== 'string' || !postSlug.trim()) {
-    throw new Error('Ungültiger Beitrag');
+    throw new Error('Ungueltiger Beitrag');
   }
 
   await prisma.userPostInteraction.updateMany({
-    where: { userId: session.user.id, postSlug },
+    where: { userId: access.user.id, postSlug },
     data: { isFavorite: false },
   });
 
   revalidatePath('/mein-bereich');
 }
-

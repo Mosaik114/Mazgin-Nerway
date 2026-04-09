@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
+import { firstParamValue } from '@/lib/auth-redirect';
 import { getSignInPageDecision } from '@/lib/auth-flow';
 import styles from './signin.module.css';
 
@@ -18,6 +19,26 @@ function hasGoogleOAuthConfig(): boolean {
 
 export default async function SignInPage({ searchParams }: SignInPageProps) {
   const resolvedSearchParams = (await searchParams) ?? {};
+  const signInError = firstParamValue(resolvedSearchParams.error).trim().toLowerCase();
+
+  if (signInError === 'blocked') {
+    return (
+      <section className={`container ${styles.page}`}>
+        <div className={styles.card}>
+          <p className={styles.eyebrow}>Anmeldung</p>
+          <h1 className={styles.title}>Dein Konto wurde gesperrt</h1>
+          <p className={styles.text}>
+            Der Zugriff ist derzeit nicht verfuegbar. Bitte kontaktiere den Support fuer eine
+            Klaerung.
+          </p>
+          <Link href="/" className={styles.link}>
+            Zurueck zur Startseite
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
   const session = await auth();
   const decision = getSignInPageDecision({
     callbackParam: resolvedSearchParams.callbackUrl,

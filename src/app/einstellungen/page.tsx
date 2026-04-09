@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { Role } from '@prisma/client';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { auth } from '@/auth';
-import { resolveProtectedRoute } from '@/lib/auth-flow';
+import { requireActivePageSession } from '@/lib/auth-page-guard';
+import { firstParamValue } from '@/lib/auth-redirect';
+import { isAdminEmail } from '@/lib/auth-policy';
 import { prisma } from '@/lib/prisma';
 import { updateDisplayNameAction, updateThemePreferenceAction } from './actions';
 import AvatarUpload from './AvatarUpload';
@@ -17,13 +17,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function EinstellungenPage() {
-  const session = await auth();
-  const access = resolveProtectedRoute(session, '/einstellungen');
+interface EinstellungenPageProps {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
 
-  if (access.type === 'redirect') {
-    redirect(access.location);
-  }
+export default async function EinstellungenPage({ searchParams }: EinstellungenPageProps) {
+  const access = await requireActivePageSession('/einstellungen');
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const showReauthHint = firstParamValue(resolvedSearchParams.reauth) === '1';
 
   const user = await prisma.user.findUnique({
     where: { id: access.user.id },
@@ -44,7 +45,7 @@ export default async function EinstellungenPage() {
 
   const currentDisplayName = user.displayName ?? '';
   const currentTheme = user.themePreference ?? '';
-  const isAdmin = user.role === Role.ADMIN;
+  const isAdmin = isAdminEmail(user.email);
 
   return (
     <section className={`container ${styles.page}`}>
@@ -52,6 +53,11 @@ export default async function EinstellungenPage() {
         <Link href="/mein-bereich" className={styles.backLink}>← Mein Bereich</Link>
         <h1 className={styles.title}>Einstellungen</h1>
       </div>
+      {showReauthHint && (
+        <p className={styles.cardDescription}>
+          Fuer sensible Aktionen war eine erneute Anmeldung erforderlich.
+        </p>
+      )}
 
       {/* Profilbild */}
       <div className={styles.card}>

@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { requireActiveSession, toAuthErrorResponse } from '@/lib/auth-guard';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Nicht eingeloggt' }, { status: 401 });
+  let access;
+  try {
+    access = await requireActiveSession();
+  } catch (error) {
+    return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
   const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: access.user.id },
     select: { displayName: true, themePreference: true },
   });
 
@@ -21,9 +23,11 @@ export async function GET() {
 }
 
 export async function PATCH(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Nicht eingeloggt' }, { status: 401 });
+  let access;
+  try {
+    access = await requireActiveSession();
+  } catch (error) {
+    return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
   let body: Record<string, unknown>;
@@ -53,7 +57,7 @@ export async function PATCH(req: Request) {
   }
 
   const user = await prisma.user.update({
-    where: { id: session.user.id },
+    where: { id: access.user.id },
     data,
     select: { displayName: true, themePreference: true },
   });

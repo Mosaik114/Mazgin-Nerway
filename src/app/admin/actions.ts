@@ -2,18 +2,9 @@
 
 import { Role } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { auth } from '@/auth';
+import { requireActiveAdminSession } from '@/lib/auth-guard';
+import { isAdminEmail } from '@/lib/auth-policy';
 import { prisma } from '@/lib/prisma';
-
-async function requireAdminSession() {
-  const session = await auth();
-
-  if (!session?.user || session.user.role !== Role.ADMIN) {
-    throw new Error('Nicht autorisiert');
-  }
-
-  return session;
-}
 
 function parseUserId(formData: FormData): string {
   const userId = formData.get('userId');
@@ -26,7 +17,7 @@ function parseUserId(formData: FormData): string {
 }
 
 export async function setUserRoleAction(formData: FormData) {
-  const session = await requireAdminSession();
+  const access = await requireActiveAdminSession();
   const userId = parseUserId(formData);
   const roleValue = formData.get('role');
 
@@ -34,20 +25,34 @@ export async function setUserRoleAction(formData: FormData) {
     throw new Error('Ungültige Rolle');
   }
 
-  if (session.user.id === userId && roleValue !== Role.ADMIN) {
+  if (access.user.id === userId && roleValue !== Role.ADMIN) {
     return;
+  }
+
+  const targetUser = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { email: true },
+  });
+
+  if (!targetUser) {
+    throw new Error('Nutzer nicht gefunden');
+  }
+
+  const policyRole = isAdminEmail(targetUser.email) ? Role.ADMIN : Role.USER;
+  if (roleValue !== policyRole) {
+    throw new Error('Admin-Rollen werden strikt ueber ADMIN_EMAILS gesteuert');
   }
 
   await prisma.user.update({
     where: { id: userId },
-    data: { role: roleValue },
+    data: { role: policyRole },
   });
 
   revalidatePath('/admin');
 }
 
 export async function toggleUserBlockAction(formData: FormData) {
-  const session = await requireAdminSession();
+  const access = await requireActiveAdminSession();
   const userId = parseUserId(formData);
   const blockedValue = formData.get('blocked');
 
@@ -57,13 +62,21 @@ export async function toggleUserBlockAction(formData: FormData) {
 
   const shouldBlock = blockedValue === 'true';
 
-  if (session.user.id === userId && shouldBlock) {
+  if (access.user.id === userId && shouldBlock) {
     return;
   }
 
-  await prisma.user.update({
-    where: { id: userId },
-    data: { isBlocked: shouldBlock },
+  await prisma.$transaction(async (tx) => {
+    await tx.user.update({
+      where: { id: userId },
+      data: { isBlocked: shouldBlock },
+    });
+
+    if (shouldBlock) {
+      await tx.session.deleteMany({
+        where: { userId },
+      });
+    }
   });
 
   revalidatePath('/admin');

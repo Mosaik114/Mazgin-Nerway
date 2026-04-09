@@ -7,6 +7,7 @@ import {
   getPostsByTagSlug,
   getTagInfoBySlug,
 } from '@/lib/posts';
+import { getCspNonce } from '@/lib/csp';
 import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './tag.module.css';
 
@@ -53,6 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogTagPage({ params }: Props) {
+  const nonce = await getCspNonce();
   const { tag } = await params;
   const tagInfo = getTagInfoBySlug(tag);
   if (!tagInfo) notFound();
@@ -96,6 +98,7 @@ export default async function BlogTagPage({ params }: Props) {
   return (
     <section className={styles.page}>
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />
@@ -128,4 +131,3 @@ export default async function BlogTagPage({ params }: Props) {
     </section>
   );
 }
-

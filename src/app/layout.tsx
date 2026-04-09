@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import AuthProvider from '@/components/AuthProvider';
 import UmamiAnalytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/config';
+import { getCspNonce } from '@/lib/csp';
 import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, SITE_PERSON_GENDER, toJsonLd } from '@/lib/seo';
 import { themeScript } from '@/lib/theme';
 
@@ -143,16 +144,20 @@ const personJsonLd = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const nonce = await getCspNonce();
+
   return (
     <html lang="de" className={`${caprasimo.variable} ${sourceSerif.variable}`}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
+          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(websiteJsonLd) }}
         />
         <script
+          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(personJsonLd) }}
         />

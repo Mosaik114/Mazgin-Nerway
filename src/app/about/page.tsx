@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SITE_URL, SOCIAL_LINKS } from '@/lib/config';
+import { getCspNonce } from '@/lib/csp';
 import { SITE_NAME, SITE_PERSON_GENDER, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './about.module.css';
 
@@ -85,18 +86,23 @@ const breadcrumbJsonLd = {
   ],
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const nonce = await getCspNonce();
+
   return (
     <>
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(personJsonLd) }}
       />
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(profilePageJsonLd) }}
       />
       <script
+        nonce={nonce}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />
