@@ -3,7 +3,7 @@ import { toAbsoluteUrl, toIsoDateOrNull, toJsonLd } from './seo';
 
 describe('seo helpers', () => {
   it('builds absolute URLs for relative paths', () => {
-    expect(toAbsoluteUrl('/blog')).toBe('https://www.nerway.de/blog');
+    expect(toAbsoluteUrl('/essays')).toBe('https://www.nerway.de/essays');
     expect(toAbsoluteUrl('contact')).toBe('https://www.nerway.de/contact');
   });
 

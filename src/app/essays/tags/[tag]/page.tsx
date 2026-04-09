@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import BlogCard from '@/components/BlogCard';
+import EssayCard from '@/components/EssayCard';
 import {
   getAllTagsWithCount,
-  getPostsByTagSlug,
+  getEssaysByTagSlug,
   getTagInfoBySlug,
-} from '@/lib/posts';
+} from '@/lib/essays';
 import { getCspNonce } from '@/lib/csp';
 import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './tag.module.css';
@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const title = `Schlagwort: ${tagInfo.name}`;
-  const description = `Beiträge zum Thema "${tagInfo.name}" auf ${SITE_NAME}.`;
-  const canonicalPath = `/blog/tags/${tagInfo.slug}`;
+  const description = `Essays zum Thema "${tagInfo.name}" auf ${SITE_NAME}.`;
+  const canonicalPath = `/essays/tags/${tagInfo.slug}`;
 
   return {
     title,
@@ -53,16 +53,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogTagPage({ params }: Props) {
+export default async function TagPage({ params }: Props) {
   const nonce = await getCspNonce();
   const { tag } = await params;
   const tagInfo = getTagInfoBySlug(tag);
   if (!tagInfo) notFound();
 
-  const posts = getPostsByTagSlug(tagInfo.slug);
+  const posts = getEssaysByTagSlug(tagInfo.slug);
   if (posts.length === 0) notFound();
 
-  const canonicalPath = `/blog/tags/${tagInfo.slug}`;
+  const canonicalPath = `/essays/tags/${tagInfo.slug}`;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -77,14 +77,14 @@ export default async function BlogTagPage({ params }: Props) {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Blog',
-        item: toAbsoluteUrl('/blog'),
+        name: 'Essays',
+        item: toAbsoluteUrl('/essays'),
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: 'Schlagwörter',
-        item: toAbsoluteUrl('/blog/tags'),
+        item: toAbsoluteUrl('/essays/tags'),
       },
       {
         '@type': 'ListItem',
@@ -104,17 +104,17 @@ export default async function BlogTagPage({ params }: Props) {
       />
 
       <div className="container">
-        <Link href="/blog/tags" className={styles.back}>← Zurück zu Schlagwörtern</Link>
+        <Link href="/essays/tags" className={styles.back}>← Zurück zu Schlagwörtern</Link>
 
         <header className={styles.header}>
           <p className={styles.tag}>Schlagwort</p>
           <h1 className={styles.title}>{tagInfo.name}</h1>
-          <p className={styles.subtitle}>{posts.length} Beiträge zu diesem Thema</p>
+          <p className={styles.subtitle}>{posts.length} Essays zu diesem Thema</p>
         </header>
 
         <div className={styles.grid}>
           {posts.map((post) => (
-            <BlogCard
+            <EssayCard
               key={post.slug}
               title={post.title}
               slug={post.slug}

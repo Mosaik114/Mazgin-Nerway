@@ -5,7 +5,7 @@ import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { formatDate } from '@/lib/config';
 import FavoriteButton from './FavoriteButton';
 import ReadingListButton from './ReadingListButton';
-import styles from './BlogCard.module.css';
+import styles from './EssayCard.module.css';
 
 interface Props {
   title: string;
@@ -22,7 +22,7 @@ interface Props {
   showActions?: boolean;
 }
 
-export default function BlogCard({
+export default function EssayCard({
   title,
   slug,
   date,
@@ -43,7 +43,7 @@ export default function BlogCard({
   const cardStyle = { '--card-accent': accentColor } as CSSProperties;
 
   return (
-    <Link href={`/blog/${slug}`} className={styles.card} style={cardStyle}>
+    <Link href={`/essays/${slug}`} className={styles.card} style={cardStyle}>
       <article>
         {coverImage && (
           <div className={styles.cover}>
@@ -59,8 +59,8 @@ export default function BlogCard({
         )}
         {showActions && (
           <div className={styles.actions}>
-            <FavoriteButton postSlug={slug} initialFavorite={isFavorite} variant="icon" />
-            <ReadingListButton postSlug={slug} initialOnList={isOnReadingList} variant="icon" />
+            <FavoriteButton essaySlug={slug} initialFavorite={isFavorite} variant="icon" />
+            <ReadingListButton essaySlug={slug} initialOnList={isOnReadingList} variant="icon" />
           </div>
         )}
         <div className={styles.body}>

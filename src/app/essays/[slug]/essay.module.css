@@ -1,8 +1,8 @@
 .page {
   padding: var(--space-xl) 0 var(--section-gap);
-  --post-accent: var(--color-gold);
-  --post-accent-bg: rgba(var(--color-gold-rgb), 0.1);
-  --post-accent-border: var(--color-gold-dim);
+  --essay-accent: var(--color-gold);
+  --essay-accent-bg: rgba(var(--color-gold-rgb), 0.1);
+  --essay-accent-border: var(--color-gold-dim);
 }
 
 /* Zurück-Link */
@@ -63,7 +63,7 @@
   font-size: clamp(1.05rem, 1.2vw, 1.2rem);
   color: var(--color-text-muted);
   line-height: 1.8;
-  border-left: 2px solid var(--post-accent-border);
+  border-left: 2px solid var(--essay-accent-border);
   padding-left: var(--space-sm);
   margin-bottom: var(--space-lg);
   font-style: italic;
@@ -107,9 +107,9 @@
 }
 
 .tagLink:is(:hover, :active) {
-  border-color: var(--post-accent-border);
-  color: var(--post-accent);
-  background-color: var(--post-accent-bg);
+  border-color: var(--essay-accent-border);
+  color: var(--essay-accent);
+  background-color: var(--essay-accent-bg);
 }
 
 /* Ornament-Trennlinie */
@@ -151,7 +151,7 @@
 }
 
 .content em {
-  color: var(--post-accent);
+  color: var(--essay-accent);
   font-style: italic;
 }
 
@@ -336,7 +336,7 @@
 }
 
 .relatedCard:is(:hover, :active) {
-  border-color: var(--post-accent-border);
+  border-color: var(--essay-accent-border);
   transform: translateY(-2px);
 }
 
@@ -372,7 +372,7 @@
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--post-accent);
+  color: var(--essay-accent);
   margin-top: var(--space-xs);
 }
 

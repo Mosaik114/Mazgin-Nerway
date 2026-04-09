@@ -4,12 +4,12 @@ import { useState } from 'react';
 import styles from './FavoriteButton.module.css';
 
 interface Props {
-  postSlug: string;
+  essaySlug: string;
   initialFavorite?: boolean;
   variant?: 'icon' | 'full';
 }
 
-export default function FavoriteButton({ postSlug, initialFavorite = false, variant = 'icon' }: Props) {
+export default function FavoriteButton({ essaySlug, initialFavorite = false, variant = 'icon' }: Props) {
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
   const [busy, setBusy] = useState(false);
 
@@ -23,7 +23,7 @@ export default function FavoriteButton({ postSlug, initialFavorite = false, vari
     setBusy(true);
 
     try {
-      const res = await fetch(`/api/posts/${postSlug}/interaction`, {
+      const res = await fetch(`/api/essays/${essaySlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

@@ -16,9 +16,9 @@ export async function GET() {
     return toAuthErrorResponse(error) ?? NextResponse.json({ error: 'Interner Fehler' }, { status: 500 });
   }
 
-  const interactions = await prisma.userPostInteraction.findMany({
+  const interactions = await prisma.userEssayInteraction.findMany({
     where: { userId: access.user.id },
-    select: { postSlug: true, isRead: true, isFavorite: true, isOnReadingList: true },
+    select: { essaySlug: true, isRead: true, isFavorite: true, isOnReadingList: true },
   });
 
   return NextResponse.json(interactions, {

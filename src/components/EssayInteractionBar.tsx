@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { buildSignInPath } from '@/lib/auth-redirect';
-import styles from './PostInteractionBar.module.css';
+import styles from './EssayInteractionBar.module.css';
 
 interface Interaction {
   isRead: boolean;
@@ -19,7 +19,7 @@ type State =
   | { kind: 'ready'; interaction: Interaction };
 
 interface Props {
-  postSlug: string;
+  essaySlug: string;
 }
 
 const EMPTY_INTERACTION: Interaction = {
@@ -31,7 +31,7 @@ const EMPTY_INTERACTION: Interaction = {
 
 const NOTE_DEBOUNCE_MS = 1100;
 
-export default function PostInteractionBar({ postSlug }: Props) {
+export default function EssayInteractionBar({ essaySlug }: Props) {
   const pathname = usePathname();
   const signInHref = buildSignInPath(pathname ?? '/');
 
@@ -46,7 +46,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
   useEffect(() => {
     let cancelled = false;
 
-    void fetch(`/api/posts/${postSlug}/interaction`, {
+    void fetch(`/api/posts/${essaySlug}/interaction`, {
       cache: 'no-store',
       credentials: 'include',
     })
@@ -82,11 +82,11 @@ export default function PostInteractionBar({ postSlug }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [postSlug]);
+  }, [essaySlug]);
 
   const patch = useCallback(
     async (updates: Partial<{ isRead: boolean; note: string; isFavorite: boolean; isOnReadingList: boolean }>) => {
-      const res = await fetch(`/api/posts/${postSlug}/interaction`, {
+      const res = await fetch(`/api/posts/${essaySlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -95,7 +95,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
       if (!res.ok) throw new Error('interaction patch failed');
       return res.json() as Promise<Interaction>;
     },
-    [postSlug],
+    [essaySlug],
   );
 
   const update = useCallback((interaction: Interaction) => {
@@ -251,7 +251,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
         className={`${styles.noteFab} ${noteOpen ? styles.noteFabOpen : ''}`}
         onClick={() => setNoteOpen((open) => !open)}
         aria-expanded={noteOpen}
-        aria-controls={`note-popup-${postSlug}`}
+        aria-controls={`note-popup-${essaySlug}`}
         aria-label={noteOpen ? 'Notiz schließen' : 'Notiz öffnen'}
         title={state.kind === 'ready' ? 'Notiz öffnen' : 'Notiz (Login erforderlich)'}
         disabled={actionsDisabled}
@@ -265,7 +265,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
 
       {noteOpen && state.kind === 'ready' && (
         <section
-          id={`note-popup-${postSlug}`}
+          id={`note-popup-${essaySlug}`}
           className={styles.notePopup}
           role="dialog"
           aria-modal="false"
@@ -287,7 +287,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
           </div>
 
           <textarea
-            id={`note-${postSlug}`}
+            id={`note-${essaySlug}`}
             className={styles.noteTextarea}
             value={noteValue}
             onChange={(event) => {
@@ -295,7 +295,7 @@ export default function PostInteractionBar({ postSlug }: Props) {
               setNoteSaved(false);
               setNoteSaveError(false);
             }}
-            placeholder="Schreibe dir hier eine persönliche Notiz zu diesem Beitrag ..."
+            placeholder="Schreibe dir hier eine persönliche Notiz zu diesem Essay ..."
             rows={6}
             maxLength={5000}
           />

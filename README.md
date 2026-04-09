@@ -1,6 +1,6 @@
 ﻿# Mazgin Nerway
 
-Persoenliche Website und Blog mit Next.js.
+Persoenliche Website und Essay-Plattform mit Next.js.
 
 ## Development
 
@@ -114,7 +114,7 @@ Dependabot ist zusaetzlich aktiv (`.github/dependabot.yml`) und aktualisiert:
 
 ## Content Workflow
 
-1. Nutze `src/content/post-template.md` als Vorlage fuer neue Beitraege.
+1. Nutze `src/content/post-template.md` als Vorlage fuer neue Essays.
 2. Lege neue Markdown-Dateien in `src/content/posts/` an.
 3. Verwende normalisierte Slugs (`kebab-case`).
 4. Pflege immer `tags`, `coverImageAlt`, `excerpt`, `date` und optional `updatedAt`.

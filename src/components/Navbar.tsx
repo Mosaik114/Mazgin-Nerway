@@ -12,7 +12,7 @@ import UserDropdown from './UserDropdown';
 
 const publicLinks = [
   { href: '/', label: 'Start' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/essays', label: 'Essays' },
   { href: '/about', label: 'Über mich' },
   { href: '/contact', label: 'Kontakt' },
 ];

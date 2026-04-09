@@ -1,4 +1,4 @@
-import { getAllPosts, getAllTagsWithCount } from '@/lib/posts';
+import { getAllEssays, getAllTagsWithCount } from '@/lib/essays';
 import { SITE_URL } from '@/lib/config';
 
 type ChangeFrequency = 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
@@ -31,9 +31,9 @@ const STATIC_PAGES: StaticPageConfig[] = [
 ];
 
 const HUB_PAGES: StaticPageConfig[] = [
-  { path: '/blog', changeFrequency: 'weekly', priority: 0.92 },
-  { path: '/blog/tags', changeFrequency: 'weekly', priority: 0.76 },
-  { path: '/blog/archiv', changeFrequency: 'weekly', priority: 0.72 },
+  { path: '/essays', changeFrequency: 'weekly', priority: 0.92 },
+  { path: '/essays/tags', changeFrequency: 'weekly', priority: 0.76 },
+  { path: '/essays/archiv', changeFrequency: 'weekly', priority: 0.72 },
   { path: '/feed.xml', changeFrequency: 'daily', priority: 0.4 },
 ];
 
@@ -84,10 +84,10 @@ function renderEntry(entry: SitemapEntry): string {
 }
 
 export function GET() {
-  const posts = getAllPosts();
+  const essays = getAllEssays();
   const tags = getAllTagsWithCount();
   const now = new Date();
-  const latestPostDate = posts[0] ? parseDateOrFallback(posts[0].date, now) : now;
+  const latestPostDate = essays[0] ? parseDateOrFallback(essays[0].date, now) : now;
 
   const entries: SitemapEntry[] = [];
 
@@ -113,22 +113,22 @@ export function GET() {
 
   for (const tag of tags) {
     entries.push({
-      url: `${SITE_URL}/blog/tags/${tag.slug}`,
+      url: `${SITE_URL}/essays/tags/${tag.slug}`,
       lastModified: latestPostDate,
       changeFrequency: 'monthly',
       priority: 0.6,
     });
   }
 
-  for (const post of posts) {
+  for (const essay of essays) {
     const images: string[] = [];
-    if (post.coverImage) {
-      images.push(toAbsoluteUrl(post.coverImage));
+    if (essay.coverImage) {
+      images.push(toAbsoluteUrl(essay.coverImage));
     }
 
     entries.push({
-      url: `${SITE_URL}/blog/${post.slug}`,
-      lastModified: parseDateOrFallback(post.updatedAt ?? post.date, latestPostDate),
+      url: `${SITE_URL}/essays/${essay.slug}`,
+      lastModified: parseDateOrFallback(essay.updatedAt ?? essay.date, latestPostDate),
       changeFrequency: 'monthly',
       priority: 0.82,
       images: images.length > 0 ? images : undefined,

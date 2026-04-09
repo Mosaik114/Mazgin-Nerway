@@ -1,33 +1,33 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getArchiveByYear } from '@/lib/posts';
+import { getArchiveByYear } from '@/lib/essays';
 import { formatDate } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
 import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import styles from './archiv.module.css';
 
 const ARCHIVE_TITLE = 'Archiv';
-const ARCHIVE_DESCRIPTION = 'Alle Beiträge nach Jahr geordnet.';
+const ARCHIVE_DESCRIPTION = 'Alle Essays nach Jahr geordnet.';
 
 export const metadata: Metadata = {
   title: ARCHIVE_TITLE,
   description: ARCHIVE_DESCRIPTION,
   alternates: {
-    canonical: '/blog/archiv',
+    canonical: '/essays/archiv',
     languages: {
-      [SITE_LANGUAGE]: '/blog/archiv',
-      'x-default': '/blog/archiv',
+      [SITE_LANGUAGE]: '/essays/archiv',
+      'x-default': '/essays/archiv',
     },
   },
   openGraph: {
     title: `${ARCHIVE_TITLE} | ${SITE_NAME}`,
     description: ARCHIVE_DESCRIPTION,
     type: 'website',
-    url: '/blog/archiv',
+    url: '/essays/archiv',
   },
 };
 
-export default async function BlogArchivePage() {
+export default async function ArchivePage() {
   const nonce = await getCspNonce();
   const archive = getArchiveByYear();
 
@@ -44,14 +44,14 @@ export default async function BlogArchivePage() {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Blog',
-        item: toAbsoluteUrl('/blog'),
+        name: 'Essays',
+        item: toAbsoluteUrl('/essays'),
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: ARCHIVE_TITLE,
-        item: toAbsoluteUrl('/blog/archiv'),
+        item: toAbsoluteUrl('/essays/archiv'),
       },
     ],
   };
@@ -65,11 +65,11 @@ export default async function BlogArchivePage() {
       />
 
       <div className="container">
-        <Link href="/blog" className={styles.back}>← Zurück zum Blog</Link>
+        <Link href="/essays" className={styles.back}>← Zurück zu Essays</Link>
 
         <header className={styles.header}>
           <p className={styles.tag}>Archiv</p>
-          <h1 className={styles.title}>Beiträge nach Jahren</h1>
+          <h1 className={styles.title}>Essays nach Jahren</h1>
           <p className={styles.subtitle}>
             Alle veröffentlichten Texte in chronologischen Jahresgruppen.
           </p>
@@ -80,12 +80,12 @@ export default async function BlogArchivePage() {
             <section key={group.year} className={styles.group}>
               <h2 className={styles.year}>{group.year}</h2>
               <ul className={styles.list}>
-                {group.posts.map((post) => (
-                  <li key={post.slug} className={styles.item}>
-                    <Link href={`/blog/${post.slug}`} className={styles.postLink}>
-                      <span className={styles.postTitle}>{post.title}</span>
+                {group.essays.map((essay) => (
+                  <li key={essay.slug} className={styles.item}>
+                    <Link href={`/essays/${essay.slug}`} className={styles.postLink}>
+                      <span className={styles.postTitle}>{essay.title}</span>
                       <span className={styles.postMeta}>
-                        {formatDate(post.date)} · {post.readingTime} Min.
+                        {formatDate(essay.date)} · {essay.readingTime} Min.
                       </span>
                     </Link>
                   </li>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requireActivePageSession } from '@/lib/auth-page-guard';
 import { prisma } from '@/lib/prisma';
-import { getAllPosts } from '@/lib/posts';
+import { getAllEssays } from '@/lib/essays';
 import { formatDate } from '@/lib/config';
 import UserAvatar from '@/components/UserAvatar';
 import { removeFromReadingListAction, removeFavoriteAction } from './actions';
@@ -30,8 +30,8 @@ export default async function MeinBereichPage() {
     }),
   ]);
 
-  const allPosts = getAllPosts();
-  const postMap = new Map(allPosts.map((p) => [p.slug, p]));
+  const allEssays = getAllEssays();
+  const postMap = new Map(allEssays.map((e) => [e.slug, e]));
 
   const displayName = user?.displayName ?? user?.name ?? access.user.email?.split('@')[0] ?? 'dort';
 
@@ -110,16 +110,16 @@ export default async function MeinBereichPage() {
         {readingList.length === 0 ? (
           <p className={styles.emptyText}>
             Deine Leseliste ist leer.{' '}
-            <Link href="/blog" className={styles.inlineLink}>Entdecke neue Beiträge</Link>
+            <Link href="/essays" className={styles.inlineLink}>Entdecke neue Essays</Link>
           </p>
         ) : (
           <div className={styles.cardGrid}>
             {readingList.map((item) => {
-              const post = postMap.get(item.postSlug);
+              const post = postMap.get(item.essaySlug);
               if (!post) return null;
               return (
-                <div key={item.postSlug} className={styles.miniCard}>
-                  <Link href={`/blog/${post.slug}`} className={styles.miniCardLink}>
+                <div key={item.essaySlug} className={styles.miniCard}>
+                  <Link href={`/essays/${post.slug}`} className={styles.miniCardLink}>
                     <span className={styles.miniCardTitle}>{post.title}</span>
                     <span className={styles.miniCardMeta}>
                       {post.category && <span>{post.category}</span>}
@@ -127,7 +127,7 @@ export default async function MeinBereichPage() {
                     </span>
                   </Link>
                   <form action={removeFromReadingListAction}>
-                    <input type="hidden" name="postSlug" value={item.postSlug} />
+                    <input type="hidden" name="essaySlug" value={item.essaySlug} />
                     <button type="submit" className={styles.removeBtn} title="Von Leseliste entfernen">
                       ×
                     </button>
@@ -145,23 +145,23 @@ export default async function MeinBereichPage() {
         {favorites.length === 0 ? (
           <p className={styles.emptyText}>
             Noch keine Favoriten.{' '}
-            <Link href="/blog" className={styles.inlineLink}>Stöbere im Blog</Link>
+            <Link href="/essays" className={styles.inlineLink}>Stöbere in den Essays</Link>
           </p>
         ) : (
           <div className={styles.cardGrid}>
             {favorites.map((item) => {
-              const post = postMap.get(item.postSlug);
+              const post = postMap.get(item.essaySlug);
               if (!post) return null;
               return (
-                <div key={item.postSlug} className={styles.miniCard}>
-                  <Link href={`/blog/${post.slug}`} className={styles.miniCardLink}>
+                <div key={item.essaySlug} className={styles.miniCard}>
+                  <Link href={`/essays/${post.slug}`} className={styles.miniCardLink}>
                     <span className={styles.miniCardTitle}>{post.title}</span>
                     <span className={styles.miniCardMeta}>
                       {post.category && <span>{post.category}</span>}
                     </span>
                   </Link>
                   <form action={removeFavoriteAction}>
-                    <input type="hidden" name="postSlug" value={item.postSlug} />
+                    <input type="hidden" name="essaySlug" value={item.essaySlug} />
                     <button type="submit" className={styles.removeBtn} title="Aus Favoriten entfernen">
                       ×
                     </button>
@@ -183,12 +183,12 @@ export default async function MeinBereichPage() {
         ) : (
           <div className={styles.cardGrid}>
             {withNotes.map((item) => {
-              const post = postMap.get(item.postSlug);
+              const post = postMap.get(item.essaySlug);
               if (!post) return null;
               return (
-                <div key={item.postSlug} className={styles.noteCard}>
+                <div key={item.essaySlug} className={styles.noteCard}>
                   <div className={styles.noteCardHeader}>
-                    <Link href={`/blog/${post.slug}`} className={styles.miniCardTitle}>
+                    <Link href={`/essays/${post.slug}`} className={styles.miniCardTitle}>
                       {post.title}
                     </Link>
                   </div>
@@ -207,17 +207,17 @@ export default async function MeinBereichPage() {
 
       {/* Gelesene Beiträge */}
       <div className={styles.sectionBlock} id="gelesen">
-        <h2 className={styles.sectionTitle}>Gelesene Beiträge</h2>
+        <h2 className={styles.sectionTitle}>Gelesene Essays</h2>
         {readPosts.length === 0 ? (
           <p className={styles.emptyText}>
             Noch nichts gelesen.{' '}
-            <Link href="/blog" className={styles.inlineLink}>Fang jetzt an</Link>
+            <Link href="/essays" className={styles.inlineLink}>Fang jetzt an</Link>
           </p>
         ) : (
           <ReadHistoryList
             posts={readPosts
               .map((item) => {
-                const post = postMap.get(item.postSlug);
+                const post = postMap.get(item.essaySlug);
                 if (!post) return null;
                 return {
                   slug: post.slug,

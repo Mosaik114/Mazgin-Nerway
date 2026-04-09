@@ -27,13 +27,13 @@ model User {
   updatedAt        DateTime              @updatedAt
   accounts         Account[]
   sessions         Session[]
-  postInteractions UserPostInteraction[]
+  essayInteractions UserEssayInteraction[]
 }
 
-model UserPostInteraction {
+model UserEssayInteraction {
   id              String    @id @default(cuid())
   userId          String
-  postSlug        String
+  essaySlug       String
   note            String?   @db.Text
   isRead          Boolean   @default(false)
   readAt          DateTime?
@@ -44,7 +44,7 @@ model UserPostInteraction {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, postSlug])
+  @@unique([userId, essaySlug])
 }
 
 model ContactRateLimitBucket {

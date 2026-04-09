@@ -14,7 +14,7 @@ export default function Footer() {
           <p className={styles.name}>Mazgin Nerway</p>
           <nav className={styles.links}>
             <Link href="/">Start</Link>
-            <Link href="/blog">Blog</Link>
+            <Link href="/essays">Essays</Link>
             <Link href="/about">Über mich</Link>
             <Link href="/contact">Kontakt</Link>
           </nav>

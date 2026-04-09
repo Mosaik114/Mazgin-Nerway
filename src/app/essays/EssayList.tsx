@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useMemo, useState, useEffect } from 'react';
 import type { CSSProperties } from 'react';
@@ -6,22 +6,22 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
-import BlogCard from '@/components/BlogCard';
+import EssayCard from '@/components/EssayCard';
 import FavoriteButton from '@/components/FavoriteButton';
 import ReadingListButton from '@/components/ReadingListButton';
-import type { Post } from '@/lib/posts';
+import type { Essay } from '@/lib/essays';
 import { formatDate } from '@/lib/config';
-import styles from './blog.module.css';
+import styles from './essay.module.css';
 
 interface UserInteraction {
-  postSlug: string;
+  essaySlug: string;
   isRead: boolean;
   isFavorite: boolean;
   isOnReadingList: boolean;
 }
 
 interface Props {
-  posts: Post[];
+  posts: Essay[];
   categories: string[];
   initialActiveCategory?: string;
   initialQuery?: string;
@@ -35,7 +35,7 @@ function normalizeForSearch(value: string): string {
     .replace(/\u00DF/g, 'ss');
 }
 
-export default function BlogList({
+export default function EssayList({
   posts,
   categories,
   initialActiveCategory = 'Alle',
@@ -53,7 +53,7 @@ export default function BlogList({
     void fetch('/api/interactions', { cache: 'no-store', credentials: 'same-origin' })
       .then((r) => (r.ok ? (r.json() as Promise<UserInteraction[]>) : []))
       .then((data) => {
-        setInteractionsMap(new Map(data.map((i) => [i.postSlug, i])));
+        setInteractionsMap(new Map(data.map((i) => [i.essaySlug, i])));
       })
       .catch(() => {});
   }, [status]);
@@ -67,7 +67,7 @@ export default function BlogList({
     if (trimmedQuery) params.set('q', trimmedQuery);
 
     const queryString = params.toString();
-    return queryString ? `/blog?${queryString}` : '/blog';
+    return queryString ? `/essays?${queryString}` : '/essays';
   };
 
   const getTagAccent = (category: string) => {
@@ -121,7 +121,7 @@ export default function BlogList({
     : 'var(--color-gold-dim)';
   const featuredStyle = { '--featured-accent': featuredAccent } as CSSProperties;
   const hasActiveFilters = active !== 'Alle' || Boolean(normalizedQuery);
-  const resultsAnnouncement = `${filtered.length} von ${posts.length} Beiträgen angezeigt.`;
+  const resultsAnnouncement = `${filtered.length} von ${posts.length} Essays angezeigt.`;
 
   return (
     <>
@@ -155,9 +155,9 @@ export default function BlogList({
         </div>
 
         <div className={styles.searchWrap}>
-          <label htmlFor="blog-search" className={styles.searchLabel}>Suche</label>
+          <label htmlFor="essay-search" className={styles.searchLabel}>Suche</label>
           <input
-            id="blog-search"
+            id="essay-search"
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -165,12 +165,12 @@ export default function BlogList({
             className={styles.searchInput}
             autoComplete="off"
             enterKeyHint="search"
-            aria-describedby="blog-results-status"
+            aria-describedby="essay-results-status"
           />
         </div>
       </div>
 
-      <p id="blog-results-status" className="sr-only" aria-live="polite">
+      <p id="essay-results-status" className="sr-only" aria-live="polite">
         {resultsAnnouncement}
       </p>
 
@@ -178,11 +178,11 @@ export default function BlogList({
         <div className={styles.filterInfo}>
           <p>
             Aktive Filter:
-            {active !== 'Alle' && ` Kategorie „${active}“`}
+            {active !== 'Alle' && ` Kategorie „${active}"`}
             {active !== 'Alle' && normalizedQuery && ' ·'}
-            {normalizedQuery && ` Suche „${query.trim()}“`}
+            {normalizedQuery && ` Suche „${query.trim()}"`}
           </p>
-          <Link href="/blog" className={styles.clearBtn}>
+          <Link href="/essays" className={styles.clearBtn}>
             Filter zurücksetzen
           </Link>
         </div>
@@ -190,15 +190,15 @@ export default function BlogList({
 
       {filtered.length === 0 ? (
         <div className={styles.empty}>
-          <p>Für diese Auswahl wurden keine Beiträge gefunden.</p>
-          <Link href="/blog" className={styles.clearBtn}>
-            Alle Beiträge anzeigen
+          <p>Für diese Auswahl wurden keine Essays gefunden.</p>
+          <Link href="/essays" className={styles.clearBtn}>
+            Alle Essays anzeigen
           </Link>
         </div>
       ) : (
         <>
           {featured && (
-            <Link href={`/blog/${featured.slug}`} className={styles.featured} style={featuredStyle}>
+            <Link href={`/essays/${featured.slug}`} className={styles.featured} style={featuredStyle}>
               {featured.coverImage ? (
                 <div className={styles.featuredCover}>
                   <Image
@@ -212,19 +212,19 @@ export default function BlogList({
                 </div>
               ) : (
                 <div className={styles.featuredFallback} aria-hidden>
-                  <span>{featured.category ?? 'Beitrag'}</span>
+                  <span>{featured.category ?? 'Essay'}</span>
                 </div>
               )}
 
               {status === 'authenticated' && (
                 <div className={styles.featuredActions}>
                   <FavoriteButton
-                    postSlug={featured.slug}
+                    essaySlug={featured.slug}
                     initialFavorite={featuredInteraction?.isFavorite}
                     variant="icon"
                   />
                   <ReadingListButton
-                    postSlug={featured.slug}
+                    essaySlug={featured.slug}
                     initialOnList={featuredInteraction?.isOnReadingList}
                     variant="icon"
                   />
@@ -260,7 +260,7 @@ export default function BlogList({
               {rest.map((post) => {
                 const interaction = interactionsMap.get(post.slug);
                 return (
-                  <BlogCard
+                  <EssayCard
                     key={post.slug}
                     title={post.title}
                     slug={post.slug}
@@ -283,9 +283,9 @@ export default function BlogList({
       )}
 
       <p className={styles.count}>
-        {filtered.length} von {posts.length} Beiträgen
-        {active !== 'Alle' && ` in „${active}“`}
-        {normalizedQuery && ` mit „${query.trim()}“`}
+        {filtered.length} von {posts.length} Essays
+        {active !== 'Alle' && ` in „${active}"`}
+        {normalizedQuery && ` mit „${query.trim()}"`}
       </p>
     </>
   );

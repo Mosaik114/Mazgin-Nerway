@@ -4,12 +4,12 @@ import { useState } from 'react';
 import styles from './ReadingListButton.module.css';
 
 interface Props {
-  postSlug: string;
+  essaySlug: string;
   initialOnList?: boolean;
   variant?: 'icon' | 'full';
 }
 
-export default function ReadingListButton({ postSlug, initialOnList = false, variant = 'icon' }: Props) {
+export default function ReadingListButton({ essaySlug, initialOnList = false, variant = 'icon' }: Props) {
   const [onList, setOnList] = useState(initialOnList);
   const [busy, setBusy] = useState(false);
 
@@ -23,7 +23,7 @@ export default function ReadingListButton({ postSlug, initialOnList = false, var
     setBusy(true);
 
     try {
-      const res = await fetch(`/api/posts/${postSlug}/interaction`, {
+      const res = await fetch(`/api/essays/${essaySlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

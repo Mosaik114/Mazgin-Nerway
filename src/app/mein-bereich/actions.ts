@@ -6,14 +6,14 @@ import { prisma } from '@/lib/prisma';
 
 export async function removeFromReadingListAction(formData: FormData) {
   const access = await requireActiveSession();
-  const postSlug = formData.get('postSlug');
+  const essaySlug = formData.get('essaySlug');
 
-  if (typeof postSlug !== 'string' || !postSlug.trim()) {
-    throw new Error('Ungueltiger Beitrag');
+  if (typeof essaySlug !== 'string' || !essaySlug.trim()) {
+    throw new Error('Ungültiger Essay');
   }
 
-  await prisma.userPostInteraction.updateMany({
-    where: { userId: access.user.id, postSlug },
+  await prisma.userEssayInteraction.updateMany({
+    where: { userId: access.user.id, essaySlug },
     data: { isOnReadingList: false },
   });
 
@@ -22,14 +22,14 @@ export async function removeFromReadingListAction(formData: FormData) {
 
 export async function removeFavoriteAction(formData: FormData) {
   const access = await requireActiveSession();
-  const postSlug = formData.get('postSlug');
+  const essaySlug = formData.get('essaySlug');
 
-  if (typeof postSlug !== 'string' || !postSlug.trim()) {
-    throw new Error('Ungueltiger Beitrag');
+  if (typeof essaySlug !== 'string' || !essaySlug.trim()) {
+    throw new Error('Ungültiger Essay');
   }
 
-  await prisma.userPostInteraction.updateMany({
-    where: { userId: access.user.id, postSlug },
+  await prisma.userEssayInteraction.updateMany({
+    where: { userId: access.user.id, essaySlug },
     data: { isFavorite: false },
   });
 

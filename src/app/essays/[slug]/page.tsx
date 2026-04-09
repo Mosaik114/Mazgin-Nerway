@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
-import { getAllPosts, getPostBySlug, getTagSlug } from '@/lib/posts';
+import { getAllEssays, getEssayBySlug, getTagSlug } from '@/lib/essays';
 import { formatDate, SITE_URL, SOCIAL_LINKS } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
 import ReadingProgress from '@/components/ReadingProgress';
-import PostInteractionBar from '@/components/PostInteractionBar';
+import EssayInteractionBar from '@/components/EssayInteractionBar';
 import {
   SITE_LANGUAGE,
   SITE_NAME,
@@ -19,7 +19,7 @@ import {
   toIsoDateOrNull,
   toJsonLd,
 } from '@/lib/seo';
-import styles from './post.module.css';
+import styles from './essay.module.css';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -121,34 +121,34 @@ function getSharedTagCount(currentTags: string[], candidateTags: string[]): numb
 }
 
 export async function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
+  return getAllEssays().map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getEssayBySlug(slug);
 
   if (!post) {
     return {
-      title: 'Beitrag nicht gefunden',
+      title: 'Essay nicht gefunden',
       robots: { index: false, follow: false },
     };
   }
 
   const title = post.seoTitle ?? post.title;
   const description = post.seoDescription ?? post.excerpt;
-  const canonicalPath = `/blog/${post.slug}`;
+  const canonicalPath = `/essays/${post.slug}`;
   const canonicalMeta = post.canonicalUrl ?? canonicalPath;
   const publishedTime = toIsoDateOrNull(post.date) ?? undefined;
   const modifiedTime = toIsoDateOrNull(post.updatedAt ?? post.date) ?? undefined;
 
-  const ogImage = post.coverImage ?? `/blog/${post.slug}/opengraph-image`;
+  const ogImage = post.coverImage ?? `/essays/${post.slug}/opengraph-image`;
   const ogAlt = post.coverImageAlt ?? post.title;
 
   return {
     title,
     description,
-    keywords: [...post.tags, post.category, 'Blog', 'Essay', SITE_NAME].filter(
+    keywords: [...post.tags, post.category, 'Essay', SITE_NAME].filter(
       (value): value is string => Boolean(value),
     ),
     alternates: {
@@ -185,15 +185,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function EssayPostPage({ params }: Props) {
   const nonce = await getCspNonce();
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getEssayBySlug(slug);
   if (!post) notFound();
 
   const incomingSlug = decodeURIComponent(slug);
   if (incomingSlug !== post.slug) {
-    redirect(`/blog/${post.slug}`);
+    redirect(`/essays/${post.slug}`);
   }
 
   const processed = await remark().use(html).process(post.content);
@@ -211,14 +211,14 @@ export default async function BlogPostPage({ params }: Props) {
     };
   };
 
-  const postAccent = getCategoryAccent(post.category);
-  const postStyle = {
-    '--post-accent': postAccent.color,
-    '--post-accent-bg': postAccent.backgroundColor,
-    '--post-accent-border': postAccent.borderColor,
+  const essayAccent = getCategoryAccent(post.category);
+  const essayStyle = {
+    '--essay-accent': essayAccent.color,
+    '--essay-accent-bg': essayAccent.backgroundColor,
+    '--essay-accent-border': essayAccent.borderColor,
   } as CSSProperties;
 
-  const orderedPosts = getAllPosts();
+  const orderedPosts = getAllEssays();
   const postIndex = orderedPosts.findIndex((candidate) => candidate.slug === post.slug);
   const prevPost = postIndex >= 0 && postIndex < orderedPosts.length - 1
     ? orderedPosts[postIndex + 1]
@@ -252,14 +252,14 @@ export default async function BlogPostPage({ params }: Props) {
 
   const relatedTop = related.slice(0, 2);
 
-  const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(`/blog/${post.slug}`);
+  const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(`/essays/${post.slug}`);
   const publishedIso = toIsoDateOrNull(post.date);
   const modifiedIso = toIsoDateOrNull(post.updatedAt ?? post.date);
   const wordCount = post.content.split(/\s+/).filter(Boolean).length;
 
-  const blogPostingJsonLd = {
+  const essayJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': 'Article',
     headline: post.seoTitle ?? post.title,
     description: post.seoDescription ?? post.excerpt,
     inLanguage: SITE_LANGUAGE,
@@ -274,7 +274,7 @@ export default async function BlogPostPage({ params }: Props) {
           url: toAbsoluteUrl(post.coverImage),
           caption: post.coverImageAlt ?? post.title,
         }]
-      : [toAbsoluteUrl(`/blog/${post.slug}/opengraph-image`)],
+      : [toAbsoluteUrl(`/essays/${post.slug}/opengraph-image`)],
     keywords: post.tags,
     wordCount,
     timeRequired: `PT${post.readingTime}M`,
@@ -295,8 +295,8 @@ export default async function BlogPostPage({ params }: Props) {
     },
     isPartOf: {
       '@type': 'Blog',
-      name: `${SITE_NAME} Blog`,
-      url: toAbsoluteUrl('/blog'),
+      name: `${SITE_NAME} Essays`,
+      url: toAbsoluteUrl('/essays'),
     },
   };
 
@@ -313,8 +313,8 @@ export default async function BlogPostPage({ params }: Props) {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Blog',
-        item: toAbsoluteUrl('/blog'),
+        name: 'Essays',
+        item: toAbsoluteUrl('/essays'),
       },
       {
         '@type': 'ListItem',
@@ -331,7 +331,7 @@ export default async function BlogPostPage({ params }: Props) {
       <script
         nonce={nonce}
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: toJsonLd(blogPostingJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: toJsonLd(essayJsonLd) }}
       />
       <script
         nonce={nonce}
@@ -339,10 +339,10 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbJsonLd) }}
       />
 
-      <article className={styles.page} style={postStyle}>
+      <article className={styles.page} style={essayStyle}>
         <div className="container">
-          <Link href="/blog" className={styles.back}>
-            ← Zurück zum Blog
+          <Link href="/essays" className={styles.back}>
+            ← Zurück zu Essays
           </Link>
 
           {post.coverImage && (
@@ -365,9 +365,9 @@ export default async function BlogPostPage({ params }: Props) {
                 <span
                   className={styles.category}
                   style={{
-                    color: postAccent.color,
-                    backgroundColor: postAccent.backgroundColor,
-                    borderColor: postAccent.borderColor,
+                    color: essayAccent.color,
+                    backgroundColor: essayAccent.backgroundColor,
+                    borderColor: essayAccent.borderColor,
                   }}
                 >
                   {post.category}
@@ -385,12 +385,12 @@ export default async function BlogPostPage({ params }: Props) {
                 <ul className={styles.tagList} aria-label="Schlagwörter">
                   {post.tags.map((tag) => (
                     <li key={getTagSlug(tag)} className={styles.tagItem}>
-                      <Link href={`/blog/tags/${getTagSlug(tag)}`} className={styles.tagLink}>#{tag}</Link>
+                      <Link href={`/essays/tags/${getTagSlug(tag)}`} className={styles.tagLink}>#{tag}</Link>
                     </li>
                   ))}
                 </ul>
               )}
-              <PostInteractionBar postSlug={post.slug} />
+              <EssayInteractionBar essaySlug={post.slug} />
             </div>
 
             <div className={styles.ornament}>
@@ -418,19 +418,19 @@ export default async function BlogPostPage({ params }: Props) {
 
           <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
-          <nav className={styles.postNav} aria-label="Beitragsnavigation">
+          <nav className={styles.postNav} aria-label="Essaynavigation">
             <div className={styles.navItem}>
               {prevPost && (
-                <Link href={`/blog/${prevPost.slug}`} className={styles.navLink}>
-                  <span className={styles.navLabel}>← Vorheriger Beitrag</span>
+                <Link href={`/essays/${prevPost.slug}`} className={styles.navLink}>
+                  <span className={styles.navLabel}>← Vorheriger Essay</span>
                   <span className={styles.navTitle}>{prevPost.title}</span>
                 </Link>
               )}
             </div>
             <div className={`${styles.navItem} ${styles.navItemRight}`}>
               {nextPost && (
-                <Link href={`/blog/${nextPost.slug}`} className={`${styles.navLink} ${styles.navLinkRight}`}>
-                  <span className={styles.navLabel}>Nächster Beitrag →</span>
+                <Link href={`/essays/${nextPost.slug}`} className={`${styles.navLink} ${styles.navLinkRight}`}>
+                  <span className={styles.navLabel}>Nächster Essay →</span>
                   <span className={styles.navTitle}>{nextPost.title}</span>
                 </Link>
               )}
@@ -448,7 +448,7 @@ export default async function BlogPostPage({ params }: Props) {
                   const relatedAccent = getCategoryAccent(relatedPost.category);
 
                   return (
-                    <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`} className={styles.relatedCard}>
+                    <Link key={relatedPost.slug} href={`/essays/${relatedPost.slug}`} className={styles.relatedCard}>
                       <span
                         className={styles.relatedCategory}
                         style={{
@@ -457,7 +457,7 @@ export default async function BlogPostPage({ params }: Props) {
                           borderColor: relatedAccent.borderColor,
                         }}
                       >
-                        {relatedPost.category ?? 'Beitrag'}
+                        {relatedPost.category ?? 'Essay'}
                       </span>
                       <span className={styles.relatedCardTitle}>{relatedPost.title}</span>
                       <span className={styles.relatedExcerpt}>{relatedPost.excerpt}</span>
@@ -473,8 +473,8 @@ export default async function BlogPostPage({ params }: Props) {
             <div className={styles.ornament}>
               <span>✦</span>
             </div>
-            <Link href="/blog" className={styles.backBottom}>
-              ← Alle Beiträge
+            <Link href="/essays" className={styles.backBottom}>
+              ← Alle Essays
             </Link>
           </footer>
         </div>

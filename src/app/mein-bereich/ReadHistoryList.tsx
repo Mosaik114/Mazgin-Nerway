@@ -26,7 +26,7 @@ export default function ReadHistoryList({ posts, initialLimit = 10 }: Props) {
       <ul className={styles.compactList}>
         {visible.map((post) => (
           <li key={post.slug} className={styles.compactItem}>
-            <Link href={`/blog/${post.slug}`} className={styles.compactLink}>
+            <Link href={`/essays/${post.slug}`} className={styles.compactLink}>
               <span className={styles.compactTitle}>{post.title}</span>
               <span className={styles.compactMeta}>
                 {post.category && <span>{post.category}</span>}

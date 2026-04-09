@@ -1,6 +1,6 @@
 import { remark } from 'remark';
 import html from 'remark-html';
-import { getAllPosts } from '@/lib/posts';
+import { getAllEssays } from '@/lib/essays';
 import { SITE_URL } from '@/lib/config';
 import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl } from '@/lib/seo';
 
@@ -29,18 +29,18 @@ async function toHtml(markdown: string): Promise<string> {
 }
 
 export async function GET() {
-  const posts = getAllPosts();
+  const essays = getAllEssays();
   const now = new Date();
-  const latestPostDate = posts[0]
-    ? parseDateOrFallback(posts[0].updatedAt ?? posts[0].date, now)
+  const latestPostDate = essays[0]
+    ? parseDateOrFallback(essays[0].updatedAt ?? essays[0].date, now)
     : now;
 
   const items = await Promise.all(
-    posts.map(async (post) => {
-      const articleUrl = toAbsoluteUrl(`/blog/${post.slug}`);
-      const pubDate = parseDateOrFallback(post.date, latestPostDate).toUTCString();
-      const htmlContent = await toHtml(post.content);
-      const categories = [post.category, ...post.tags].filter(
+    essays.map(async (essay) => {
+      const articleUrl = toAbsoluteUrl(`/essays/${essay.slug}`);
+      const pubDate = parseDateOrFallback(essay.date, latestPostDate).toUTCString();
+      const htmlContent = await toHtml(essay.content);
+      const categories = [essay.category, ...essay.tags].filter(
         (value): value is string => Boolean(value),
       );
       const categoryItems = categories
@@ -49,11 +49,11 @@ export async function GET() {
 
       return `
     <item>
-      <title>${escapeXml(post.seoTitle ?? post.title)}</title>
+      <title>${escapeXml(essay.seoTitle ?? essay.title)}</title>
       <link>${articleUrl}</link>
       <guid isPermaLink="true">${articleUrl}</guid>
       <pubDate>${pubDate}</pubDate>
-      <description>${toCdata(post.seoDescription ?? post.excerpt)}</description>
+      <description>${toCdata(essay.seoDescription ?? essay.excerpt)}</description>
       ${categoryItems}
       <content:encoded>${toCdata(htmlContent)}</content:encoded>
     </item>`;

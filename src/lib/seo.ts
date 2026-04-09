@@ -1,9 +1,9 @@
 import { SITE_URL } from '@/lib/config';
 
 export const SITE_NAME = 'Mazgin Nerway';
-export const SITE_DESCRIPTION = 'Gedanken, Geschichten und Reflexionen - irgendwo zwischen zwei Welten.';
+export const SITE_DESCRIPTION = 'Essays, Gedanken und Reflexionen - irgendwo zwischen zwei Welten.';
 export const SITE_LANGUAGE = 'de-DE';
-export const SITE_PERSON_GENDER = 'male';
+export const SITE_PERSON_GENDER = 'Male';
 
 export function toAbsoluteUrl(pathname = '/'): string {
   const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;

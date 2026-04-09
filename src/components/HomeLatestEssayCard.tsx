@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import type { Post } from '@/lib/posts';
-import BlogCard from './BlogCard';
-import styles from './HomeLatestPostCard.module.css';
+import type { Essay } from '@/lib/essays';
+import EssayCard from './EssayCard';
+import styles from './HomeLatestEssayCard.module.css';
 
 interface Interaction {
   isRead: boolean;
@@ -13,10 +13,10 @@ interface Interaction {
 }
 
 interface Props {
-  post: Post;
+  post: Essay;
 }
 
-export default function HomeLatestPostCard({ post }: Props) {
+export default function HomeLatestEssayCard({ post }: Props) {
   const { status } = useSession();
   const [interaction, setInteraction] = useState<Interaction | null>(null);
   const isAuthenticated = status === 'authenticated';
@@ -48,7 +48,7 @@ export default function HomeLatestPostCard({ post }: Props) {
 
   return (
     <>
-      <BlogCard
+      <EssayCard
         title={post.title}
         slug={post.slug}
         date={post.date}

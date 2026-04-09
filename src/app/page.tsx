@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatDate } from '@/lib/config';
-import { getAllPosts } from '@/lib/posts';
+import { getAllEssays } from '@/lib/essays';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
-import BlogCard from '@/components/BlogCard';
-import HomeLatestPostCard from '@/components/HomeLatestPostCard';
+import EssayCard from '@/components/EssayCard';
+import HomeLatestEssayCard from '@/components/HomeLatestEssayCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
   title: {
-    absolute: 'Nerway Blog',
+    absolute: 'Nerway Essays',
   },
   description:
     'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'de_DE',
     url: '/',
-    title: 'Nerway Blog',
+    title: 'Nerway Essays',
     description:
       'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
     images: [
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
         url: '/images/og-home.jpg',
         width: 1200,
         height: 630,
-        alt: 'Nerway Blog',
+        alt: 'Nerway Essays',
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nerway Blog',
+    title: 'Nerway Essays',
     description:
       'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
     images: ['/images/og-home.jpg'],
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const allPosts = getAllPosts();
-  const posts = allPosts.slice(0, 3);
+  const allEssays = getAllEssays();
+  const posts = allEssays.slice(0, 3);
   const latestPost = posts[0];
 
   return (
@@ -64,11 +64,11 @@ export default function Home() {
               Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.
             </p>
             <div className={styles.heroActions}>
-              <Link href="/blog" className={styles.btnPrimary}>Blog lesen</Link>
+              <Link href="/essays" className={styles.btnPrimary}>Essays lesen</Link>
               <Link href="/about" className={styles.btnSecondary}>Über mich</Link>
             </div>
             <div className={styles.heroMeta}>
-              <span>{allPosts.length} Beiträge</span>
+              <span>{allPosts.length} Essays</span>
               {latestPost && <span>Neu: {formatDate(latestPost.date)}</span>}
             </div>
           </div>
@@ -84,9 +84,9 @@ export default function Home() {
                     backgroundColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}1f`,
                   }}
                 >
-                  Neuester Beitrag
+                  Neuester Essay
                 </span>
-                <HomeLatestPostCard post={latestPost} />
+                <HomeLatestEssayCard post={latestPost} />
               </div>
             </div>
           )}
@@ -98,12 +98,12 @@ export default function Home() {
       <section className={styles.section}>
         <div className="container">
           <SectionTitle
-            title="Letzte Beiträge"
-            subtitle="Aktuelle Texte aus meinem Blog."
+            title="Letzte Essays"
+            subtitle="Aktuelle Texte."
           />
           <div className={styles.grid}>
             {posts.map((post) => (
-              <BlogCard
+              <EssayCard
                 key={post.slug}
                 title={post.title}
                 slug={post.slug}
@@ -117,7 +117,7 @@ export default function Home() {
             ))}
           </div>
           <div className={styles.allLink}>
-            <Link href="/blog" className={styles.btnSecondary}>Alle Beiträge →</Link>
+            <Link href="/essays" className={styles.btnSecondary}>Alle Essays →</Link>
           </div>
         </div>
       </section>
@@ -131,7 +131,7 @@ export default function Home() {
           <h2 className={styles.aboutTitle}>Wer steckt dahinter?</h2>
           <p className={styles.aboutText}>
             Ich bin Mazgin. Aufgewachsen zwischen Kulturen, fasziniert von Sprache
-            und dem, was Worte bewirken können. Dieser Blog ist mein Ort zum Denken.
+            und dem, was Worte bewirken können. Diese Essays sind mein Ort zum Denken.
           </p>
           <div className={styles.aboutActions}>
             <Link href="/about" className={styles.btnSecondary}>Mehr über mich</Link>

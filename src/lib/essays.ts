@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 
 const postsDir = path.join(process.cwd(), 'src/content/posts');
 
-export interface Post {
+export interface Essay {
   slug: string;
   title: string;
   seoTitle?: string;
@@ -47,7 +47,7 @@ export interface TagInfo {
 
 export interface ArchiveGroup {
   year: string;
-  posts: Post[];
+  essays: Essay[];
 }
 
 function calcReadingTime(content: string): number {
@@ -88,7 +88,7 @@ function parseTags(value: unknown): string[] {
   return Array.from(unique.values());
 }
 
-function parsePost(filename: string, content: string, data: Frontmatter): Post {
+function parseEssay(filename: string, content: string, data: Frontmatter): Essay {
   const filenameSlug = filename.replace('.md', '');
   const slug = normalizeSlug(data.slug ?? filenameSlug);
   const title = data.title?.trim() || slug;
@@ -113,43 +113,43 @@ function parsePost(filename: string, content: string, data: Frontmatter): Post {
   };
 }
 
-function getComparableTimestamp(post: Post): number {
-  const source = post.updatedAt || post.date;
+function getComparableTimestamp(essay: Essay): number {
+  const source = essay.updatedAt || essay.date;
   const timestamp = Date.parse(source);
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
-let cachedPosts: Post[] | null = null;
+let cachedEssays: Essay[] | null = null;
 
-export function getAllPosts(): Post[] {
+export function getAllEssays(): Essay[] {
   const useCache = process.env.NODE_ENV === 'production';
-  if (useCache && cachedPosts) return cachedPosts;
+  if (useCache && cachedEssays) return cachedEssays;
 
   const files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.md'));
 
-  const posts = files
+  const essays = files
     .map((filename) => {
       const raw = fs.readFileSync(path.join(postsDir, filename), 'utf-8');
       const { data, content } = matter(raw);
       if ((data as Frontmatter).published === false) return null;
-      return parsePost(filename, content, data as Frontmatter);
+      return parseEssay(filename, content, data as Frontmatter);
     })
-    .filter((p): p is Post => p !== null);
+    .filter((e): e is Essay => e !== null);
 
-  const sorted = posts.sort((a, b) => {
+  const sorted = essays.sort((a, b) => {
     const byDate = getComparableTimestamp(b) - getComparableTimestamp(a);
     if (byDate !== 0) return byDate;
     return a.slug.localeCompare(b.slug, 'de-DE');
   });
 
-  if (useCache) cachedPosts = sorted;
+  if (useCache) cachedEssays = sorted;
 
   return sorted;
 }
 
-export function getPostBySlug(slug: string): Post | null {
+export function getEssayBySlug(slug: string): Essay | null {
   const incoming = normalizeSlug(decodeURIComponent(slug));
-  return getAllPosts().find((p) => normalizeSlug(p.slug) === incoming) ?? null;
+  return getAllEssays().find((e) => normalizeSlug(e.slug) === incoming) ?? null;
 }
 
 export function getTagSlug(tag: string): string {
@@ -159,8 +159,8 @@ export function getTagSlug(tag: string): string {
 export function getAllTagsWithCount(): TagInfo[] {
   const counts = new Map<string, TagInfo>();
 
-  for (const post of getAllPosts()) {
-    for (const tag of post.tags) {
+  for (const essay of getAllEssays()) {
+    for (const tag of essay.tags) {
       const slug = getTagSlug(tag);
       const entry = counts.get(slug);
       if (entry) {
@@ -186,26 +186,26 @@ export function getTagInfoBySlug(tagSlug: string): TagInfo | null {
   return getAllTagsWithCount().find((tag) => tag.slug === incoming) ?? null;
 }
 
-export function getPostsByTagSlug(tagSlug: string): Post[] {
+export function getEssaysByTagSlug(tagSlug: string): Essay[] {
   const incoming = normalizeSlug(decodeURIComponent(tagSlug));
 
-  return getAllPosts().filter((post) =>
-    post.tags.some((tag) => normalizeSlug(tag) === incoming),
+  return getAllEssays().filter((essay) =>
+    essay.tags.some((tag) => normalizeSlug(tag) === incoming),
   );
 }
 
 export function getArchiveByYear(): ArchiveGroup[] {
-  const groups = new Map<string, Post[]>();
+  const groups = new Map<string, Essay[]>();
 
-  for (const post of getAllPosts()) {
-    const yearMatch = post.date.match(/^\d{4}/);
+  for (const essay of getAllEssays()) {
+    const yearMatch = essay.date.match(/^\d{4}/);
     const year = yearMatch ? yearMatch[0] : 'Unbekannt';
 
-    const posts = groups.get(year);
-    if (posts) {
-      posts.push(post);
+    const entries = groups.get(year);
+    if (entries) {
+      entries.push(essay);
     } else {
-      groups.set(year, [post]);
+      groups.set(year, [essay]);
     }
   }
 
@@ -215,8 +215,8 @@ export function getArchiveByYear(): ArchiveGroup[] {
       if (b === 'Unbekannt') return -1;
       return Number(b) - Number(a);
     })
-    .map(([year, posts]) => ({
+    .map(([year, essays]) => ({
       year,
-      posts,
+      essays,
     }));
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AuthGuardError, requireActiveSession, toAuthErrorResponse } from '@/lib/auth-guard';
-import { getPostBySlug } from '@/lib/posts';
+import { getEssayBySlug } from '@/lib/essays';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -10,7 +10,7 @@ interface Params {
 }
 
 function resolveCanonicalPostSlug(rawSlug: string): string | null {
-  const post = getPostBySlug(rawSlug);
+  const post = getEssayBySlug(rawSlug);
   return post?.slug ?? null;
 }
 
@@ -30,12 +30,12 @@ export async function GET(_req: Request, { params }: Params) {
   const canonicalSlug = resolveCanonicalPostSlug(slug);
 
   if (!canonicalSlug) {
-    return NextResponse.json({ error: 'Beitrag nicht gefunden' }, { status: 404 });
+    return NextResponse.json({ error: 'Essay nicht gefunden' }, { status: 404 });
   }
 
-  const interaction = await prisma.userPostInteraction.findUnique({
+  const interaction = await prisma.userEssayInteraction.findUnique({
     where: {
-      userId_postSlug: { userId: access.user.id, postSlug: canonicalSlug },
+      userId_essaySlug: { userId: access.user.id, essaySlug: canonicalSlug },
     },
     select: { isRead: true, note: true, isFavorite: true, isOnReadingList: true },
   });
@@ -58,7 +58,7 @@ export async function PATCH(req: Request, { params }: Params) {
   const canonicalSlug = resolveCanonicalPostSlug(slug);
 
   if (!canonicalSlug) {
-    return NextResponse.json({ error: 'Beitrag nicht gefunden' }, { status: 404 });
+    return NextResponse.json({ error: 'Essay nicht gefunden' }, { status: 404 });
   }
 
   let body: Record<string, unknown>;
@@ -88,11 +88,11 @@ export async function PATCH(req: Request, { params }: Params) {
     return NextResponse.json({ error: 'Keine gültigen Felder' }, { status: 400 });
   }
 
-  const interaction = await prisma.userPostInteraction.upsert({
+  const interaction = await prisma.userEssayInteraction.upsert({
     where: {
-      userId_postSlug: { userId: access.user.id, postSlug: canonicalSlug },
+      userId_essaySlug: { userId: access.user.id, essaySlug: canonicalSlug },
     },
-    create: { userId: access.user.id, postSlug: canonicalSlug, ...data },
+    create: { userId: access.user.id, essaySlug: canonicalSlug, ...data },
     update: data,
     select: { isRead: true, note: true, isFavorite: true, isOnReadingList: true },
   });

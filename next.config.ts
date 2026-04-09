@@ -39,6 +39,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/blog',
+        destination: '/essays',
+        permanent: true,
+      },
+      {
+        source: '/blog/:path*',
+        destination: '/essays/:path*',
+        permanent: true,
+      },
+      {
         source: '/:path*',
         has: [{ type: 'host', value: 'nerway.de' }],
         destination: 'https://www.nerway.de/:path*',

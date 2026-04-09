@@ -1,16 +1,16 @@
 import { ImageResponse } from 'next/og';
-import { getPostBySlug } from '@/lib/posts';
+import { getEssayBySlug } from '@/lib/essays';
 import { formatDate } from '@/lib/config';
 
-export const alt = 'Blogbeitrag';
+export const alt = 'Essay';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function OgImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getEssayBySlug(slug);
 
-  const title = post?.seoTitle ?? post?.title ?? 'Beitrag nicht gefunden';
+  const title = post?.seoTitle ?? post?.title ?? 'Essay nicht gefunden';
   const category = post?.category ?? '';
   const date = post ? formatDate(post.date) : '';
 
