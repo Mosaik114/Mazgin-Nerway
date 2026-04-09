@@ -1,23 +1,23 @@
 :root {
   /* Farben */
-  --color-bg:         #0f0e0c;
-  --color-bg-soft:    #1a1814;
-  --color-bg-card:    #201e1a;
-  --color-border:     #2e2b25;
+  --color-bg:         #13110d;
+  --color-bg-soft:    #1b1813;
+  --color-bg-card:    #231f18;
+  --color-border:     #3a3329;
 
-  --color-text:       #e8e0d4;
-  --color-text-muted: #8a8070;
-  --color-text-soft:  #c4b8a8;
-  --color-on-gold:    #0f0e0c;
+  --color-text:       #f1eadf;
+  --color-text-muted: #9a8e7b;
+  --color-text-soft:  #d0c4b2;
+  --color-on-gold:    #1a150d;
 
-  --color-gold:       #c9a84c;
-  --color-gold-light: #e2c47a;
-  --color-gold-dim:   #7a6230;
-  --color-gold-rgb:   201, 168, 76;
+  --color-gold:       #d1ae57;
+  --color-gold-light: #e7c97f;
+  --color-gold-dim:   #8f6f34;
+  --color-gold-rgb:   209, 174, 87;
 
-  --color-danger:        #c07070;
-  --color-danger-border: #8b3a3a;
-  --color-danger-rgb:    139, 58, 58;
+  --color-danger:        #c77872;
+  --color-danger-border: #99524b;
+  --color-danger-rgb:    153, 82, 75;
 
   --color-overlay-rgb: 15, 14, 12;
 
@@ -42,7 +42,9 @@
   --text-xl:   1.5rem;
 
   /* Layout */
-  --max-width: 1100px;
+  --max-width: 1160px;
+  --reading-max-width: 760px;
+  --content-max-width: 960px;
   --section-gap: var(--space-2xl);
   --header-height: 68px;
   --tap-target-size: 44px;
@@ -53,6 +55,13 @@
   --radius-lg: 18px;
   --radius-pill: 999px;
 
+  /* Motion */
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+  --motion-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
+
   /* Breakpoints (reference, used as raw values in media queries) */
   /* --bp-sm: 480px  --bp-md: 768px  --bp-lg: 1024px */
 }
@@ -60,26 +69,26 @@
 /* Hellmodus (inkl. Legacy-Sepia) */
 [data-theme="light"],
 [data-theme="sepia"] {
-  --color-bg:         #f5f0e8;
-  --color-bg-soft:    #ede8dc;
-  --color-bg-card:    #e8e2d4;
-  --color-border:     #d4cab8;
+  --color-bg:         #f8f3e9;
+  --color-bg-soft:    #efe8da;
+  --color-bg-card:    #f5efe3;
+  --color-border:     #d7ccb8;
 
-  --color-text:       #2c2416;
-  --color-text-muted: #7a6a50;
-  --color-text-soft:  #4a3c28;
-  --color-on-gold:    #2c2416;
+  --color-text:       #2a2418;
+  --color-text-muted: #70614b;
+  --color-text-soft:  #493d2d;
+  --color-on-gold:    #2a2213;
 
-  --color-gold:       #8b6914;
-  --color-gold-light: #a07820;
-  --color-gold-dim:   #c4a85a;
-  --color-gold-rgb:   139, 105, 20;
+  --color-gold:       #8a6513;
+  --color-gold-light: #a97a20;
+  --color-gold-dim:   #c6ab62;
+  --color-gold-rgb:   138, 101, 19;
 
-  --color-danger:        #8b4f47;
-  --color-danger-border: #7a3d34;
-  --color-danger-rgb:    122, 61, 52;
+  --color-danger:        #92544c;
+  --color-danger-border: #804239;
+  --color-danger-rgb:    128, 66, 57;
 
-  --color-overlay-rgb: 245, 240, 232;
+  --color-overlay-rgb: 248, 243, 233;
 }
 
 /* Reset */
@@ -103,6 +112,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+main {
+  min-height: calc(100svh - var(--header-height));
+}
+
 /* Typografie */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
@@ -120,13 +133,14 @@ img {
   display: block;
 }
 
-/* Ornament-Linie (orientalisches Trennelement) */
+/* Ornament-Linie (dezente Signatur) */
 .ornament {
   display: flex;
   align-items: center;
   gap: 1rem;
   color: var(--color-gold);
-  font-size: 0.7rem;
+  font-size: 0.6rem;
+  opacity: 0.72;
 }
 
 .ornament::before,
@@ -171,8 +185,9 @@ img {
 
 /* Focus-Styles (Accessibility) */
 :focus-visible {
-  outline: 2px solid var(--color-gold-dim);
-  outline-offset: 2px;
+  outline: 2px solid rgba(var(--color-gold-rgb), 0.72);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(var(--color-gold-rgb), 0.16);
 }
 
 :focus:not(:focus-visible) {
@@ -231,6 +246,13 @@ img {
   .container {
     padding-left: max(var(--mobile-padding-inline), env(safe-area-inset-left));
     padding-right: max(var(--mobile-padding-inline), env(safe-area-inset-right));
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
   }
 }
 

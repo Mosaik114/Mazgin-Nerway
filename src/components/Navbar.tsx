@@ -115,33 +115,39 @@ export default function Navbar() {
         </Link>
 
         <nav className={styles.nav} aria-label="Hauptnavigation">
-          {publicLinks.map(({ href, label }) => {
-            const isActive = isActiveLink(pathname, href);
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`${styles.link} ${isActive ? styles.active : ''}`}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {label}
+          <div className={styles.navLinks}>
+            {publicLinks.map(({ href, label }) => {
+              const isActive = isActiveLink(pathname, href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`${styles.link} ${isActive ? styles.active : ''}`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className={styles.navTools}>
+            <ThemeToggle />
+            {isLoading ? (
+              <span className={styles.avatarSkeleton} />
+            ) : isAuthenticated ? (
+              <UserDropdown
+                name={currentUser?.name}
+                email={currentUser?.email}
+                image={currentUser?.image}
+                isAdmin={isAdmin}
+              />
+            ) : (
+              <Link href={signInHref} className={styles.authButton} onClick={() => setOpen(false)}>
+                Anmelden
               </Link>
-            );
-          })}
-          {isLoading ? (
-            <span className={styles.avatarSkeleton} />
-          ) : isAuthenticated ? (
-            <UserDropdown
-              name={currentUser?.name}
-              email={currentUser?.email}
-              image={currentUser?.image}
-              isAdmin={isAdmin}
-            />
-          ) : (
-            <Link href={signInHref} className={styles.authButton} onClick={() => setOpen(false)}>
-              Anmelden
-            </Link>
-          )}
+            )}
+          </div>
         </nav>
 
         <button

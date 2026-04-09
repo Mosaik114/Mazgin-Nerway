@@ -54,7 +54,7 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={`container ${styles.heroInner} ${!latestPost ? styles.heroSingle : ''}`}>
           <div className={styles.heroContent}>
-            <div className={styles.heroTag}>✦ Willkommen</div>
+            <div className={styles.heroTag}>Willkommen</div>
             <h1 className={styles.heroTitle}>
               Zwischen zwei Welten
               <span>entsteht meine Stimme.</span>
@@ -91,7 +91,6 @@ export default function Home() {
             </div>
           )}
         </div>
-        <div className={styles.heroOrn} aria-hidden>✦</div>
       </section>
 
       {/* Letzte Posts */}
@@ -125,9 +124,6 @@ export default function Home() {
       {/* About-Vorschau */}
       <section className={styles.aboutPreview}>
         <div className={`container ${styles.aboutInner}`}>
-          <div className={styles.aboutOrn}>
-            <span>✦</span>
-          </div>
           <h2 className={styles.aboutTitle}>Wer steckt dahinter?</h2>
           <p className={styles.aboutText}>
             Ich bin Mazgin. Aufgewachsen zwischen Kulturen, fasziniert von Sprache

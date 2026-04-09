@@ -3,7 +3,7 @@
 }
 
 .page .container {
-  max-width: 900px;
+  max-width: 980px;
 }
 
 /* Header */
@@ -37,9 +37,16 @@
 /* Layout */
 .layout {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(250px, 0.9fr);
   gap: var(--space-xl);
   align-items: start;
+}
+
+.formWrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-card);
+  padding: var(--space-lg);
 }
 
 /* Formular */
@@ -170,8 +177,11 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
-  padding-top: 0.25rem;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-card);
 }
 
 .infoBlock {
@@ -199,13 +209,16 @@
     gap: var(--space-lg);
   }
 
+  .formWrap {
+    padding: var(--space-md);
+  }
+
   .submit {
     padding: 0.75rem 1.4rem;
   }
 
   .info {
-    border-top: 1px solid var(--color-border);
-    padding-top: var(--space-lg);
+    padding: var(--space-md);
   }
 }
 
