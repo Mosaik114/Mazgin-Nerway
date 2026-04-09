@@ -46,6 +46,34 @@ Hinweis fuer Deployments (z. B. Vercel):
 - Wenn beim Login `Fehler 400: invalid_request` mit `Missing required parameter: client_id` erscheint:
   In der aktiven Umgebung fehlt mindestens `AUTH_GOOGLE_ID` oder `GOOGLE_CLIENT_ID`.
 
+### Preview Login Healthcheck (Vercel + Google OAuth)
+
+Feste Preview-Domain:
+
+- `https://preview.nerway.de` ist in Vercel dem Branch `test-preview` zugewiesen.
+- DNS zeigt auf `cname.vercel-dns.com` (CNAME `preview` -> `cname.vercel-dns.com`).
+
+Vercel Preview-Umgebung:
+
+- `AUTH_SECRET`
+- `AUTH_GOOGLE_ID`
+- `AUTH_GOOGLE_SECRET`
+- optional empfohlen: `AUTH_URL=https://preview.nerway.de`
+- `Vercel Authentication` ist fuer Preview deaktiviert (sonst kann OAuth blockiert werden).
+
+Google Cloud OAuth Client (`nerway-web`):
+
+- Authorized JavaScript origins enthaelt:
+  - `https://preview.nerway.de`
+- Authorized redirect URIs enthaelt:
+  - `https://preview.nerway.de/api/auth/callback/google`
+
+Smoke-Test:
+
+1. Preview-Deployment fuer `test-preview` redeployen.
+2. `https://preview.nerway.de/auth/signin?callbackUrl=%2F` oeffnen.
+3. Erwartung: Redirect zu `accounts.google.com` ohne `redirect_uri_mismatch`.
+
 ## Quality Checks
 
 ```bash
