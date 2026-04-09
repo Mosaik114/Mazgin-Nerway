@@ -1,8 +1,8 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { Role } from '@prisma/client';
 import NextAuth from 'next-auth';
-import Google from 'next-auth/providers/google';
 import { prisma } from '@/lib/prisma';
+import authConfig from '@/auth.config';
 
 function readEnv(...keys: string[]): string {
   for (const key of keys) {
@@ -26,22 +26,11 @@ const adminEmails = new Set(
 );
 
 const authSecret = readEnv('AUTH_SECRET', 'NEXTAUTH_SECRET');
-const googleClientId = readEnv('AUTH_GOOGLE_ID', 'GOOGLE_CLIENT_ID');
-const googleClientSecret = readEnv('AUTH_GOOGLE_SECRET', 'GOOGLE_CLIENT_SECRET');
-const googleOAuthConfigured = Boolean(googleClientId && googleClientSecret);
 
 const missingAuthConfig: string[] = [];
 
 if (!authSecret) {
   missingAuthConfig.push('AUTH_SECRET (or NEXTAUTH_SECRET)');
-}
-
-if (!googleClientId) {
-  missingAuthConfig.push('AUTH_GOOGLE_ID (or GOOGLE_CLIENT_ID)');
-}
-
-if (!googleClientSecret) {
-  missingAuthConfig.push('AUTH_GOOGLE_SECRET (or GOOGLE_CLIENT_SECRET)');
 }
 
 if (!process.env.DATABASE_URL) {
@@ -52,23 +41,13 @@ if (missingAuthConfig.length > 0) {
   console.error(`[auth] Missing required environment variables: ${missingAuthConfig.join(', ')}`);
 }
 
-const providers = googleOAuthConfigured
-  ? [
-      Google({
-        clientId: googleClientId,
-        clientSecret: googleClientSecret,
-      }),
-    ]
-  : [];
-
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
   secret: authSecret || undefined,
-  trustHost: true,
   session: {
     strategy: 'database',
   },
-  providers,
   callbacks: {
     async signIn({ user }) {
       if (!user.email) {

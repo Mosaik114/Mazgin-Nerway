@@ -1,5 +1,7 @@
-import { auth } from '@/auth';
-import { NextResponse } from 'next/server';
+import NextAuth from 'next-auth';
+import authConfig from '@/auth.config';
+
+const { auth } = NextAuth(authConfig);
 
 const protectedPaths = ['/mein-bereich', '/einstellungen'];
 
@@ -13,10 +15,8 @@ export default auth((req) => {
   if (isProtected && !req.auth?.user) {
     const signInUrl = new URL('/auth/signin', req.url);
     signInUrl.searchParams.set('callbackUrl', pathname);
-    return NextResponse.redirect(signInUrl);
+    return Response.redirect(signInUrl);
   }
-
-  return NextResponse.next();
 });
 
 export const config = {
