@@ -260,70 +260,63 @@ export default function PostInteractionBar({ postSlug }: Props) {
           <path d="M12 20h9" />
           <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
         </svg>
+        <span className={styles.noteFabLabel}>Notiz</span>
       </button>
 
       {noteOpen && state.kind === 'ready' && (
-        <>
-          <button
-            type="button"
-            className={styles.noteOverlay}
-            aria-label="Notiz schließen"
-            onClick={() => setNoteOpen(false)}
+        <section
+          id={`note-popup-${postSlug}`}
+          className={styles.notePopup}
+          role="dialog"
+          aria-modal="false"
+          aria-label="Meine Notiz"
+        >
+          <div className={styles.noteHeader}>
+            <p className={styles.noteTitle}>Meine Notiz</p>
+            <button
+              type="button"
+              className={styles.noteClose}
+              onClick={() => setNoteOpen(false)}
+              aria-label="Notiz schließen"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <textarea
+            id={`note-${postSlug}`}
+            className={styles.noteTextarea}
+            value={noteValue}
+            onChange={(event) => {
+              setNoteValue(event.target.value);
+              setNoteSaved(false);
+              setNoteSaveError(false);
+            }}
+            placeholder="Schreibe dir hier eine persönliche Notiz zu diesem Beitrag ..."
+            rows={6}
+            maxLength={5000}
           />
-          <section
-            id={`note-popup-${postSlug}`}
-            className={styles.notePopup}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Meine Notiz"
-          >
-            <div className={styles.noteHeader}>
-              <p className={styles.noteTitle}>Meine Notiz</p>
-              <button
-                type="button"
-                className={styles.noteClose}
-                onClick={() => setNoteOpen(false)}
-                aria-label="Notiz schließen"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
 
-            <textarea
-              id={`note-${postSlug}`}
-              className={styles.noteTextarea}
-              value={noteValue}
-              onChange={(event) => {
-                setNoteValue(event.target.value);
-                setNoteSaved(false);
-                setNoteSaveError(false);
+          <div className={styles.noteFooter}>
+            <span className={styles.charCount}>{noteValue.length} / 5000</span>
+            <span className={`${styles.noteStatus} ${noteSaveError ? styles.noteStatusError : ''}`}>
+              {noteStatus}
+            </span>
+            <button
+              type="button"
+              className={`${styles.saveBtn} ${noteSaved ? styles.saveBtnSaved : ''}`}
+              onClick={() => {
+                void persistNote(noteValue, 'manual');
               }}
-              placeholder="Schreibe dir hier eine persönliche Notiz zu diesem Beitrag ..."
-              rows={6}
-              maxLength={5000}
-            />
-
-            <div className={styles.noteFooter}>
-              <span className={styles.charCount}>{noteValue.length} / 5000</span>
-              <span className={`${styles.noteStatus} ${noteSaveError ? styles.noteStatusError : ''}`}>
-                {noteStatus}
-              </span>
-              <button
-                type="button"
-                className={`${styles.saveBtn} ${noteSaved ? styles.saveBtnSaved : ''}`}
-                onClick={() => {
-                  void persistNote(noteValue, 'manual');
-                }}
-                disabled={noteSaving || !noteChanged}
-              >
-                {noteSaving ? 'Speichern ...' : noteSaved ? 'Gespeichert' : 'Speichern'}
-              </button>
-            </div>
-          </section>
-        </>
+              disabled={noteSaving || !noteChanged}
+            >
+              {noteSaving ? 'Speichern ...' : noteSaved ? 'Gespeichert' : 'Speichern'}
+            </button>
+          </div>
+        </section>
       )}
     </>
   );

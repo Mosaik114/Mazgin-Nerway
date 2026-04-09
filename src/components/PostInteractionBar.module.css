@@ -94,15 +94,16 @@
   position: fixed;
   right: max(1rem, env(safe-area-inset-right));
   bottom: max(1rem, env(safe-area-inset-bottom));
-  width: 48px;
-  height: 48px;
+  min-height: 48px;
+  padding: 0.5rem 0.9rem;
   border: 1px solid rgba(var(--color-gold-rgb), 0.35);
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   background: var(--color-bg-card);
   color: var(--color-gold-light);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.45rem;
   box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
   cursor: pointer;
   z-index: 120;
@@ -122,20 +123,18 @@
   cursor: default;
 }
 
-.noteOverlay {
-  position: fixed;
-  inset: 0;
-  border: none;
-  background: rgba(var(--color-overlay-rgb), 0.5);
-  backdrop-filter: blur(2px);
-  z-index: 118;
-  cursor: default;
+.noteFabLabel {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 .notePopup {
   position: fixed;
   right: max(1rem, env(safe-area-inset-right));
-  bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 3.65rem);
+  bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.15rem);
   width: min(360px, calc(100vw - 2rem));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -287,5 +286,10 @@
     left: max(1rem, env(safe-area-inset-left));
     right: max(1rem, env(safe-area-inset-right));
     width: auto;
+  }
+
+  .noteFab {
+    min-height: 46px;
+    padding: 0.5rem 0.78rem;
   }
 }
