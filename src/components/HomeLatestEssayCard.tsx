@@ -14,9 +14,10 @@ interface Interaction {
 
 interface Props {
   post: Essay;
+  showLoginHint?: boolean;
 }
 
-export default function HomeLatestEssayCard({ post }: Props) {
+export default function HomeLatestEssayCard({ post, showLoginHint = true }: Props) {
   const { status } = useSession();
   const [interaction, setInteraction] = useState<Interaction | null>(null);
   const isAuthenticated = status === 'authenticated';
@@ -29,7 +30,7 @@ export default function HomeLatestEssayCard({ post }: Props) {
 
     let cancelled = false;
 
-    void fetch(`/api/posts/${post.slug}/interaction`, {
+    void fetch(`/api/essays/${post.slug}/interaction`, {
       cache: 'no-store',
       credentials: 'include',
     })
@@ -62,7 +63,7 @@ export default function HomeLatestEssayCard({ post }: Props) {
         isOnReadingList={interaction?.isOnReadingList}
         showActions={isAuthenticated}
       />
-      {!isAuthenticated && (
+      {!isAuthenticated && showLoginHint && (
         <p className={styles.loginHint}>
           Favoriten und Spaeter-lesen sind nach dem Login verfuegbar.
         </p>

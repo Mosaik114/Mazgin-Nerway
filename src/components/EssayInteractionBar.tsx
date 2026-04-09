@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { buildSignInPath } from '@/lib/auth-redirect';
@@ -42,11 +42,12 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
   const [noteSaving, setNoteSaving] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
   const [noteSaveError, setNoteSaveError] = useState(false);
+  const actionMutationIdRef = useRef(0);
 
   useEffect(() => {
     let cancelled = false;
 
-    void fetch(`/api/posts/${essaySlug}/interaction`, {
+    void fetch(`/api/essays/${essaySlug}/interaction`, {
       cache: 'no-store',
       credentials: 'include',
     })
@@ -86,7 +87,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
 
   const patch = useCallback(
     async (updates: Partial<{ isRead: boolean; note: string; isFavorite: boolean; isOnReadingList: boolean }>) => {
-      const res = await fetch(`/api/posts/${essaySlug}/interaction`, {
+      const res = await fetch(`/api/essays/${essaySlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -106,25 +107,43 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
   const actionsDisabled = state.kind !== 'ready';
   const noteChanged = noteValue !== savedNoteValue;
 
-  const toggleRead = async () => {
+  const optimisticToggle = useCallback(
+    async (updates: Partial<Pick<Interaction, 'isRead' | 'isFavorite' | 'isOnReadingList'>>) => {
+      if (state.kind !== 'ready') return;
+
+      const previous = state.interaction;
+      const optimisticNext: Interaction = { ...previous, ...updates };
+      const mutationId = ++actionMutationIdRef.current;
+
+      update(optimisticNext);
+
+      try {
+        const persisted = await patch(updates);
+        if (actionMutationIdRef.current === mutationId) {
+          update(persisted);
+        }
+      } catch {
+        if (actionMutationIdRef.current === mutationId) {
+          update(previous);
+        }
+      }
+    },
+    [patch, state, update],
+  );
+
+  const toggleRead = () => {
     if (state.kind !== 'ready') return;
-    try {
-      update(await patch({ isRead: !state.interaction.isRead }));
-    } catch { /* silent */ }
+    void optimisticToggle({ isRead: !state.interaction.isRead });
   };
 
-  const toggleFavorite = async () => {
+  const toggleFavorite = () => {
     if (state.kind !== 'ready') return;
-    try {
-      update(await patch({ isFavorite: !state.interaction.isFavorite }));
-    } catch { /* silent */ }
+    void optimisticToggle({ isFavorite: !state.interaction.isFavorite });
   };
 
-  const toggleReadingList = async () => {
+  const toggleReadingList = () => {
     if (state.kind !== 'ready') return;
-    try {
-      update(await patch({ isOnReadingList: !state.interaction.isOnReadingList }));
-    } catch { /* silent */ }
+    void optimisticToggle({ isOnReadingList: !state.interaction.isOnReadingList });
   };
 
   const persistNote = useCallback(

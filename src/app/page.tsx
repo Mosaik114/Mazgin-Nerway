@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { formatDate } from '@/lib/config';
 import { getAllEssays } from '@/lib/essays';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
-import EssayCard from '@/components/EssayCard';
 import HomeLatestEssayCard from '@/components/HomeLatestEssayCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
@@ -103,16 +102,10 @@ export default function Home() {
           />
           <div className={styles.grid}>
             {posts.map((post) => (
-              <EssayCard
+              <HomeLatestEssayCard
                 key={post.slug}
-                title={post.title}
-                slug={post.slug}
-                date={post.date}
-                excerpt={post.excerpt}
-                category={post.category}
-                coverImage={post.coverImage}
-                coverImageAlt={post.coverImageAlt}
-                readingTime={post.readingTime}
+                post={post}
+                showLoginHint={false}
               />
             ))}
           </div>

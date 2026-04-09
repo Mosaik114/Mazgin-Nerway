@@ -45,6 +45,7 @@ model UserEssayInteraction {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, essaySlug])
+  @@map("UserPostInteraction")
 }
 
 model ContactRateLimitBucket {
