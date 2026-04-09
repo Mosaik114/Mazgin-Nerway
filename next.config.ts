@@ -26,7 +26,7 @@ function buildContentSecurityPolicy(): string {
     "form-action 'self'",
     "frame-ancestors 'none'",
     "object-src 'none'",
-    "img-src 'self' data: blob:",
+    "img-src 'self' data: blob: https://lh3.googleusercontent.com",
     "font-src 'self'",
     "style-src 'self' 'unsafe-inline'",
     "script-src 'self' 'unsafe-inline'",
@@ -68,6 +68,12 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     qualities: [75, 86, 88, 90],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
   },
   async redirects() {
     return [

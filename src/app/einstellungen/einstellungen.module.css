@@ -49,6 +49,38 @@
   line-height: 1.6;
 }
 
+/* Avatar Upload */
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.avatarPreview {
+  flex-shrink: 0;
+}
+
+.avatarControls {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.avatarButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.fileInput {
+  display: none;
+}
+
+.successText {
+  font-size: var(--text-sm);
+  color: #6aaf8e;
+}
+
 /* Formular-Zeilen */
 .fieldRow {
   display: flex;

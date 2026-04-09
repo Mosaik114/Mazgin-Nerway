@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { updateDisplayNameAction, updateThemePreferenceAction } from './actions';
+import AvatarUpload from './AvatarUpload';
 import DeleteAccountForm from './DeleteAccountForm';
 import styles from './einstellungen.module.css';
 
@@ -28,6 +29,7 @@ export default async function EinstellungenPage() {
       displayName: true,
       name: true,
       email: true,
+      image: true,
       themePreference: true,
       role: true,
       createdAt: true,
@@ -47,6 +49,15 @@ export default async function EinstellungenPage() {
       <div className={styles.header}>
         <Link href="/mein-bereich" className={styles.backLink}>← Mein Bereich</Link>
         <h1 className={styles.title}>Einstellungen</h1>
+      </div>
+
+      {/* Profilbild */}
+      <div className={styles.card}>
+        <h2 className={styles.cardTitle}>Profilbild</h2>
+        <p className={styles.cardDescription}>
+          Lade ein eigenes Profilbild hoch. Erlaubt sind JPEG, PNG und WebP.
+        </p>
+        <AvatarUpload currentImage={user.image} name={user.displayName ?? user.name} />
       </div>
 
       {/* Anzeigename */}
@@ -110,7 +121,7 @@ export default async function EinstellungenPage() {
         <h2 className={styles.cardTitle}>Gefahrenzone</h2>
         <p className={styles.cardDescription}>
           Wenn du dein Konto löschst, werden alle deine Daten unwiderruflich entfernt:
-          Lesezeichen, Notizen, Favoriten und deine Leseliste.
+          Notizen, Favoriten und deine Leseliste.
         </p>
         <DeleteAccountForm
           userEmail={user.email ?? ''}
