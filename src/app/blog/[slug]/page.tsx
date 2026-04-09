@@ -380,15 +380,18 @@ export default async function BlogPostPage({ params }: Props) {
             <h1 className={styles.title}>{post.title}</h1>
             <p className={styles.excerpt}>{post.excerpt}</p>
 
-            {post.tags.length > 0 && (
-              <ul className={styles.tagList} aria-label="Schlagwörter">
-                {post.tags.map((tag) => (
-                  <li key={getTagSlug(tag)} className={styles.tagItem}>
-                    <Link href={`/blog/tags/${getTagSlug(tag)}`} className={styles.tagLink}>#{tag}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <div className={styles.tagActionRow}>
+              {post.tags.length > 0 && (
+                <ul className={styles.tagList} aria-label="Schlagwörter">
+                  {post.tags.map((tag) => (
+                    <li key={getTagSlug(tag)} className={styles.tagItem}>
+                      <Link href={`/blog/tags/${getTagSlug(tag)}`} className={styles.tagLink}>#{tag}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <PostInteractionBar postSlug={post.slug} />
+            </div>
 
             <div className={styles.ornament}>
               <span>✦</span>
@@ -414,8 +417,6 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           <div className={styles.content} dangerouslySetInnerHTML={{ __html: contentHtml }} />
-
-          <PostInteractionBar postSlug={post.slug} />
 
           <nav className={styles.postNav} aria-label="Beitragsnavigation">
             <div className={styles.navItem}>

@@ -69,12 +69,22 @@
   font-style: italic;
 }
 
+.tagActionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
 .tagList {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: var(--space-md);
+  flex: 1 1 280px;
+  margin-bottom: 0;
 }
 
 .tagItem {
@@ -376,6 +386,14 @@
 }
 
 @media (max-width: 768px) {
+  .tagActionRow {
+    gap: 0.65rem;
+  }
+
+  .tagList {
+    flex-basis: 100%;
+  }
+
   .postNav {
     grid-template-columns: 1fr;
     gap: 0.9rem;
