@@ -20,7 +20,7 @@ export default async function MeinBereichPage() {
   const access = await requireActivePageSession('/mein-bereich');
 
   const [interactions, user] = await Promise.all([
-    prisma.userPostInteraction.findMany({
+    prisma.userEssayInteraction.findMany({
       where: { userId: access.user.id },
       orderBy: { updatedAt: 'desc' },
     }),

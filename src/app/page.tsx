@@ -68,7 +68,7 @@ export default function Home() {
               <Link href="/about" className={styles.btnSecondary}>Über mich</Link>
             </div>
             <div className={styles.heroMeta}>
-              <span>{allPosts.length} Essays</span>
+              <span>{allEssays.length} Essays</span>
               {latestPost && <span>Neu: {formatDate(latestPost.date)}</span>}
             </div>
           </div>
