@@ -88,14 +88,6 @@
   overflow: hidden;
 }
 
-.readBadge {
-  display: inline-flex;
-  align-items: center;
-  font-size: var(--text-xs);
-  color: #6aaf8e;
-  font-weight: 600;
-}
-
 .readMore {
   font-family: var(--font-heading);
   font-size: var(--text-sm);

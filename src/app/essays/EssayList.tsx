@@ -9,6 +9,7 @@ import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import EssayCard from '@/components/EssayCard';
 import FavoriteButton from '@/components/FavoriteButton';
 import ReadingListButton from '@/components/ReadingListButton';
+import MarkReadButton from '@/components/MarkReadButton';
 import type { Essay } from '@/lib/essays';
 import { formatDate } from '@/lib/config';
 import styles from './essay.module.css';
@@ -218,6 +219,11 @@ export default function EssayList({
 
               {status === 'authenticated' && (
                 <div className={styles.featuredActions}>
+                  <MarkReadButton
+                    essaySlug={featured.slug}
+                    initialIsRead={featuredInteraction?.isRead}
+                    variant="icon"
+                  />
                   <FavoriteButton
                     essaySlug={featured.slug}
                     initialFavorite={featuredInteraction?.isFavorite}

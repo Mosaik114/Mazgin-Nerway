@@ -5,6 +5,7 @@ import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { formatDate } from '@/lib/config';
 import FavoriteButton from './FavoriteButton';
 import ReadingListButton from './ReadingListButton';
+import MarkReadButton from './MarkReadButton';
 import styles from './EssayCard.module.css';
 
 interface Props {
@@ -59,6 +60,7 @@ export default function EssayCard({
         )}
         {showActions && (
           <div className={styles.actions}>
+            <MarkReadButton essaySlug={slug} initialIsRead={isRead} variant="icon" />
             <FavoriteButton essaySlug={slug} initialFavorite={isFavorite} variant="icon" />
             <ReadingListButton essaySlug={slug} initialOnList={isOnReadingList} variant="icon" />
           </div>
@@ -79,7 +81,6 @@ export default function EssayCard({
             )}
             <time className={styles.date}>{formatted}</time>
             {readingTime && <span className={styles.readTime}>{readingTime} Min.</span>}
-            {isRead && <span className={styles.readBadge} title="Gelesen">✓</span>}
           </div>
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.excerpt}>{excerpt}</p>
