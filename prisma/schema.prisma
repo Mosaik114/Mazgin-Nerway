@@ -33,7 +33,7 @@ model User {
 model UserEssayInteraction {
   id              String    @id @default(cuid())
   userId          String
-  essaySlug       String
+  essaySlug       String    @map("postSlug")
   note            String?   @db.Text
   isRead          Boolean   @default(false)
   readAt          DateTime?
