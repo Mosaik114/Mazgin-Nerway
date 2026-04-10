@@ -1,29 +1,29 @@
 import { describe, expect, it } from 'vitest';
 import {
-  getAllPosts,
+  getAllEssays,
   getAllTagsWithCount,
   getArchiveByYear,
-  getPostBySlug,
-  getPostsByTagSlug,
+  getEssayBySlug,
+  getEssaysByTagSlug,
   getTagInfoBySlug,
   normalizeSlug,
-} from './posts';
+} from './essays';
 
-describe('posts helpers', () => {
+describe('essays helpers', () => {
   it('normalizes slugs including umlauts and ß', () => {
     expect(normalizeSlug(' Straße & Bühne ')).toBe('strasse-buhne');
     expect(normalizeSlug('  Mehr   Worte  ')).toBe('mehr-worte');
   });
 
-  it('loads published posts and resolves posts by slug', () => {
-    const posts = getAllPosts();
-    expect(posts.length).toBeGreaterThan(0);
+  it('loads published essays and resolves essays by slug', () => {
+    const essays = getAllEssays();
+    expect(essays.length).toBeGreaterThan(0);
 
-    const first = posts[0];
+    const first = essays[0];
     expect(first.title.length).toBeGreaterThan(0);
     expect(first.tags.length).toBeGreaterThan(0);
 
-    const resolved = getPostBySlug(first.slug);
+    const resolved = getEssayBySlug(first.slug);
     expect(resolved?.slug).toBe(first.slug);
   });
 
@@ -39,16 +39,16 @@ describe('posts helpers', () => {
     const tagInfo = getTagInfoBySlug(firstTag.slug);
     expect(tagInfo?.slug).toBe(firstTag.slug);
 
-    const taggedPosts = getPostsByTagSlug(firstTag.slug);
-    expect(taggedPosts.length).toBeGreaterThan(0);
+    const taggedEssays = getEssaysByTagSlug(firstTag.slug);
+    expect(taggedEssays.length).toBeGreaterThan(0);
   });
 
-  it('groups archive entries without losing posts', () => {
-    const posts = getAllPosts();
+  it('groups archive entries without losing essays', () => {
+    const essays = getAllEssays();
     const archive = getArchiveByYear();
 
-    const totalInArchive = archive.reduce((sum, group) => sum + group.posts.length, 0);
-    expect(totalInArchive).toBe(posts.length);
+    const totalInArchive = archive.reduce((sum, group) => sum + group.essays.length, 0);
+    expect(totalInArchive).toBe(essays.length);
   });
 });
 

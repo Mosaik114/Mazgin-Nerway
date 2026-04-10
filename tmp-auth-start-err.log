@@ -1,0 +1,6 @@
+[auth] AUTH_URL (or NEXTAUTH_URL) is missing in production and no VERCEL_URL fallback is available. trustHost is disabled.
+[31m[auth][error][0m UntrustedHost: Host must be trusted. URL was: http://localhost:3215/api/auth/signin/google. Read more at https://errors.authjs.dev#untrustedhost
+    at C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\chunks\44.js:404:51325
+    at fH (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\.next\server\chunks\44.js:404:53992)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async rH.do (C:\Users\nerwa\Documents\Programmieren\Mazgin Nerway\mazgin-nerway\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:5:21048)
