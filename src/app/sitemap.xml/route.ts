@@ -34,7 +34,6 @@ const HUB_PAGES: StaticPageConfig[] = [
   { path: '/essays', changeFrequency: 'weekly', priority: 0.92 },
   { path: '/essays/tags', changeFrequency: 'weekly', priority: 0.76 },
   { path: '/essays/archiv', changeFrequency: 'weekly', priority: 0.72 },
-  { path: '/feed.xml', changeFrequency: 'daily', priority: 0.4 },
 ];
 
 function toAbsoluteUrl(path: string): string {
