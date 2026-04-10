@@ -48,7 +48,8 @@ export default async function EinstellungenPage({ searchParams }: EinstellungenP
   const isAdmin = isAdminEmail(user.email);
 
   return (
-    <section className={`container ${styles.page}`}>
+    <section className={styles.page}>
+      <div className="container">
       <div className={styles.header}>
         <Link href="/mein-bereich" className={styles.backLink}>← Mein Bereich</Link>
         <h1 className={styles.title}>Einstellungen</h1>
@@ -135,6 +136,7 @@ export default async function EinstellungenPage({ searchParams }: EinstellungenP
           userEmail={user.email ?? ''}
           isAdmin={isAdmin}
         />
+      </div>
       </div>
     </section>
   );
