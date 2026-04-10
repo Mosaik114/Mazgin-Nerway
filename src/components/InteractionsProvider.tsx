@@ -1,7 +1,8 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
+import useSWR from 'swr';
 
 interface Interaction {
   essaySlug: string;
@@ -20,25 +21,24 @@ export function useInteractions(): Map<string, Interaction> {
   return useContext(InteractionsContext).map;
 }
 
+const fetcher = (url: string): Promise<Interaction[]> =>
+  fetch(url, { credentials: 'same-origin' })
+    .then((r) => (r.ok ? (r.json() as Promise<Interaction[]>) : []))
+    .catch(() => []);
+
 export function InteractionsProvider({ children }: { children: React.ReactNode }) {
   const { status } = useSession();
-  const [map, setMap] = useState<Map<string, Interaction>>(new Map());
 
-  const load = useCallback(() => {
-    if (status !== 'authenticated') {
-      setMap(new Map());
-      return;
-    }
+  const { data } = useSWR<Interaction[]>(
+    status === 'authenticated' ? '/api/interactions' : null,
+    fetcher,
+    { revalidateOnFocus: true },
+  );
 
-    void fetch('/api/interactions', { cache: 'no-store', credentials: 'same-origin' })
-      .then((r) => (r.ok ? (r.json() as Promise<Interaction[]>) : []))
-      .then((data) => setMap(new Map(data.map((i) => [i.essaySlug, i]))))
-      .catch(() => {});
-  }, [status]);
-
-  useEffect(() => {
-    load();
-  }, [load]);
+  const map = useMemo(
+    () => new Map((data ?? []).map((i) => [i.essaySlug, i])),
+    [data],
+  );
 
   return (
     <InteractionsContext.Provider value={{ map }}>

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { buildSignInPath } from '@/lib/auth-redirect';
+import useSWR from 'swr';
 import styles from './EssayInteractionBar.module.css';
 
 interface Interaction {
@@ -12,11 +13,6 @@ interface Interaction {
   isFavorite: boolean;
   isOnReadingList: boolean;
 }
-
-type State =
-  | { kind: 'loading' }
-  | { kind: 'unauthenticated' }
-  | { kind: 'ready'; interaction: Interaction };
 
 interface Props {
   essaySlug: string;
@@ -31,62 +27,49 @@ const EMPTY_INTERACTION: Interaction = {
 
 const NOTE_DEBOUNCE_MS = 1100;
 
+const fetcher = (url: string): Promise<Interaction | null> =>
+  fetch(url, { cache: 'no-store', credentials: 'include' })
+    .then((r) => (r.ok ? (r.json() as Promise<Interaction | null>) : null))
+    .catch(() => null);
+
 export default function EssayInteractionBar({ essaySlug }: Props) {
   const pathname = usePathname();
   const signInHref = buildSignInPath(pathname ?? '/');
 
-  const [state, setState] = useState<State>({ kind: 'loading' });
-  const [noteOpen, setNoteOpen] = useState(false);
+  const { data, isLoading, mutate } = useSWR<Interaction | null>(
+    `/api/essays/${essaySlug}/interaction`,
+    fetcher,
+    { revalidateOnFocus: false },
+  );
+
   const [noteValue, setNoteValue] = useState('');
   const [savedNoteValue, setSavedNoteValue] = useState('');
   const [noteSaving, setNoteSaving] = useState(false);
   const [noteSaved, setNoteSaved] = useState(false);
   const [noteSaveError, setNoteSaveError] = useState(false);
-  const actionMutationIdRef = useRef(0);
+  const [noteOpen, setNoteOpen] = useState(false);
 
+  const initializedSlugRef = useRef<string | null>(null);
+
+  // Sync note state when data first arrives for this slug
   useEffect(() => {
-    let cancelled = false;
+    if (data && initializedSlugRef.current !== essaySlug) {
+      initializedSlugRef.current = essaySlug;
+      const note = data.note ?? '';
+      setNoteValue(note);
+      setSavedNoteValue(note);
+      setNoteSaved(false);
+      setNoteSaveError(false);
+    }
+  }, [data, essaySlug]);
 
-    void fetch(`/api/essays/${essaySlug}/interaction`, {
-      cache: 'no-store',
-      credentials: 'include',
-    })
-      .then((response) => (response.ok ? (response.json() as Promise<Interaction | null>) : null))
-      .then((data) => {
-        if (cancelled) return;
-
-        if (data === null || data === undefined) {
-          setState({ kind: 'unauthenticated' });
-          setNoteOpen(false);
-          setNoteValue('');
-          setSavedNoteValue('');
-        } else {
-          const nextNote = data.note ?? '';
-          setState({ kind: 'ready', interaction: data });
-          setNoteValue(nextNote);
-          setSavedNoteValue(nextNote);
-        }
-
-        setNoteSaved(false);
-        setNoteSaveError(false);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setState({ kind: 'unauthenticated' });
-        setNoteOpen(false);
-        setNoteValue('');
-        setSavedNoteValue('');
-        setNoteSaved(false);
-        setNoteSaveError(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [essaySlug]);
+  const isUnauthenticated = !isLoading && data === null;
+  const interaction = data ?? EMPTY_INTERACTION;
+  const actionsDisabled = isLoading || isUnauthenticated;
+  const noteChanged = noteValue !== savedNoteValue;
 
   const patch = useCallback(
-    async (updates: Partial<{ isRead: boolean; note: string; isFavorite: boolean; isOnReadingList: boolean }>) => {
+    async (updates: Partial<Interaction>): Promise<Interaction> => {
       const res = await fetch(`/api/essays/${essaySlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -99,75 +82,42 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
     [essaySlug],
   );
 
-  const update = useCallback((interaction: Interaction) => {
-    setState({ kind: 'ready', interaction });
-  }, []);
-
-  const interaction = state.kind === 'ready' ? state.interaction : EMPTY_INTERACTION;
-  const actionsDisabled = state.kind !== 'ready';
-  const noteChanged = noteValue !== savedNoteValue;
-
   const optimisticToggle = useCallback(
-    async (updates: Partial<Pick<Interaction, 'isRead' | 'isFavorite' | 'isOnReadingList'>>) => {
-      if (state.kind !== 'ready') return;
-
-      const previous = state.interaction;
-      const optimisticNext: Interaction = { ...previous, ...updates };
-      const mutationId = ++actionMutationIdRef.current;
-
-      update(optimisticNext);
-
-      try {
-        const persisted = await patch(updates);
-        if (actionMutationIdRef.current === mutationId) {
-          update(persisted);
-        }
-      } catch {
-        if (actionMutationIdRef.current === mutationId) {
-          update(previous);
-        }
-      }
+    (updates: Partial<Pick<Interaction, 'isRead' | 'isFavorite' | 'isOnReadingList'>>) => {
+      if (!data) return;
+      void mutate(async () => patch(updates), {
+        optimisticData: { ...data, ...updates },
+        rollbackOnError: true,
+        revalidate: false,
+      });
     },
-    [patch, state, update],
+    [data, mutate, patch],
   );
 
-  const toggleRead = () => {
-    if (state.kind !== 'ready') return;
-    void optimisticToggle({ isRead: !state.interaction.isRead });
-  };
-
-  const toggleFavorite = () => {
-    if (state.kind !== 'ready') return;
-    void optimisticToggle({ isFavorite: !state.interaction.isFavorite });
-  };
-
-  const toggleReadingList = () => {
-    if (state.kind !== 'ready') return;
-    void optimisticToggle({ isOnReadingList: !state.interaction.isOnReadingList });
-  };
+  const toggleRead = () => optimisticToggle({ isRead: !interaction.isRead });
+  const toggleFavorite = () => optimisticToggle({ isFavorite: !interaction.isFavorite });
+  const toggleReadingList = () => optimisticToggle({ isOnReadingList: !interaction.isOnReadingList });
 
   const persistNote = useCallback(
     async (value: string, source: 'auto' | 'manual') => {
-      if (state.kind !== 'ready' || noteSaving || value === savedNoteValue) return;
+      if (!data || noteSaving || value === savedNoteValue) return;
 
       setNoteSaving(true);
       try {
         const next = await patch({ note: value });
-        update(next);
+        await mutate(next, { revalidate: false });
         setSavedNoteValue(next.note ?? '');
         setNoteSaveError(false);
         if (source === 'manual' || value === noteValue) {
           setNoteSaved(true);
         }
       } catch {
-        if (source === 'manual') {
-          setNoteSaveError(true);
-        }
+        if (source === 'manual') setNoteSaveError(true);
       } finally {
         setNoteSaving(false);
       }
     },
-    [state.kind, noteSaving, savedNoteValue, patch, update, noteValue],
+    [data, noteSaving, savedNoteValue, patch, mutate, noteValue],
   );
 
   useEffect(() => {
@@ -186,7 +136,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
   }, [noteOpen]);
 
   useEffect(() => {
-    if (state.kind !== 'ready' || !noteChanged || noteSaving) return;
+    if (!data || !noteChanged || noteSaving) return;
 
     const valueToSave = noteValue;
     const timer = window.setTimeout(() => {
@@ -194,7 +144,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
     }, NOTE_DEBOUNCE_MS);
 
     return () => window.clearTimeout(timer);
-  }, [state.kind, noteChanged, noteSaving, noteValue, persistNote]);
+  }, [data, noteChanged, noteSaving, noteValue, persistNote]);
 
   const noteStatus = noteSaving
     ? 'Speichert ...'
@@ -254,7 +204,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
           </button>
         </div>
 
-        {state.kind === 'unauthenticated' && (
+        {isUnauthenticated && (
           <p className={styles.loginHint}>
             Für Markierungen und Notizen&nbsp;
             <Link href={signInHref} className={styles.loginHintLink}>
@@ -272,7 +222,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
         aria-expanded={noteOpen}
         aria-controls={`note-popup-${essaySlug}`}
         aria-label={noteOpen ? 'Notiz schließen' : 'Notiz öffnen'}
-        title={state.kind === 'ready' ? 'Notiz öffnen' : 'Notiz (Login erforderlich)'}
+        title={data ? 'Notiz öffnen' : 'Notiz (Login erforderlich)'}
         disabled={actionsDisabled}
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -282,7 +232,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
         <span className={styles.noteFabLabel}>Notiz</span>
       </button>
 
-      {noteOpen && state.kind === 'ready' && (
+      {noteOpen && data && (
         <section
           id={`note-popup-${essaySlug}`}
           className={styles.notePopup}
@@ -327,9 +277,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
             <button
               type="button"
               className={`${styles.saveBtn} ${noteSaved ? styles.saveBtnSaved : ''}`}
-              onClick={() => {
-                void persistNote(noteValue, 'manual');
-              }}
+              onClick={() => void persistNote(noteValue, 'manual')}
               disabled={noteSaving || !noteChanged}
             >
               {noteSaving ? 'Speichern ...' : noteSaved ? 'Gespeichert' : 'Speichern'}
