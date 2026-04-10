@@ -23,7 +23,7 @@ Die Beine, die eben noch schwer waren, werden leichter. Man nimmt die letzten St
 
 *Gusht, Birinc und Birjane.*
 
-Ein Geruch, der sich in das Treppenhaus schleicht und einen beim Namen ruft. Die Tasche schlägt gegen das Bein. Die Schultern sind noch hochgezogen. Aber der Tag, der gerade noch so groß war, das Pausenhofgeschrei, die Hausaufgaben, die man vergessen hat wird kleiner mit jeder Stufe. Kleiner und kleiner, bis man klingelt.
+Ein Geruch, der sich in das Treppenhaus schleicht und einen beim Namen ruft. Die Tasche schlägt gegen das Bein. Die Schultern sind noch hochgezogen. Aber der Tag, der gerade noch so groß war, das Pausenhofgeschrei, die Hausaufgaben, die man vergessen hat, wird kleiner mit jeder Stufe. Kleiner und kleiner, bis man klingelt.
 
 Dade kocht. Das weiß man, noch bevor sie aufmacht. Man hört sie nicht, man sieht sie nicht, aber sie ist da, in der Wärme, die durch den Spalt kommt, wenn die Tür aufgeht.
 
