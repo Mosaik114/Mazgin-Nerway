@@ -6,7 +6,7 @@
 .page .container {
   max-width: 640px;
   display: grid;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
 }
 
 .header {
