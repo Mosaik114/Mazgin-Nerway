@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { remark } from 'remark';
-import html from 'remark-html';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import { getAllEssays, getEssayBySlug, getTagSlug } from '@/lib/essays';
 import { formatDate, SITE_URL, SOCIAL_LINKS } from '@/lib/config';
@@ -23,86 +21,6 @@ import styles from './essay.module.css';
 
 interface Props {
   params: Promise<{ slug: string }>;
-}
-
-interface TocHeading {
-  id: string;
-  level: 2 | 3;
-  text: string;
-}
-
-function normalizeHeadingId(value: string): string {
-  const normalized = value
-    .trim()
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-
-  return normalized || 'abschnitt';
-}
-
-function dedupeHeadingId(base: string, counters: Map<string, number>): string {
-  const count = counters.get(base) ?? 0;
-  counters.set(base, count + 1);
-  return count === 0 ? base : `${base}-${count + 1}`;
-}
-
-function extractTocHeadings(markdown: string): TocHeading[] {
-  const headings: TocHeading[] = [];
-  const counters = new Map<string, number>();
-  let inCodeBlock = false;
-
-  for (const line of markdown.split('\n')) {
-    const trimmed = line.trim();
-
-    if (trimmed.startsWith('```')) {
-      inCodeBlock = !inCodeBlock;
-      continue;
-    }
-
-    if (inCodeBlock) continue;
-
-    const match = /^(#{2,3})\s+(.+?)\s*$/.exec(trimmed);
-    if (!match) continue;
-
-    const level = match[1].length as 2 | 3;
-    const text = match[2]
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1')
-      .replace(/[`*_~]/g, '')
-      .trim();
-
-    if (!text) continue;
-
-    const baseId = normalizeHeadingId(text);
-    const id = dedupeHeadingId(baseId, counters);
-    headings.push({ id, level, text });
-  }
-
-  return headings;
-}
-
-function attachHeadingIdsToHtml(contentHtml: string, tocHeadings: TocHeading[]): string {
-  const h2 = tocHeadings.filter((heading) => heading.level === 2);
-  const h3 = tocHeadings.filter((heading) => heading.level === 3);
-  let h2Index = 0;
-  let h3Index = 0;
-
-  return contentHtml
-    .replace(/<h2>([\s\S]*?)<\/h2>/g, (_full, inner) => {
-      const heading = h2[h2Index++];
-      if (!heading) return `<h2>${inner}</h2>`;
-      return `<h2 id="${heading.id}">${inner}</h2>`;
-    })
-    .replace(/<h3>([\s\S]*?)<\/h3>/g, (_full, inner) => {
-      const heading = h3[h3Index++];
-      if (!heading) return `<h3>${inner}</h3>`;
-      return `<h3 id="${heading.id}">${inner}</h3>`;
-    });
 }
 
 function getComparableTimestamp(date: string, updatedAt?: string): number {
@@ -196,9 +114,7 @@ export default async function EssayPostPage({ params }: Props) {
     redirect(`/essays/${post.slug}`);
   }
 
-  const processed = await remark().use(html).process(post.content);
-  const tocHeadings = extractTocHeadings(post.content);
-  const contentHtml = attachHeadingIdsToHtml(processed.toString(), tocHeadings);
+  const { contentHtml, tocHeadings } = post;
   const formatted = formatDate(post.date);
 
   const getCategoryAccent = (category?: string) => {

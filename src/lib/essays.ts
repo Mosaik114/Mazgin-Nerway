@@ -1,8 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 const postsDir = path.join(process.cwd(), 'src/content/posts');
+
+export interface TocHeading {
+  id: string;
+  level: 2 | 3;
+  text: string;
+}
 
 export interface Essay {
   slug: string;
@@ -20,6 +28,8 @@ export interface Essay {
   featured?: boolean;
   readingTime: number;
   content: string;
+  contentHtml: string;
+  tocHeadings: TocHeading[];
 }
 
 interface Frontmatter {
@@ -52,6 +62,81 @@ export interface ArchiveGroup {
 
 function calcReadingTime(content: string): number {
   return Math.max(1, Math.ceil(content.split(/\s+/).filter(Boolean).length / 200));
+}
+
+function normalizeHeadingId(value: string): string {
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  return normalized || 'abschnitt';
+}
+
+function dedupeHeadingId(base: string, counters: Map<string, number>): string {
+  const count = counters.get(base) ?? 0;
+  counters.set(base, count + 1);
+  return count === 0 ? base : `${base}-${count + 1}`;
+}
+
+function extractTocHeadings(markdown: string): TocHeading[] {
+  const headings: TocHeading[] = [];
+  const counters = new Map<string, number>();
+  let inCodeBlock = false;
+
+  for (const line of markdown.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('```')) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+    if (inCodeBlock) continue;
+
+    const match = /^(#{2,3})\s+(.+?)\s*$/.exec(trimmed);
+    if (!match) continue;
+
+    const level = match[1].length as 2 | 3;
+    const text = match[2]
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+      .replace(/[`*_~]/g, '')
+      .trim();
+    if (!text) continue;
+
+    const baseId = normalizeHeadingId(text);
+    const id = dedupeHeadingId(baseId, counters);
+    headings.push({ id, level, text });
+  }
+
+  return headings;
+}
+
+function attachHeadingIdsToHtml(contentHtml: string, tocHeadings: TocHeading[]): string {
+  const h2 = tocHeadings.filter((h) => h.level === 2);
+  const h3 = tocHeadings.filter((h) => h.level === 3);
+  let h2Index = 0;
+  let h3Index = 0;
+
+  return contentHtml
+    .replace(/<h2>([\s\S]*?)<\/h2>/g, (_full, inner) => {
+      const heading = h2[h2Index++];
+      if (!heading) return `<h2>${inner}</h2>`;
+      return `<h2 id="${heading.id}">${inner}</h2>`;
+    })
+    .replace(/<h3>([\s\S]*?)<\/h3>/g, (_full, inner) => {
+      const heading = h3[h3Index++];
+      if (!heading) return `<h3>${inner}</h3>`;
+      return `<h3 id="${heading.id}">${inner}</h3>`;
+    });
+}
+
+function buildContentHtml(markdown: string, tocHeadings: TocHeading[]): string {
+  const processed = remark().use(html).processSync(markdown);
+  return attachHeadingIdsToHtml(processed.toString(), tocHeadings);
 }
 
 export function normalizeSlug(value: string): string {
@@ -93,6 +178,8 @@ function parseEssay(filename: string, content: string, data: Frontmatter): Essay
   const slug = normalizeSlug(data.slug ?? filenameSlug);
   const title = data.title?.trim() || slug;
   const excerpt = data.excerpt?.trim() || `${content.slice(0, 160).replace(/\n/g, ' ')}...`;
+  const tocHeadings = extractTocHeadings(content);
+  const contentHtml = buildContentHtml(content, tocHeadings);
 
   return {
     slug,
@@ -110,6 +197,8 @@ function parseEssay(filename: string, content: string, data: Frontmatter): Essay
     featured: data.featured ?? false,
     readingTime: calcReadingTime(content),
     content,
+    contentHtml,
+    tocHeadings,
   };
 }
 
