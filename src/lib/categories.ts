@@ -16,7 +16,7 @@ export type Category = (typeof CATEGORIES)[number];
 export const CATEGORY_COLORS: Record<Category, string> = {
   'Pers\u00F6nliches': '#c9a84c',
   Schreiben: '#7a9e7e',
-  Gedanken: '#7a8e9e',
+  Gedanken: '#c9a84c',
   Glaube: '#4ca96b',
   Streit: '#c94c4c',
   Kindheit: '#89CFF0',
