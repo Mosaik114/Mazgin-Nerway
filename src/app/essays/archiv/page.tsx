@@ -85,7 +85,7 @@ export default async function ArchivePage() {
                     <Link href={`/essays/${essay.slug}`} className={styles.postLink}>
                       <span className={styles.postTitle}>{essay.title}</span>
                       <span className={styles.postMeta}>
-                        {formatDate(essay.date)} · {essay.readingTime} Min.
+                        <time dateTime={essay.date}>{formatDate(essay.date)}</time> · {essay.readingTime} Min.
                       </span>
                     </Link>
                   </li>

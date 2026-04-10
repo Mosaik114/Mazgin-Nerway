@@ -15,6 +15,10 @@ export const metadata: Metadata = {
     'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
   alternates: {
     canonical: '/',
+    languages: {
+      'de-DE': '/',
+      'x-default': '/',
+    },
   },
   openGraph: {
     type: 'website',

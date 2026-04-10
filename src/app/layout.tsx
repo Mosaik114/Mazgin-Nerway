@@ -73,15 +73,14 @@ export const metadata: Metadata = {
   },
   category: 'Literatur',
   alternates: {
-    canonical: '/',
-    languages: {
-      [SITE_LANGUAGE]: '/',
-      'x-default': '/',
-    },
     types: {
       'application/rss+xml': `${SITE_URL}/feed.xml`,
     },
   },
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0f0e0c' },
+    { media: '(prefers-color-scheme: light)', color: '#f5f0e8' },
+  ],
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   publisher: SITE_NAME,

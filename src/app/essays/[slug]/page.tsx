@@ -373,7 +373,7 @@ export default async function EssayPostPage({ params }: Props) {
                   {post.category}
                 </span>
               )}
-              <time className={styles.date}>{formatted}</time>
+              <time dateTime={post.date} className={styles.date}>{formatted}</time>
               <span className={styles.readTime}>{post.readingTime} Min. Lesezeit</span>
             </div>
 

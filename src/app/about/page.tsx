@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     'Ich bin Mazgin Nerway – Autor und Essayist. Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
   alternates: {
     canonical: '/about',
+    languages: {
+      'de-DE': '/about',
+      'x-default': '/about',
+    },
   },
   openGraph: {
     type: 'profile',
