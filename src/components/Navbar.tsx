@@ -46,54 +46,38 @@ export default function Navbar() {
 
   useEffect(() => {
     const mobileNav = mobileNavRef.current;
-    if (!mobileNav) return;
 
-    if (open) {
-      mobileNav.removeAttribute('inert');
+    if (!open) {
+      mobileNav?.setAttribute('inert', '');
       return;
     }
 
-    mobileNav.setAttribute('inert', '');
-  }, [open]);
+    mobileNav?.removeAttribute('inert');
 
-  useEffect(() => {
-    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setOpen(false);
-      }
+      if (event.key === 'Escape') setOpen(false);
     };
-
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [open]);
 
   useEffect(() => {
     const query = window.matchMedia('(min-width: 861px)');
 
     const handleViewportChange = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        setOpen(false);
-      }
+      if (event.matches) setOpen(false);
     };
 
     query.addEventListener('change', handleViewportChange);
     return () => query.removeEventListener('change', handleViewportChange);
   }, []);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const { style } = document.body;
-    const previousOverflow = style.overflow;
-
-    style.overflow = 'hidden';
-
-    return () => {
-      style.overflow = previousOverflow;
-    };
-  }, [open]);
 
   return (
     <header className={styles.header}>

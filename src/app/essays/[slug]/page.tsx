@@ -10,7 +10,9 @@ import { getAllEssays, getEssayBySlug, getTagSlug } from '@/lib/essays';
 import { formatDate, SITE_URL, SOCIAL_LINKS } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
 import ReadingProgress from '@/components/ReadingProgress';
-import EssayInteractionBar from '@/components/EssayInteractionBar';
+import dynamic from 'next/dynamic';
+
+const EssayInteractionBar = dynamic(() => import('@/components/EssayInteractionBar'), { ssr: false });
 import {
   SITE_LANGUAGE,
   SITE_NAME,

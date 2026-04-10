@@ -6,7 +6,9 @@ import { firstParamValue } from '@/lib/auth-redirect';
 import { isAdminEmail } from '@/lib/auth-policy';
 import { prisma } from '@/lib/prisma';
 import { updateDisplayNameAction, updateThemePreferenceAction } from './actions';
-import AvatarUpload from './AvatarUpload';
+import dynamic from 'next/dynamic';
+
+const AvatarUpload = dynamic(() => import('./AvatarUpload'), { ssr: false });
 import DeleteAccountForm from './DeleteAccountForm';
 import styles from './einstellungen.module.css';
 
