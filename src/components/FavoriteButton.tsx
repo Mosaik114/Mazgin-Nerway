@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './FavoriteButton.module.css';
 
 interface Props {
@@ -12,6 +12,10 @@ interface Props {
 export default function FavoriteButton({ essaySlug, initialFavorite = false, variant = 'icon' }: Props) {
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(initialFavorite ?? false);
+  }, [initialFavorite]);
 
   async function toggle(e: React.MouseEvent) {
     e.preventDefault();

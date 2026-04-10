@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ReadingListButton.module.css';
 
 interface Props {
@@ -12,6 +12,10 @@ interface Props {
 export default function ReadingListButton({ essaySlug, initialOnList = false, variant = 'icon' }: Props) {
   const [onList, setOnList] = useState(initialOnList);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    setOnList(initialOnList ?? false);
+  }, [initialOnList]);
 
   async function toggle(e: React.MouseEvent) {
     e.preventDefault();
