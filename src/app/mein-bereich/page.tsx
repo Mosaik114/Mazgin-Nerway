@@ -60,7 +60,7 @@ export default async function MeinBereichPage() {
         <div className={styles.profileInfo}>
           <UserAvatar image={user?.image} name={displayName} size={72} />
           <div className={styles.profileText}>
-            <h1 className={styles.title}>Hallo, {displayName}</h1>
+            <h1 className={styles.title}>Moin, {displayName}</h1>
             {user?.email && <p className={styles.profileEmail}>{user.email}</p>}
           </div>
         </div>
