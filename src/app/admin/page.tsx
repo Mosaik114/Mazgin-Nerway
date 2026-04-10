@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import { Role } from '@prisma/client';
 import Link from 'next/link';
 import { requireActivePageSession } from '@/lib/auth-page-guard';
+
+export const metadata: Metadata = {
+  title: 'Admin',
+  robots: { index: false, follow: false },
+};
 import { isAdminEmail } from '@/lib/auth-policy';
 import { prisma } from '@/lib/prisma';
 import { setUserRoleAction, toggleUserBlockAction } from './actions';
