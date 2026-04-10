@@ -44,4 +44,4 @@ Und Tausende sind um einen herum: Trotzdem ist man allein. Nicht einsam. Allein.
 
 *Sie war immer genau hier. Man selbst hat nur den Weg gebraucht.*
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

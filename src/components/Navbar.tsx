@@ -89,8 +89,8 @@ export default function Navbar() {
           aria-label="Zur Startseite"
         >
           <Image
-            src="/images/Mazgin Nerway Logo Gold.png"
-            alt="Mazgin Nerway"
+            src="/images/Mizgin Nerway Logo Gold.png"
+            alt="Mizgin Nerway"
             width={512}
             height={124}
             priority

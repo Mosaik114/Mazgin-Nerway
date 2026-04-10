@@ -11,7 +11,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.content}>
-          <p className={styles.name}>Mazgin Nerway</p>
+          <p className={styles.name}>Mizgin Nerway</p>
           <nav className={styles.links}>
             <Link href="/">Start</Link>
             <Link href="/essays">Essays</Link>
@@ -34,7 +34,7 @@ export default function Footer() {
             <Link href="/datenschutz">Datenschutz</Link>
           </div>
           <p className={styles.copy}>
-            © {new Date().getFullYear()} Mazgin Nerway. Alle Rechte vorbehalten.
+            © {new Date().getFullYear()} Mizgin Nerway. Alle Rechte vorbehalten.
           </p>
         </div>
       </div>

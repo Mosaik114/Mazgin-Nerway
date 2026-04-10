@@ -1,6 +1,6 @@
 import { SITE_URL } from '@/lib/config';
 
-export const SITE_NAME = 'Mazgin Nerway';
+export const SITE_NAME = 'Mizgin Nerway';
 export const SITE_DESCRIPTION = 'Essays, Gedanken und Reflexionen - irgendwo zwischen zwei Welten.';
 export const SITE_LANGUAGE = 'de-DE';
 export const SITE_PERSON_GENDER = 'Male';

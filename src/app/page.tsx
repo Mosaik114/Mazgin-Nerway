@@ -127,7 +127,7 @@ export default function Home() {
           </div>
           <h2 className={styles.aboutTitle}>Wer steckt dahinter?</h2>
           <p className={styles.aboutText}>
-            Ich bin Mazgin. Aufgewachsen zwischen Kulturen, fasziniert von Sprache
+            Ich bin Mizgin. Aufgewachsen zwischen Kulturen, fasziniert von Sprache
             und dem, was Worte bewirken können. Diese Essays sind mein Ort zum Denken.
           </p>
           <div className={styles.aboutActions}>

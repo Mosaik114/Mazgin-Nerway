@@ -63,4 +63,4 @@ Der Weg am Friedhof vorbei hat irgendwo hingeführt.
 *Sie hat das gewusst. Man selbst ist es nur gegangen.*
 
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

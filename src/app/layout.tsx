@@ -130,12 +130,12 @@ const personJsonLd = {
   '@type': 'Person',
   '@id': `${SITE_URL}/about#person`,
   name: SITE_NAME,
-  alternateName: ['Nerway', 'Mazgin'],
+  alternateName: ['Nerway', 'Mizgin'],
   url: SITE_URL,
-  image: `${SITE_URL}/images/mazgin-rechts.png`,
+  image: `${SITE_URL}/images/mizgin-rechts.png`,
   jobTitle: 'Autor & Essayist',
   description:
-    'Mazgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+    'Mizgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   gender: SITE_PERSON_GENDER,
   knowsLanguage: ['de', 'de-DE'],
   mainEntityOfPage: {

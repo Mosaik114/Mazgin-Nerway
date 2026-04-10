@@ -28,7 +28,7 @@ function firstParamValue(value: SearchParamValue): string {
   return value ?? '';
 }
 
-const ESSAYS_DESCRIPTION = 'Alle Essays von Mazgin Nerway - Gedanken, Geschichten und Reflexionen.';
+const ESSAYS_DESCRIPTION = 'Alle Essays von Mizgin Nerway - Gedanken, Geschichten und Reflexionen.';
 
 export const metadata: Metadata = {
   title: ESSAYS_TITLE,

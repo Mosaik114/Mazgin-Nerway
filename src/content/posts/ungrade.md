@@ -54,4 +54,4 @@ Das sagt sich leicht.
 *Es zu glauben dauert ein Leben. Aber man hat ja eines.*
 
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

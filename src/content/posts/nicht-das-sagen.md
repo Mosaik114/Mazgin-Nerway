@@ -53,4 +53,4 @@ Das fühlt sich nicht an wie Stärke. Es fühlt sich an wie der Moment, bevor ma
 *Aber der Tee wird warm. Und der andere sitzt noch da.*
 
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

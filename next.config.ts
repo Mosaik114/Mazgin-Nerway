@@ -61,13 +61,13 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'mazginnerway.de' }],
+        has: [{ type: 'host', value: 'mizginnerway.de' }],
         destination: 'https://www.nerway.de/:path*',
         permanent: true,
       },
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.mazginnerway.de' }],
+        has: [{ type: 'host', value: 'www.mizginnerway.de' }],
         destination: 'https://www.nerway.de/:path*',
         permanent: true,
       },

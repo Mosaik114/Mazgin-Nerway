@@ -47,4 +47,4 @@ Man dreht die Heizung einen Grad höher. Sie schaut aus dem Fenster. Die Tüten 
 
 *Irgendwann wird man sich an genau das erinnern.*
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

@@ -4,7 +4,7 @@ import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
 import ContactForm from './ContactForm';
 import styles from './contact.module.css';
 
-const CONTACT_DESCRIPTION = 'Kontaktiere Mazgin Nerway – für Fragen, Kooperationen oder einfach um hallo zu sagen.';
+const CONTACT_DESCRIPTION = 'Kontaktiere Mizgin Nerway – für Fragen, Kooperationen oder einfach um hallo zu sagen.';
 
 export const metadata: Metadata = {
   title: 'Kontakt',

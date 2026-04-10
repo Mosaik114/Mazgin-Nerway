@@ -8,7 +8,7 @@ import styles from './about.module.css';
 export const metadata: Metadata = {
   title: 'Über mich',
   description:
-    'Ich bin Mazgin Nerway – Autor und Essayist. Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
+    'Ich bin Mizgin Nerway – Autor und Essayist. Aufgewachsen zwischen Kulturen, schreibe ich auf Deutsch über Identität, Sprache und das, was dazwischen liegt.',
   alternates: {
     canonical: '/about',
     languages: {
@@ -46,12 +46,12 @@ const personJsonLd = {
   '@type': 'Person',
   '@id': `${SITE_URL}/about#person`,
   name: SITE_NAME,
-  alternateName: ['Nerway', 'Mazgin'],
+  alternateName: ['Nerway', 'Mizgin'],
   url: SITE_URL,
-  image: `${SITE_URL}/images/mazgin-rechts.png`,
+  image: `${SITE_URL}/images/mizgin-rechts.png`,
   jobTitle: 'Autor & Essayist',
   description:
-    'Mazgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+    'Mizgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   gender: SITE_PERSON_GENDER,
   sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok, SOCIAL_LINKS.youtube],
   knowsLanguage: ['de', 'de-DE'],
@@ -67,7 +67,7 @@ const profilePageJsonLd = {
   name: `Über mich | ${SITE_NAME}`,
   url: `${SITE_URL}/about`,
   description:
-    'Mazgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+    'Mizgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
   mainEntity: personJsonLd,
 };
 
@@ -115,7 +115,7 @@ export default async function AboutPage() {
         {/* Header */}
         <header className={styles.header}>
           <div className={styles.tag}>✦ Über mich</div>
-          <h1 className={styles.title}>Mazgin Nerway</h1>
+          <h1 className={styles.title}>Mizgin Nerway</h1>
 
           <div className={styles.ornament}>
             <span>✦</span>
@@ -125,8 +125,8 @@ export default async function AboutPage() {
         <div className={styles.body}>
           <div className={styles.imageWrap}>
             <Image
-              src="/images/mazgin-rechts.png"
-              alt="Porträt von Mazgin Nerway"
+              src="/images/mizgin-rechts.png"
+              alt="Porträt von Mizgin Nerway"
               fill
               sizes="(max-width: 768px) 470px, (max-width: 1024px) 575px, 685px"
               quality={90}
@@ -143,7 +143,7 @@ export default async function AboutPage() {
               dass man sie nicht mehr zurücknehmen kann. Das sind dann meistens die richtigen.
             </p>
             <p>
-              Ich bin Mazgin. Ein Name, der in manchen Mündern stolpert und in anderen einfach
+              Ich bin Mizgin. Ein Name, der in manchen Mündern stolpert und in anderen einfach
               sitzt. Ein Name zwischen Sprachen, wie ich selbst. Ich schreibe auf Deutsch, träume
               auf Deutsch und trage trotzdem Dinge in mir, für die das Deutsche noch kein Wort
               hat. Diesen Zwischenraum kenne ich gut. Ich lebe darin. Und ich schreibe aus ihm

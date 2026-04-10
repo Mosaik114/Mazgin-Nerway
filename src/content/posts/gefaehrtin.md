@@ -43,4 +43,4 @@ Es war nicht zu finden, dieses Gefühl, nicht zu suchen, nicht zu planen. Man is
 
 *Niemand war gemeint als sie.*
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

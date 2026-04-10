@@ -18,7 +18,7 @@ export async function GET(req: Request) {
   const now = new Date();
   const publicPayload = {
     status: 'ok',
-    service: 'mazgin-nerway',
+    service: 'mizgin-nerway',
     timestamp: now.toISOString(),
   };
 

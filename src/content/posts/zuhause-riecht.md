@@ -38,4 +38,4 @@ Heute stehe ich manchmal in einer Küche und rieche etwas, das mich für eine Se
 *Die Treppen gibt es noch. Den Geruch gibt es noch. Nur das Kind, das diese Stufen hinaufgelaufen ist, gibt es so nicht mehr.*
 
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

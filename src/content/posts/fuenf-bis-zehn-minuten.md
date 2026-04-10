@@ -44,4 +44,4 @@ Diese zehn Minuten stehen in keinem Plan. Niemand hat sie geschickt. Niemand war
 
 *Ein Moment, der nur einem gehört. Bevor man wieder jemandem gehört.*
 
-In Erinnerung, Mazgin Nerway
+In Erinnerung, Mizgin Nerway

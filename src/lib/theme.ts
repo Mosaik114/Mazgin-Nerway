@@ -1,8 +1,8 @@
 export type Theme = 'dark' | 'light';
 
-const STORAGE_KEY = 'mazgin-theme';
+const STORAGE_KEY = 'mizgin-theme';
 const DEFAULT_THEME: Theme = 'dark';
-const THEME_CHANGE_EVENT = 'mazgin:theme-change';
+const THEME_CHANGE_EVENT = 'mizgin:theme-change';
 const LEGACY_LIGHT_THEME = 'sepia';
 
 function isLightThemeValue(value: string | null): boolean {
@@ -95,7 +95,7 @@ export function onThemeChange(listener: (theme: Theme) => void): () => void {
 export const themeScript = `
 (function() {
   try {
-    var t = localStorage.getItem('mazgin-theme');
+    var t = localStorage.getItem('mizgin-theme');
     if (t === 'light' || t === 'sepia') {
       document.documentElement.setAttribute('data-theme', 'light');
     } else {

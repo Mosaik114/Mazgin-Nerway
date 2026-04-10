@@ -25,7 +25,7 @@ const STATIC_PAGES: StaticPageConfig[] = [
     path: '/about',
     changeFrequency: 'monthly',
     priority: 0.7,
-    images: ['/images/mazgin-rechts.png'],
+    images: ['/images/mizgin-rechts.png'],
   },
   { path: '/contact', changeFrequency: 'yearly', priority: 0.55 },
 ];

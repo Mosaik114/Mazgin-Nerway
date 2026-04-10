@@ -9,7 +9,7 @@ function hasEnvValue(key: string): boolean {
 }
 
 export const LEGAL_CONTACT = {
-  name: readEnvValue('LEGAL_NAME', 'Mazgin Nerway'),
+  name: readEnvValue('LEGAL_NAME', 'Mizgin Nerway'),
   street: readEnvValue('LEGAL_STREET', '[Straße und Hausnummer]'),
   postalCode: readEnvValue('LEGAL_POSTAL_CODE', '[PLZ]'),
   city: readEnvValue('LEGAL_CITY', '[Stadt]'),

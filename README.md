@@ -1,4 +1,4 @@
-﻿# Mazgin Nerway
+﻿# Mizgin Nerway
 
 Persoenliche Website und Essay-Plattform mit Next.js.
 

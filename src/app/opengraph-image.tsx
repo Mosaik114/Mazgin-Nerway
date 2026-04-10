@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Mazgin Nerway';
+export const alt = 'Mizgin Nerway';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -31,7 +31,7 @@ export default function OgImage() {
             lineHeight: 1.1,
           }}
         >
-          Mazgin{' '}
+          Mizgin{' '}
           <span style={{ color: '#c9a84c' }}>Nerway</span>
         </div>
         <div style={{ color: '#8a8070', fontSize: 28, marginTop: 24, maxWidth: 700 }}>
