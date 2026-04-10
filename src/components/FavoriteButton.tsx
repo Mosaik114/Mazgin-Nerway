@@ -53,8 +53,8 @@ export default function FavoriteButton({ essaySlug, initialFavorite = false, var
     >
       <svg
         className={`${styles.heart} ${isFavorite ? styles.heartActive : ''}`}
-        width="18"
-        height="18"
+        width="15"
+        height="15"
         viewBox="0 0 24 24"
         fill={isFavorite ? 'currentColor' : 'none'}
         stroke="currentColor"

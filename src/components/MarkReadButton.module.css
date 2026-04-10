@@ -16,8 +16,8 @@
 }
 
 .iconOnly {
-  width: 32px;
-  height: 32px;
+  width: 27px;
+  height: 27px;
   justify-content: center;
   border-radius: var(--radius-xs);
   background: rgba(var(--color-overlay-rgb), 0.7);
