@@ -5,21 +5,18 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import Fuse from 'fuse.js';
 import { CATEGORY_COLORS, type Category } from '@/lib/categories';
 import EssayCard from '@/components/EssayCard';
 import FavoriteButton from '@/components/FavoriteButton';
 import ReadingListButton from '@/components/ReadingListButton';
 import MarkReadButton from '@/components/MarkReadButton';
+import { useInteractions } from '@/components/InteractionsProvider';
 import type { Essay } from '@/lib/essays';
 import { formatDate } from '@/lib/config';
 import styles from './essay.module.css';
 
-interface UserInteraction {
-  essaySlug: string;
-  isRead: boolean;
-  isFavorite: boolean;
-  isOnReadingList: boolean;
-}
+const PAGE_SIZE = 9;
 
 interface Props {
   posts: Essay[];
@@ -28,12 +25,27 @@ interface Props {
   initialQuery?: string;
 }
 
-function normalizeForSearch(value: string): string {
-  return value
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\u00DF/g, 'ss');
+import type { IFuseOptions } from 'fuse.js';
+
+const fuseOptions: IFuseOptions<Essay> = {
+  keys: [
+    { name: 'title', weight: 2 },
+    { name: 'tags', weight: 1.5 },
+    { name: 'category', weight: 1.5 },
+    { name: 'excerpt', weight: 1 },
+  ],
+  threshold: 0.35,
+  ignoreLocation: true,
+  includeScore: true,
+};
+
+function buildFilterHref(category: string, query: string): string {
+  const params = new URLSearchParams();
+  const trimmed = query.trim();
+  if (category !== 'Alle') params.set('category', category);
+  if (trimmed) params.set('q', trimmed);
+  const qs = params.toString();
+  return qs ? `/essays?${qs}` : '/essays';
 }
 
 export default function EssayList({
@@ -43,40 +55,53 @@ export default function EssayList({
   initialQuery = '',
 }: Props) {
   const { status } = useSession();
+  const interactionsMap = useInteractions();
+
   const initialActive = categories.includes(initialActiveCategory) ? initialActiveCategory : 'Alle';
   const [active, setActive] = useState(initialActive);
   const [query, setQuery] = useState(initialQuery);
-  const [interactionsMap, setInteractionsMap] = useState<Map<string, UserInteraction>>(new Map());
+  const [page, setPage] = useState(1);
 
+  // Reset to page 1 whenever filter or query changes
   useEffect(() => {
-    if (status !== 'authenticated') return;
+    setPage(1);
+  }, [active, query]);
 
-    void fetch('/api/interactions', { cache: 'no-store', credentials: 'same-origin' })
-      .then((r) => (r.ok ? (r.json() as Promise<UserInteraction[]>) : []))
-      .then((data) => {
-        setInteractionsMap(new Map(data.map((i) => [i.essaySlug, i])));
-      })
-      .catch(() => {});
-  }, [status]);
-  const normalizedQuery = normalizeForSearch(query.trim());
+  const fuse = useMemo(() => new Fuse(posts, fuseOptions), [posts]);
 
-  const buildFilterHref = (category: string, nextQuery: string): string => {
-    const params = new URLSearchParams();
-    const trimmedQuery = nextQuery.trim();
+  const filtered = useMemo(() => {
+    const byCategory = active === 'Alle' ? posts : posts.filter((p) => p.category === active);
 
-    if (category !== 'Alle') params.set('category', category);
-    if (trimmedQuery) params.set('q', trimmedQuery);
+    if (!query.trim()) return byCategory;
 
-    const queryString = params.toString();
-    return queryString ? `/essays?${queryString}` : '/essays';
-  };
+    const fusePosts = new Fuse(byCategory, fuseOptions);
+    return fusePosts.search(query.trim()).map((r) => r.item);
+  }, [active, fuse, posts, query]);
+
+  const featured =
+    active === 'Alle' && !query.trim() && page === 1
+      ? (filtered.find((p) => p.featured) ?? filtered[0])
+      : null;
+
+  const listPosts = featured ? filtered.filter((p) => p.slug !== featured.slug) : filtered;
+
+  const totalPages = Math.max(1, Math.ceil(listPosts.length / PAGE_SIZE));
+  const pagePosts = listPosts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    counts.set('Alle', posts.length);
+    categories
+      .filter((cat) => cat !== 'Alle')
+      .forEach((cat) => counts.set(cat, posts.filter((p) => p.category === cat).length));
+    return counts;
+  }, [categories, posts]);
 
   const getTagAccent = (category: string) => {
     const color =
       category === 'Alle'
         ? 'var(--color-gold)'
         : (CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)');
-
     return {
       color,
       backgroundColor: category === 'Alle' ? 'rgba(var(--color-gold-rgb), 0.08)' : `${color}1a`,
@@ -84,44 +109,14 @@ export default function EssayList({
     };
   };
 
-  const categoryCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    counts.set('Alle', posts.length);
-    categories
-      .filter((cat) => cat !== 'Alle')
-      .forEach((cat) => {
-        counts.set(cat, posts.filter((post) => post.category === cat).length);
-      });
-    return counts;
-  }, [categories, posts]);
-
-  const filtered = useMemo(() => {
-    const byCategory = active === 'Alle' ? posts : posts.filter((post) => post.category === active);
-    if (!normalizedQuery) return byCategory;
-
-    return byCategory.filter((post) => {
-      const haystack = [post.title, post.excerpt, post.category, ...post.tags]
-        .filter(Boolean)
-        .join(' ');
-
-      const normalizedHaystack = normalizeForSearch(haystack);
-      return normalizedHaystack.includes(normalizedQuery);
-    });
-  }, [active, normalizedQuery, posts]);
-
-  const featured =
-    active === 'Alle' && !normalizedQuery
-      ? (filtered.find((post) => post.featured) ?? filtered[0])
-      : null;
-
-  const rest = featured ? filtered.filter((post) => post.slug !== featured.slug) : filtered;
   const featuredInteraction = featured ? interactionsMap.get(featured.slug) : undefined;
   const featuredDate = featured ? formatDate(featured.date) : null;
   const featuredAccent = featured?.category
     ? (CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold-dim)')
     : 'var(--color-gold-dim)';
   const featuredStyle = { '--featured-accent': featuredAccent } as CSSProperties;
-  const hasActiveFilters = active !== 'Alle' || Boolean(normalizedQuery);
+
+  const hasActiveFilters = active !== 'Alle' || Boolean(query.trim());
   const resultsAnnouncement = `${filtered.length} von ${posts.length} Essays angezeigt.`;
 
   return (
@@ -137,7 +132,6 @@ export default function EssayList({
               '--tag-accent-bg': tagAccent.backgroundColor,
               '--tag-accent-border': tagAccent.borderColor,
             } as CSSProperties;
-            const href = buildFilterHref(cat, query);
 
             return (
               <Link
@@ -145,7 +139,7 @@ export default function EssayList({
                 onClick={() => setActive(cat)}
                 className={`${styles.tag} ${isActive ? styles.tagActive : ''}`}
                 style={tagStyle}
-                href={href}
+                href={buildFilterHref(cat, query)}
                 aria-current={isActive ? 'page' : undefined}
               >
                 <span>{cat}</span>
@@ -161,7 +155,7 @@ export default function EssayList({
             id="essay-search"
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="Nach Titel, Text oder Kategorie suchen"
             className={styles.searchInput}
             autoComplete="off"
@@ -180,8 +174,8 @@ export default function EssayList({
           <p>
             Aktive Filter:
             {active !== 'Alle' && ` Kategorie „${active}"`}
-            {active !== 'Alle' && normalizedQuery && ' ·'}
-            {normalizedQuery && ` Suche „${query.trim()}"`}
+            {active !== 'Alle' && query.trim() && ' ·'}
+            {query.trim() && ` Suche „${query.trim()}"`}
           </p>
           <Link href="/essays" className={styles.clearBtn}>
             Filter zurücksetzen
@@ -261,9 +255,9 @@ export default function EssayList({
             </Link>
           )}
 
-          {rest.length > 0 && (
+          {pagePosts.length > 0 && (
             <div className={styles.grid}>
-              {rest.map((post) => {
+              {pagePosts.map((post) => {
                 const interaction = interactionsMap.get(post.slug);
                 return (
                   <EssayCard
@@ -285,13 +279,51 @@ export default function EssayList({
               })}
             </div>
           )}
+
+          {totalPages > 1 && (
+            <nav className={styles.pagination} aria-label="Seitennavigation">
+              <button
+                type="button"
+                className={styles.pageBtn}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                aria-label="Vorherige Seite"
+              >
+                ←
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  className={`${styles.pageBtn} ${p === page ? styles.pageBtnActive : ''}`}
+                  onClick={() => setPage(p)}
+                  aria-current={p === page ? 'page' : undefined}
+                  aria-label={`Seite ${p}`}
+                >
+                  {p}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                className={styles.pageBtn}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                aria-label="Nächste Seite"
+              >
+                →
+              </button>
+            </nav>
+          )}
         </>
       )}
 
       <p className={styles.count}>
         {filtered.length} von {posts.length} Essays
         {active !== 'Alle' && ` in „${active}"`}
-        {normalizedQuery && ` mit „${query.trim()}"`}
+        {query.trim() && ` mit „${query.trim()}"`}
+        {totalPages > 1 && ` · Seite ${page} von ${totalPages}`}
       </p>
     </>
   );
