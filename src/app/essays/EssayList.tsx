@@ -70,12 +70,13 @@ export default function EssayList({
   const fuse = useMemo(() => new Fuse(posts, fuseOptions), [posts]);
 
   const filtered = useMemo(() => {
-    const byCategory = active === 'Alle' ? posts : posts.filter((p) => p.category === active);
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery) {
+      return active === 'Alle' ? posts : posts.filter((p) => p.category === active);
+    }
 
-    if (!query.trim()) return byCategory;
-
-    const fusePosts = new Fuse(byCategory, fuseOptions);
-    return fusePosts.search(query.trim()).map((r) => r.item);
+    const results = fuse.search(trimmedQuery).map((r) => r.item);
+    return active === 'Alle' ? results : results.filter((p) => p.category === active);
   }, [active, fuse, posts, query]);
 
   const featured =
