@@ -19,10 +19,22 @@ export const metadata: Metadata = {
 export default async function MeinBereichPage() {
   const access = await requireActivePageSession('/mein-bereich');
 
-  const [interactions, user] = await Promise.all([
+  const [readingList, favorites, withNotesRaw, readPosts, user] = await Promise.all([
     prisma.userEssayInteraction.findMany({
-      where: { userId: access.user.id },
+      where: { userId: access.user.id, isOnReadingList: true },
       orderBy: { updatedAt: 'desc' },
+    }),
+    prisma.userEssayInteraction.findMany({
+      where: { userId: access.user.id, isFavorite: true },
+      orderBy: { updatedAt: 'desc' },
+    }),
+    prisma.userEssayInteraction.findMany({
+      where: { userId: access.user.id, note: { not: null } },
+      orderBy: { updatedAt: 'desc' },
+    }),
+    prisma.userEssayInteraction.findMany({
+      where: { userId: access.user.id, isRead: true, readAt: { not: null } },
+      orderBy: { readAt: 'desc' },
     }),
     prisma.user.findUnique({
       where: { id: access.user.id },
@@ -30,18 +42,12 @@ export default async function MeinBereichPage() {
     }),
   ]);
 
+  const withNotes = withNotesRaw.filter((i) => i.note && i.note.trim().length > 0);
+
   const allEssays = getAllEssays();
   const postMap = new Map(allEssays.map((e) => [e.slug, e]));
 
   const displayName = user?.displayName ?? user?.name ?? access.user.email?.split('@')[0] ?? 'dort';
-
-  // Daten gruppieren
-  const readingList = interactions.filter((i) => i.isOnReadingList);
-  const favorites = interactions.filter((i) => i.isFavorite);
-  const withNotes = interactions.filter((i) => i.note && i.note.trim().length > 0);
-  const readPosts = interactions
-    .filter((i) => i.isRead && i.readAt)
-    .sort((a, b) => (b.readAt?.getTime() ?? 0) - (a.readAt?.getTime() ?? 0));
 
   const totalRead = readPosts.length;
   const totalFavorites = favorites.length;

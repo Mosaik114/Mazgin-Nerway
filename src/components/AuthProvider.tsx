@@ -7,5 +7,5 @@ type AuthProviderProps = {
 };
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  return <SessionProvider refetchOnWindowFocus>{children}</SessionProvider>;
+  return <SessionProvider refetchOnWindowFocus={false}>{children}</SessionProvider>;
 }
