@@ -12,7 +12,7 @@ coverImage: "/images/fuenf-bis-zehn-minuten.png"
 coverImageAlt: "Blick aus einem geparkten Auto auf eine ruhige Straße"
 seoTitle: "Fünf bis zehn Minuten – der stille Moment nach dem langen Tag"
 seoDescription: "Über die zehn Minuten im geparkten Auto, die niemand sieht und die trotzdem einem selbst gehören."
-published: false
+published: true
 excerpt: "Man parkt. Man zieht den Schlüssel ab. Und dann sitzt man einfach. Noch nicht bereit, weiterzumachen."
 ---
 
