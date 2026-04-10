@@ -122,8 +122,7 @@ function getComparableTimestamp(essay: Essay): number {
 let cachedEssays: Essay[] | null = null;
 
 export function getAllEssays(): Essay[] {
-  const useCache = process.env.NODE_ENV === 'production';
-  if (useCache && cachedEssays) return cachedEssays;
+  if (cachedEssays) return cachedEssays;
 
   const files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.md'));
 
@@ -142,7 +141,7 @@ export function getAllEssays(): Essay[] {
     return a.slug.localeCompare(b.slug, 'de-DE');
   });
 
-  if (useCache) cachedEssays = sorted;
+  cachedEssays = sorted;
 
   return sorted;
 }

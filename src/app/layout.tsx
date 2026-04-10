@@ -6,6 +6,7 @@ import '../styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AuthProvider from '@/components/AuthProvider';
+import { InteractionsProvider } from '@/components/InteractionsProvider';
 import UmamiAnalytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
@@ -165,9 +166,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a href="#main" className="skip-link">Zum Inhalt springen</a>
         <UmamiAnalytics />
         <AuthProvider>
-          <Navbar />
-          <main id="main">{children}</main>
-          <Footer />
+          <InteractionsProvider>
+            <Navbar />
+            <main id="main">{children}</main>
+            <Footer />
+          </InteractionsProvider>
         </AuthProvider>
         <VercelAnalytics />
         <SpeedInsights />
