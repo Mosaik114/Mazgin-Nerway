@@ -2,17 +2,18 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatDate } from '@/lib/config';
 import { getAllEssays } from '@/lib/essays';
-import { CATEGORY_COLORS, type Category } from '@/lib/categories';
+import { getCategoryAccent } from '@/lib/categories';
 import HomeLatestEssayCard from '@/components/HomeLatestEssayCard';
 import SectionTitle from '@/components/SectionTitle';
 import styles from './page.module.css';
 
+const HOME_TITLE = 'Nerway Essays';
+const HOME_DESCRIPTION =
+  'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.';
+
 export const metadata: Metadata = {
-  title: {
-    absolute: 'Nerway Essays',
-  },
-  description:
-    'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
   alternates: {
     canonical: '/',
     languages: {
@@ -24,24 +25,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'de_DE',
     url: '/',
-    title: 'Nerway Essays',
-    description:
-      'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     images: [
       {
         url: '/images/og-home.jpg',
         width: 1200,
         height: 630,
-        alt: 'Nerway Essays',
+        alt: HOME_TITLE,
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nerway Essays',
-    description:
-      'Zwischen zwei Welten entsteht meine Stimme. Ich schreibe über Identität, Sprache und die stillen Momente dazwischen. Ehrlich, persönlich und mit Blick auf das, was zwischen den Zeilen liegt.',
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     images: ['/images/og-home.jpg'],
   },
 };
@@ -50,6 +49,7 @@ export default function Home() {
   const allEssays = getAllEssays();
   const posts = allEssays.slice(0, 3);
   const latestPost = posts[0];
+  const latestAccent = latestPost ? getCategoryAccent(latestPost.category) : null;
 
   return (
     <>
@@ -82,9 +82,9 @@ export default function Home() {
                 <span
                   className={styles.heroAsideBadge}
                   style={{
-                    color: CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)',
-                    borderColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}99`,
-                    backgroundColor: `${CATEGORY_COLORS[latestPost.category as Category] ?? 'var(--color-gold)'}1f`,
+                    color: latestAccent!.color,
+                    borderColor: latestAccent!.borderColor,
+                    backgroundColor: latestAccent!.backgroundColor,
                   }}
                 >
                   Neuester Essay

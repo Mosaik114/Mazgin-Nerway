@@ -3,13 +3,14 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CATEGORY_COLORS, type Category } from '@/lib/categories';
-import { getAllEssays, getEssayBySlug, getTagSlug } from '@/lib/essays';
+import { getCategoryAccent } from '@/lib/categories';
+import { getAllEssays, getEssayBySlug, getEssayNavigation, getTagSlug } from '@/lib/essays';
 import { formatDate, SITE_URL, SOCIAL_LINKS } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
 import ReadingProgress from '@/components/ReadingProgress';
 import EssayInteractionBar from '@/components/EssayInteractionBarClient';
 import {
+  buildBreadcrumbJsonLd,
   SITE_LANGUAGE,
   SITE_NAME,
   SITE_PERSON_GENDER,
@@ -21,21 +22,6 @@ import styles from './essay.module.css';
 
 interface Props {
   params: Promise<{ slug: string }>;
-}
-
-function getComparableTimestamp(date: string, updatedAt?: string): number {
-  const source = updatedAt || date;
-  const parsed = Date.parse(source);
-  return Number.isNaN(parsed) ? 0 : parsed;
-}
-
-function getSharedTagCount(currentTags: string[], candidateTags: string[]): number {
-  if (currentTags.length === 0 || candidateTags.length === 0) return 0;
-
-  const current = new Set(currentTags.map((tag) => getTagSlug(tag)));
-  return candidateTags.reduce((count, tag) => {
-    return current.has(getTagSlug(tag)) ? count + 1 : count;
-  }, 0);
 }
 
 export async function generateStaticParams() {
@@ -117,16 +103,6 @@ export default async function EssayPostPage({ params }: Props) {
   const { contentHtml, tocHeadings } = post;
   const formatted = formatDate(post.date);
 
-  const getCategoryAccent = (category?: string) => {
-    const color = category ? CATEGORY_COLORS[category as Category] : null;
-
-    return {
-      color: color ?? 'var(--color-gold)',
-      backgroundColor: color ? `${color}1a` : 'rgba(var(--color-gold-rgb), 0.1)',
-      borderColor: color ? `${color}66` : 'var(--color-gold-dim)',
-    };
-  };
-
   const essayAccent = getCategoryAccent(post.category);
   const essayStyle = {
     '--essay-accent': essayAccent.color,
@@ -134,39 +110,7 @@ export default async function EssayPostPage({ params }: Props) {
     '--essay-accent-border': essayAccent.borderColor,
   } as CSSProperties;
 
-  const orderedPosts = getAllEssays();
-  const postIndex = orderedPosts.findIndex((candidate) => candidate.slug === post.slug);
-  const prevPost = postIndex >= 0 && postIndex < orderedPosts.length - 1
-    ? orderedPosts[postIndex + 1]
-    : null;
-  const nextPost = postIndex > 0 ? orderedPosts[postIndex - 1] : null;
-  const allPosts = orderedPosts.filter((candidate) => candidate.slug !== post.slug);
-
-  const relatedByTags = allPosts
-    .map((candidate) => ({
-      candidate,
-      score: getSharedTagCount(post.tags, candidate.tags),
-    }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score;
-      return getComparableTimestamp(b.candidate.date, b.candidate.updatedAt)
-        - getComparableTimestamp(a.candidate.date, a.candidate.updatedAt);
-    })
-    .map((item) => item.candidate);
-
-  const related = [...relatedByTags];
-
-  if (related.length < 2 && post.category) {
-    const fallback = allPosts
-      .filter((candidate) => candidate.category === post.category)
-      .filter((candidate) => !related.some((item) => item.slug === candidate.slug))
-      .sort((a, b) => getComparableTimestamp(b.date, b.updatedAt) - getComparableTimestamp(a.date, a.updatedAt));
-
-    related.push(...fallback);
-  }
-
-  const relatedTop = related.slice(0, 2);
+  const { prevPost, nextPost, related: relatedTop } = getEssayNavigation(post);
 
   const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(`/essays/${post.slug}`);
   const publishedIso = toIsoDateOrNull(post.date);
@@ -216,30 +160,10 @@ export default async function EssayPostPage({ params }: Props) {
     },
   };
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Startseite',
-        item: toAbsoluteUrl('/'),
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Essays',
-        item: toAbsoluteUrl('/essays'),
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: post.title,
-        item: canonicalUrl,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Essays', path: '/essays' },
+    { name: post.title, path: `/essays/${post.slug}` },
+  ]);
 
   return (
     <>

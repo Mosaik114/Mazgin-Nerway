@@ -65,17 +65,7 @@ function calcReadingTime(content: string): number {
 }
 
 function normalizeHeadingId(value: string): string {
-  const normalized = value
-    .trim()
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-  return normalized || 'abschnitt';
+  return normalizeSlug(value) || 'abschnitt';
 }
 
 function dedupeHeadingId(base: string, counters: Map<string, number>): string {
@@ -202,8 +192,8 @@ function parseEssay(filename: string, content: string, data: Frontmatter): Essay
   };
 }
 
-function getComparableTimestamp(essay: Essay): number {
-  const source = essay.updatedAt || essay.date;
+export function getComparableTimestamp(date: string, updatedAt?: string): number {
+  const source = updatedAt || date;
   const timestamp = Date.parse(source);
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
@@ -225,7 +215,7 @@ export function getAllEssays(): Essay[] {
     .filter((e): e is Essay => e !== null);
 
   const sorted = essays.sort((a, b) => {
-    const byDate = getComparableTimestamp(b) - getComparableTimestamp(a);
+    const byDate = getComparableTimestamp(b.date, b.updatedAt) - getComparableTimestamp(a.date, a.updatedAt);
     if (byDate !== 0) return byDate;
     return a.slug.localeCompare(b.slug, 'de-DE');
   });
@@ -307,4 +297,58 @@ export function getArchiveByYear(): ArchiveGroup[] {
       year,
       essays,
     }));
+}
+
+function getSharedTagCount(currentTags: string[], candidateTags: string[]): number {
+  if (currentTags.length === 0 || candidateTags.length === 0) return 0;
+
+  const current = new Set(currentTags.map((tag) => getTagSlug(tag)));
+  return candidateTags.reduce((count, tag) => {
+    return current.has(getTagSlug(tag)) ? count + 1 : count;
+  }, 0);
+}
+
+export interface EssayNavigation {
+  prevPost: Essay | null;
+  nextPost: Essay | null;
+  related: Essay[];
+}
+
+/** Returns prev/next posts and up to `maxRelated` related essays for a given post. */
+export function getEssayNavigation(post: Essay, maxRelated = 2): EssayNavigation {
+  const orderedPosts = getAllEssays();
+  const postIndex = orderedPosts.findIndex((candidate) => candidate.slug === post.slug);
+
+  const prevPost = postIndex >= 0 && postIndex < orderedPosts.length - 1
+    ? orderedPosts[postIndex + 1]
+    : null;
+  const nextPost = postIndex > 0 ? orderedPosts[postIndex - 1] : null;
+
+  const otherPosts = orderedPosts.filter((candidate) => candidate.slug !== post.slug);
+
+  const relatedByTags = otherPosts
+    .map((candidate) => ({
+      candidate,
+      score: getSharedTagCount(post.tags, candidate.tags),
+    }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return getComparableTimestamp(b.candidate.date, b.candidate.updatedAt)
+        - getComparableTimestamp(a.candidate.date, a.candidate.updatedAt);
+    })
+    .map((item) => item.candidate);
+
+  const related = [...relatedByTags];
+
+  if (related.length < maxRelated && post.category) {
+    const fallback = otherPosts
+      .filter((candidate) => candidate.category === post.category)
+      .filter((candidate) => !related.some((item) => item.slug === candidate.slug))
+      .sort((a, b) => getComparableTimestamp(b.date, b.updatedAt) - getComparableTimestamp(a.date, a.updatedAt));
+
+    related.push(...fallback);
+  }
+
+  return { prevPost, nextPost, related: related.slice(0, maxRelated) };
 }
