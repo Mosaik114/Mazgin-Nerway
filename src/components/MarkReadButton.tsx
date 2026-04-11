@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useInteractionToggle } from './useInteractionToggle';
+import { CheckCircleIcon } from './Icons';
 import styles from './MarkReadButton.module.css';
 
 interface Props {
@@ -10,64 +11,25 @@ interface Props {
 }
 
 export default function MarkReadButton({ essaySlug, initialIsRead = false, variant = 'icon' }: Props) {
-  const [isRead, setIsRead] = useState(initialIsRead);
-  const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    setIsRead(initialIsRead ?? false);
-  }, [initialIsRead]);
-
-  async function toggle(e: React.MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (busy) return;
-
-    const next = !isRead;
-    setIsRead(next);
-    setBusy(true);
-
-    try {
-      const res = await fetch(`/api/essays/${essaySlug}/interaction`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ isRead: next }),
-      });
-      if (!res.ok) setIsRead(!next);
-    } catch {
-      setIsRead(!next);
-    } finally {
-      setBusy(false);
-    }
-  }
+  const { active, busy, toggle } = useInteractionToggle({
+    essaySlug,
+    field: 'isRead',
+    initialValue: initialIsRead,
+  });
 
   return (
     <button
       type="button"
-      className={`${styles.btn} ${isRead ? styles.active : ''} ${variant === 'full' ? styles.full : styles.iconOnly}`}
+      className={`${styles.btn} ${active ? styles.active : ''} ${variant === 'full' ? styles.full : styles.iconOnly}`}
       onClick={toggle}
-      aria-pressed={isRead}
-      aria-label={isRead ? 'Als ungelesen markieren' : 'Als gelesen markieren'}
-      title={isRead ? 'Als ungelesen markieren' : 'Als gelesen markieren'}
+      aria-pressed={active}
+      aria-label={active ? 'Als ungelesen markieren' : 'Als gelesen markieren'}
+      title={active ? 'Als ungelesen markieren' : 'Als gelesen markieren'}
       disabled={busy}
     >
-      <svg
-        className={`${styles.icon} ${isRead ? styles.iconActive : ''}`}
-        width="15"
-        height="15"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="9 12 11 14 15 10" />
-      </svg>
+      <CheckCircleIcon size={15} className={`${styles.icon} ${active ? styles.iconActive : ''}`} />
       {variant === 'full' && (
-        <span className={styles.label}>{isRead ? 'Gelesen' : 'Als gelesen markieren'}</span>
+        <span className={styles.label}>{active ? 'Gelesen' : 'Als gelesen markieren'}</span>
       )}
     </button>
   );

@@ -4,21 +4,17 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { buildSignInPath } from '@/lib/auth-redirect';
+import type { InteractionDetail } from '@/types/interactions';
 import useSWR from 'swr';
+import { BookmarkIcon, CheckCircleAltIcon, CloseIcon, HeartIcon, PenIcon } from './Icons';
 import styles from './EssayInteractionBar.module.css';
-
-interface Interaction {
-  isRead: boolean;
-  note: string;
-  isFavorite: boolean;
-  isOnReadingList: boolean;
-}
 
 interface Props {
   essaySlug: string;
 }
 
-const EMPTY_INTERACTION: Interaction = {
+const EMPTY_INTERACTION: InteractionDetail = {
+  essaySlug: '',
   isRead: false,
   note: '',
   isFavorite: false,
@@ -27,16 +23,16 @@ const EMPTY_INTERACTION: Interaction = {
 
 const NOTE_DEBOUNCE_MS = 1100;
 
-const fetcher = (url: string): Promise<Interaction | null> =>
+const fetcher = (url: string): Promise<InteractionDetail | null> =>
   fetch(url, { cache: 'no-store', credentials: 'include' })
-    .then((r) => (r.ok ? (r.json() as Promise<Interaction | null>) : null))
+    .then((r) => (r.ok ? (r.json() as Promise<InteractionDetail | null>) : null))
     .catch(() => null);
 
 export default function EssayInteractionBar({ essaySlug }: Props) {
   const pathname = usePathname();
   const signInHref = buildSignInPath(pathname ?? '/');
 
-  const { data, isLoading, mutate } = useSWR<Interaction | null>(
+  const { data, isLoading, mutate } = useSWR<InteractionDetail | null>(
     `/api/essays/${essaySlug}/interaction`,
     fetcher,
     { revalidateOnFocus: false },
@@ -69,7 +65,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
   const noteChanged = noteValue !== savedNoteValue;
 
   const patch = useCallback(
-    async (updates: Partial<Interaction>): Promise<Interaction> => {
+    async (updates: Partial<InteractionDetail>): Promise<InteractionDetail> => {
       const res = await fetch(`/api/essays/${essaySlug}/interaction`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -77,13 +73,13 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
         body: JSON.stringify(updates),
       });
       if (!res.ok) throw new Error('interaction patch failed');
-      return res.json() as Promise<Interaction>;
+      return res.json() as Promise<InteractionDetail>;
     },
     [essaySlug],
   );
 
   const optimisticToggle = useCallback(
-    (updates: Partial<Pick<Interaction, 'isRead' | 'isFavorite' | 'isOnReadingList'>>) => {
+    (updates: Partial<Pick<InteractionDetail, 'isRead' | 'isFavorite' | 'isOnReadingList'>>) => {
       if (!data) return;
       void mutate(async () => patch(updates), {
         optimisticData: { ...data, ...updates },
@@ -169,10 +165,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
             title={interaction.isRead ? 'Gelesen' : 'Als gelesen markieren'}
             disabled={actionsDisabled}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
+            <CheckCircleAltIcon size={16} />
           </button>
 
           <button
@@ -184,9 +177,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
             title={interaction.isFavorite ? 'Favorisiert' : 'Favorit'}
             disabled={actionsDisabled}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill={interaction.isFavorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
+            <HeartIcon size={16} filled={interaction.isFavorite} />
           </button>
 
           <button
@@ -198,9 +189,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
             title={interaction.isOnReadingList ? 'Auf Leseliste' : 'Später lesen'}
             disabled={actionsDisabled}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill={interaction.isOnReadingList ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-            </svg>
+            <BookmarkIcon size={16} filled={interaction.isOnReadingList} />
           </button>
         </div>
 
@@ -225,10 +214,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
         title={data ? 'Notiz öffnen' : 'Notiz (Login erforderlich)'}
         disabled={actionsDisabled}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 20h9" />
-          <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-        </svg>
+        <PenIcon size={18} />
         <span className={styles.noteFabLabel}>Notiz</span>
       </button>
 
@@ -248,10 +234,7 @@ export default function EssayInteractionBar({ essaySlug }: Props) {
               onClick={() => setNoteOpen(false)}
               aria-label="Notiz schließen"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <CloseIcon size={16} />
             </button>
           </div>
 
