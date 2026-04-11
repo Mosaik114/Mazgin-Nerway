@@ -1,5 +1,6 @@
 import { getAllEssays, getAllTagsWithCount } from '@/lib/essays';
-import { SITE_URL } from '@/lib/config';
+import { toAbsoluteUrl } from '@/lib/seo';
+import { escapeXml, parseDateOrFallback } from '@/lib/utils';
 
 type ChangeFrequency = 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
@@ -36,27 +37,10 @@ const HUB_PAGES: StaticPageConfig[] = [
   { path: '/essays/archiv', changeFrequency: 'weekly', priority: 0.72 },
 ];
 
-function toAbsoluteUrl(path: string): string {
-  return path === '/' ? SITE_URL : `${SITE_URL}${path}`;
-}
-
 function parseDate(value: string | undefined): Date | null {
   if (!value) return null;
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
-}
-
-function parseDateOrFallback(value: string | undefined, fallback: Date): Date {
-  return parseDate(value) ?? fallback;
-}
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
 }
 
 function renderEntry(entry: SitemapEntry): string {
@@ -112,7 +96,7 @@ export function GET() {
 
   for (const tag of tags) {
     entries.push({
-      url: `${SITE_URL}/essays/tags/${tag.slug}`,
+      url: toAbsoluteUrl(`/essays/tags/${tag.slug}`),
       lastModified: latestPostDate,
       changeFrequency: 'monthly',
       priority: 0.6,
@@ -126,7 +110,7 @@ export function GET() {
     }
 
     entries.push({
-      url: `${SITE_URL}/essays/${essay.slug}`,
+      url: toAbsoluteUrl(`/essays/${essay.slug}`),
       lastModified: parseDateOrFallback(essay.updatedAt ?? essay.date, latestPostDate),
       changeFrequency: 'monthly',
       priority: 0.82,

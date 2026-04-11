@@ -2,21 +2,8 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { normalizeEmail, parseAdminEmails, resolveRoleForEmail } from '@/lib/auth-policy';
+import { readEnv } from '@/lib/utils';
 import authConfig from '@/auth.config';
-
-function readEnv(...keys: string[]): string {
-  for (const key of keys) {
-    const value = process.env[key];
-    if (typeof value === 'string') {
-      const trimmed = value.trim();
-      if (trimmed) {
-        return trimmed;
-      }
-    }
-  }
-
-  return '';
-}
 
 const authSecret = readEnv('AUTH_SECRET', 'NEXTAUTH_SECRET');
 

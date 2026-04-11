@@ -3,24 +3,10 @@ import html from 'remark-html';
 import { getAllEssays } from '@/lib/essays';
 import { SITE_URL } from '@/lib/config';
 import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl } from '@/lib/seo';
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
+import { escapeXml, parseDateOrFallback } from '@/lib/utils';
 
 function toCdata(value: string): string {
   return `<![CDATA[${value.replace(/]]>/g, ']]]]><![CDATA[>')}]]>`;
-}
-
-function parseDateOrFallback(value: string | undefined, fallback: Date): Date {
-  if (!value) return fallback;
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? fallback : parsed;
 }
 
 async function toHtml(markdown: string): Promise<string> {
