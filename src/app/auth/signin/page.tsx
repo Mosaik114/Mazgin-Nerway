@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth';
+import { getSignInPageDecision } from '@/lib/auth-flow';
+import { firstParamValue } from '@/lib/auth-redirect';
+import styles from './signin.module.css';
 
 export const metadata: Metadata = {
   title: 'Anmelden',
   robots: { index: false, follow: false },
 };
-import { firstParamValue } from '@/lib/auth-redirect';
-import { getSignInPageDecision } from '@/lib/auth-flow';
-import styles from './signin.module.css';
 
 type SignInSearchParams = Record<string, string | string[] | undefined>;
 

@@ -1,3 +1,7 @@
+/**
+ * Pure auth-guard logic without database access.
+ * Kept separate from auth-guard.ts so it can be unit-tested without Prisma.
+ */
 import type { Role } from '@prisma/client';
 import { isAdminEmail } from './auth-policy';
 

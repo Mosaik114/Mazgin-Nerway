@@ -1,3 +1,4 @@
+/** Decision logic for protected routes and the sign-in page (redirect vs. show vs. allow). */
 import type { Session } from 'next-auth';
 import {
   buildSignInPath,

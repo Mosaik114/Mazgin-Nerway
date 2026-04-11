@@ -31,6 +31,7 @@ function serializePayload(payload?: Record<string, unknown>): Record<string, unk
       cloned[key] = {
         name: value.name,
         message: value.message,
+        ...(value.stack ? { stack: value.stack } : {}),
       };
       continue;
     }
@@ -78,4 +79,3 @@ export function logEvent(level: LogLevel, event: string, payload?: Record<string
 
   console.log(line);
 }
-

@@ -1,3 +1,4 @@
+/** Redirect-based auth guards for server-rendered pages (as opposed to JSON responses in API routes). */
 import { redirect } from 'next/navigation';
 import type { ActiveSessionContext } from './auth-guard';
 import { AuthGuardError, requireActiveSession } from './auth-guard';

@@ -1,3 +1,7 @@
+/**
+ * Database-backed auth guards for API routes and server actions.
+ * Re-exports pure logic from auth-guard-core for convenience.
+ */
 import { NextResponse } from 'next/server';
 import type { Session } from 'next-auth';
 import { auth } from '@/auth';
