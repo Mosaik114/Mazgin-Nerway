@@ -5,6 +5,7 @@ import { CATEGORIES } from '@/lib/categories';
 import { formatDate, SITE_URL } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
 import {
+  buildBreadcrumbJsonLd,
   SITE_LANGUAGE,
   SITE_NAME,
   SITE_PERSON_GENDER,
@@ -12,20 +13,15 @@ import {
   toIsoDateOrNull,
   toJsonLd,
 } from '@/lib/seo';
+import { firstParamValue, type SearchParamValue } from '@/lib/auth-redirect';
 import EssayList from './EssayList';
 import styles from './essay.module.css';
 
 const ESSAYS_TITLE = 'Essays';
-type SearchParamValue = string | string[] | undefined;
 type EssaySearchParams = Record<string, SearchParamValue>;
 
 interface EssayPageProps {
   searchParams?: Promise<EssaySearchParams>;
-}
-
-function firstParamValue(value: SearchParamValue): string {
-  if (Array.isArray(value)) return value[0] ?? '';
-  return value ?? '';
 }
 
 const ESSAYS_DESCRIPTION = 'Alle Essays von Mizgin Nerway - Gedanken, Geschichten und Reflexionen.';
@@ -115,24 +111,7 @@ export default async function EssaysPage({ searchParams }: EssayPageProps) {
     }),
   };
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Startseite',
-        item: toAbsoluteUrl('/'),
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Essays',
-        item: toAbsoluteUrl('/essays'),
-      },
-    ],
-  };
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([{ name: 'Essays', path: '/essays' }]);
 
   return (
     <section className={styles.page}>

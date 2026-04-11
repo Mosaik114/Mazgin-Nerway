@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { prisma } from '@/lib/prisma';
-import { SITE_URL } from '@/lib/config';
+import { isValidEmail, SITE_URL } from '@/lib/config';
 import { createRequestId, logEvent } from '@/lib/monitoring';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -211,6 +211,8 @@ async function consumeDbRateLimit(keys: string[]): Promise<boolean> {
   return limited;
 }
 
+// Rate limiting: tries DB-backed buckets first (persistent across deploys).
+// Falls back to in-memory map if the DB table is missing or unreachable.
 async function isRateLimited(keys: string[], requestId: string): Promise<boolean> {
   const uniqueKeys = Array.from(new Set(keys.filter(Boolean)));
 
@@ -251,10 +253,6 @@ function normalizeMessage(value: string): string {
     .replace(/\r\n/g, '\n')
     .replace(/\r/g, '\n')
     .trim();
-}
-
-function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function parseBody(payload: unknown): Record<string, unknown> | null {

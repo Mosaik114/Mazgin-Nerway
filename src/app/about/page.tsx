@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { SITE_URL, SOCIAL_LINKS } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
-import { SITE_NAME, SITE_PERSON_GENDER, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
+import { buildBreadcrumbJsonLd, buildPersonJsonLd, SITE_NAME, toJsonLd } from '@/lib/seo';
 import styles from './about.module.css';
 
 export const metadata: Metadata = {
@@ -41,54 +40,18 @@ export const metadata: Metadata = {
   },
 };
 
-const personJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  '@id': `${SITE_URL}/about#person`,
-  name: SITE_NAME,
-  alternateName: ['Nerway', 'Mizgin'],
-  url: SITE_URL,
-  image: `${SITE_URL}/images/mizgin-rechts.png`,
-  jobTitle: 'Autor & Essayist',
-  description:
-    'Mizgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
-  gender: SITE_PERSON_GENDER,
-  sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.tiktok, SOCIAL_LINKS.youtube],
-  knowsLanguage: ['de', 'de-DE'],
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': `${SITE_URL}/about`,
-  },
-};
+const personJsonLd = buildPersonJsonLd({ includeSameAs: true });
 
 const profilePageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
   name: `Über mich | ${SITE_NAME}`,
-  url: `${SITE_URL}/about`,
-  description:
-    'Mizgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
+  url: personJsonLd.mainEntityOfPage['@id'],
+  description: personJsonLd.description,
   mainEntity: personJsonLd,
 };
 
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Startseite',
-      item: toAbsoluteUrl('/'),
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Über mich',
-      item: toAbsoluteUrl('/about'),
-    },
-  ],
-};
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([{ name: 'Über mich', path: '/about' }]);
 
 export default async function AboutPage() {
   const nonce = await getCspNonce();

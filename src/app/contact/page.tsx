@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getCspNonce } from '@/lib/csp';
-import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
+import { buildBreadcrumbJsonLd, SITE_LANGUAGE, SITE_NAME, toJsonLd } from '@/lib/seo';
 import ContactForm from './ContactForm';
 import styles from './contact.module.css';
 
@@ -25,24 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Startseite',
-      item: toAbsoluteUrl('/'),
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Kontakt',
-      item: toAbsoluteUrl('/contact'),
-    },
-  ],
-};
+const breadcrumbJsonLd = buildBreadcrumbJsonLd([{ name: 'Kontakt', path: '/contact' }]);
 
 export default async function ContactPage() {
   const nonce = await getCspNonce();

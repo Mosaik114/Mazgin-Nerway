@@ -25,3 +25,20 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   'Identit\u00E4t': '#8d7ac9',
   'Liebe': '#e05a8a',
 };
+
+export interface CategoryAccent {
+  color: string;
+  backgroundColor: string;
+  borderColor: string;
+}
+
+/** Returns accent color, background, and border for a given category. */
+export function getCategoryAccent(category?: string): CategoryAccent {
+  const color = category ? (CATEGORY_COLORS[category as Category] ?? null) : null;
+
+  return {
+    color: color ?? 'var(--color-gold)',
+    backgroundColor: color ? `${color}1a` : 'rgba(var(--color-gold-rgb), 0.1)',
+    borderColor: color ? `${color}66` : 'var(--color-gold-dim)',
+  };
+}

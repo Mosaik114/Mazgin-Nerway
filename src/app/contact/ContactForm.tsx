@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { isValidEmail } from '@/lib/config';
 import styles from './contact.module.css';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -14,7 +15,7 @@ export default function ContactForm() {
     if (!String(data.get('name')).trim()) errs.name = 'Bitte gib deinen Namen ein.';
     const email = String(data.get('email')).trim();
     if (!email) errs.email = 'Bitte gib deine E-Mail-Adresse ein.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Ungültige E-Mail-Adresse.';
+    else if (!isValidEmail(email)) errs.email = 'Ungültige E-Mail-Adresse.';
     if (!String(data.get('message')).trim()) errs.message = 'Bitte schreib eine Nachricht.';
     return errs;
   }

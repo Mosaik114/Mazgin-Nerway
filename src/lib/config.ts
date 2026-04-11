@@ -6,6 +6,10 @@ export const SOCIAL_LINKS = {
   youtube: 'https://www.youtube.com/@mizgin_nerway',
 } as const;
 
+export function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 export function formatDate(date: string): string {
   return new Date(date).toLocaleDateString(LOCALE, {
     day: '2-digit',

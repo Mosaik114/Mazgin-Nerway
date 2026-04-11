@@ -10,7 +10,7 @@ import { InteractionsProvider } from '@/components/InteractionsProvider';
 import UmamiAnalytics from '@/components/Analytics';
 import { SITE_URL } from '@/lib/config';
 import { getCspNonce } from '@/lib/csp';
-import { SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, SITE_PERSON_GENDER, toJsonLd } from '@/lib/seo';
+import { buildPersonJsonLd, SITE_DESCRIPTION, SITE_LANGUAGE, SITE_NAME, SITE_PERSON_GENDER, toJsonLd } from '@/lib/seo';
 import { themeScript } from '@/lib/theme';
 
 const caprasimo = Caprasimo({
@@ -125,24 +125,7 @@ const websiteJsonLd = {
   },
 };
 
-const personJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  '@id': `${SITE_URL}/about#person`,
-  name: SITE_NAME,
-  alternateName: ['Nerway', 'Mizgin'],
-  url: SITE_URL,
-  image: `${SITE_URL}/images/mizgin-rechts.png`,
-  jobTitle: 'Autor & Essayist',
-  description:
-    'Mizgin Nerway ist Autor und Essayist. Er schreibt auf Deutsch über Identität, Sprache und das Leben zwischen zwei Kulturen.',
-  gender: SITE_PERSON_GENDER,
-  knowsLanguage: ['de', 'de-DE'],
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': `${SITE_URL}/about`,
-  },
-};
+const personJsonLd = buildPersonJsonLd();
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const nonce = await getCspNonce();

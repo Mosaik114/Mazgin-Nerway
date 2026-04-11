@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
-import { CATEGORY_COLORS, type Category } from '@/lib/categories';
+import { getCategoryAccent } from '@/lib/categories';
 import { formatDate } from '@/lib/config';
 import FavoriteButton from './FavoriteButton';
 import ReadingListButton from './ReadingListButton';
@@ -38,10 +38,8 @@ export default function EssayCard({
   showActions = false,
 }: Props) {
   const formatted = formatDate(date);
-  const accentColor = category
-    ? (CATEGORY_COLORS[category as Category] ?? 'var(--color-gold-dim)')
-    : 'var(--color-gold-dim)';
-  const cardStyle = { '--card-accent': accentColor } as CSSProperties;
+  const accent = getCategoryAccent(category);
+  const cardStyle = { '--card-accent': accent.color } as CSSProperties;
 
   return (
     <Link href={`/essays/${slug}`} className={styles.card} style={cardStyle}>
@@ -71,9 +69,9 @@ export default function EssayCard({
               <span
                 className={styles.category}
                 style={{
-                  color: CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)',
-                  backgroundColor: `${CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)'}1a`,
-                  borderColor: `${CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)'}66`,
+                  color: accent.color,
+                  backgroundColor: accent.backgroundColor,
+                  borderColor: accent.borderColor,
                 }}
               >
                 {category}

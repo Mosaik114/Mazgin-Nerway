@@ -8,7 +8,7 @@ import {
   getTagInfoBySlug,
 } from '@/lib/essays';
 import { getCspNonce } from '@/lib/csp';
-import { SITE_LANGUAGE, SITE_NAME, toAbsoluteUrl, toJsonLd } from '@/lib/seo';
+import { buildBreadcrumbJsonLd, SITE_LANGUAGE, SITE_NAME, toJsonLd } from '@/lib/seo';
 import styles from './tag.module.css';
 
 interface Props {
@@ -64,36 +64,11 @@ export default async function TagPage({ params }: Props) {
 
   const canonicalPath = `/essays/tags/${tagInfo.slug}`;
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Startseite',
-        item: toAbsoluteUrl('/'),
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Essays',
-        item: toAbsoluteUrl('/essays'),
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: 'Schlagwörter',
-        item: toAbsoluteUrl('/essays/tags'),
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: tagInfo.name,
-        item: toAbsoluteUrl(canonicalPath),
-      },
-    ],
-  };
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Essays', path: '/essays' },
+    { name: 'Schlagwörter', path: '/essays/tags' },
+    { name: tagInfo.name, path: canonicalPath },
+  ]);
 
   return (
     <section className={styles.page}>

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import Fuse from 'fuse.js';
-import { CATEGORY_COLORS, type Category } from '@/lib/categories';
+import { getCategoryAccent } from '@/lib/categories';
 import EssayCard from '@/components/EssayCard';
 import FavoriteButton from '@/components/FavoriteButton';
 import ReadingListButton from '@/components/ReadingListButton';
@@ -99,23 +99,20 @@ export default function EssayList({
   }, [categories, posts]);
 
   const getTagAccent = (category: string) => {
-    const color =
-      category === 'Alle'
-        ? 'var(--color-gold)'
-        : (CATEGORY_COLORS[category as Category] ?? 'var(--color-gold)');
-    return {
-      color,
-      backgroundColor: category === 'Alle' ? 'rgba(var(--color-gold-rgb), 0.08)' : `${color}1a`,
-      borderColor: category === 'Alle' ? 'var(--color-gold-dim)' : `${color}66`,
-    };
+    if (category === 'Alle') {
+      return {
+        color: 'var(--color-gold)',
+        backgroundColor: 'rgba(var(--color-gold-rgb), 0.08)',
+        borderColor: 'var(--color-gold-dim)',
+      };
+    }
+    return getCategoryAccent(category);
   };
 
   const featuredInteraction = featured ? interactionsMap.get(featured.slug) : undefined;
   const featuredDate = featured ? formatDate(featured.date) : null;
-  const featuredAccent = featured?.category
-    ? (CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold-dim)')
-    : 'var(--color-gold-dim)';
-  const featuredStyle = { '--featured-accent': featuredAccent } as CSSProperties;
+  const featuredCategoryAccent = getCategoryAccent(featured?.category);
+  const featuredStyle = { '--featured-accent': featuredCategoryAccent.color } as CSSProperties;
 
   const hasActiveFilters = active !== 'Alle' || Boolean(query.trim());
   const resultsAnnouncement = `${filtered.length} von ${posts.length} Essays angezeigt.`;
@@ -238,9 +235,9 @@ export default function EssayList({
                     <span
                       className={styles.featuredCategory}
                       style={{
-                        color: CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold)',
-                        backgroundColor: `${CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold)'}1a`,
-                        borderColor: `${CATEGORY_COLORS[featured.category as Category] ?? 'var(--color-gold)'}66`,
+                        color: featuredCategoryAccent.color,
+                        backgroundColor: featuredCategoryAccent.backgroundColor,
+                        borderColor: featuredCategoryAccent.borderColor,
                       }}
                     >
                       {featured.category}

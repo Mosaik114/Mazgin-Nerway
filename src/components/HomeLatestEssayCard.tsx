@@ -35,7 +35,7 @@ export default function HomeLatestEssayCard({ post, showLoginHint = true }: Prop
       />
       {!isAuthenticated && showLoginHint && (
         <p className={styles.loginHint}>
-          Favoriten und Spaeter-lesen sind nach dem Login verfuegbar.
+          Favoriten und Später-lesen sind nach dem Login verfügbar.
         </p>
       )}
     </>
