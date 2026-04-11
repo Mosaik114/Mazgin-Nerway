@@ -1,9 +1,9 @@
 export const SITE_URL = 'https://www.nerway.de';
 export const LOCALE = 'de-DE';
 export const SOCIAL_LINKS = {
-  instagram: 'https://www.instagram.com/mizgin_nerway/',
-  tiktok: 'https://www.tiktok.com/@mizgin_nerway',
-  youtube: 'https://www.youtube.com/@mizgin_nerway',
+  instagram: 'https://www.instagram.com/mazgin_nerway/',
+  tiktok: 'https://www.tiktok.com/@mazgin_nerway',
+  youtube: 'https://www.youtube.com/@mazgin_nerway',
 } as const;
 
 export function isValidEmail(value: string): boolean {
