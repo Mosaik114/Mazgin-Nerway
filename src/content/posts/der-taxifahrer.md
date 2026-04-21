@@ -3,7 +3,7 @@ title: "Der Taxifahrer"
 date: "2026-04-08"
 updatedAt: "2026-04-021"
 slug: "der-taxifahrer"
-category: "Gedanken"
+category: "Familie"
 tags:
   - Familie
   - Dankbarkeit
